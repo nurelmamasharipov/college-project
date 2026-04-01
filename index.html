@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodePath — IT Тренажёр</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:   #07090f;
+      --bg2:  #0d1220;
+      --bg3:  #131b2e;
+      --bg4:  #1a2540;
+      --bdr:  rgba(255,255,255,0.06);
+      --bdr2: rgba(255,255,255,0.13);
+      --txt:  #dde4f0;
+      --txt2: #6b7fa0;
+      --txt3: #3d5070;
+      --acc:  #4f8ef7;
+      --acc-g:rgba(79,142,247,0.13);
+      --c-html:#f06240;
+      --c-css: #29a8e0;
+      --c-js:  #f0d840;
+      --c-prog:#9f73f8;
+      --ok:   #3ecf8e;
+      --err:  #f87171;
+      --warn: #fbbf24;
+      --r: 13px;
+      --font: 'Syne', sans-serif;
+      --mono: 'JetBrains Mono', monospace;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.6;overflow-x:hidden}
+
+    /* background grid */
+    body::before{content:'';position:fixed;inset:0;
+      background-image:linear-gradient(rgba(79,142,247,.04) 1px,transparent 1px),
+                       linear-gradient(90deg,rgba(79,142,247,.04) 1px,transparent 1px);
+      background-size:44px 44px;pointer-events:none;z-index:0}
+
+    /* glow orbs */
+    body::after{content:'';position:fixed;width:700px;height:700px;
+      background:radial-gradient(circle,rgba(79,142,247,.07) 0%,transparent 70%);
+      top:-200px;right:-150px;pointer-events:none;z-index:0}
+
+    #root{position:relative;z-index:1;min-height:100vh}
+
+    /* ── HEADER ── */
+    header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(7,9,15,.88);backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--bdr);
+      padding:0 24px;height:62px;
+      display:flex;align-items:center;justify-content:space-between}
+
+    .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;color:inherit}
+    .logo-mark{
+      width:36px;height:36px;border-radius:8px;
+      background:linear-gradient(135deg,var(--acc),#7c3aed);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;letter-spacing:-1px}
+    .logo-name{font-size:18px;font-weight:800;letter-spacing:-.5px}
+    .logo-name b{color:var(--acc);font-weight:800}
+
+    .hdr-right{display:flex;align-items:center;gap:10px}
+    .lang-sw{display:flex;background:var(--bg3);border:1px solid var(--bdr2);border-radius:8px;overflow:hidden}
+    .lang-sw button{
+      padding:6px 12px;font-family:var(--font);font-size:12px;font-weight:700;
+      border:none;background:transparent;color:var(--txt2);cursor:pointer;transition:all .2s}
+    .lang-sw button.on{background:var(--acc);color:#fff}
+    .icon-btn{
+      width:38px;height:38px;border:1px solid var(--bdr2);background:var(--bg3);border-radius:8px;
+      color:var(--txt2);cursor:pointer;display:flex;align-items:center;justify-content:center;
+      font-size:15px;transition:all .2s}
+    .icon-btn:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-g)}
+
+    /* ── VIEWS ── */
+    .view{display:none;animation:fadeUp .25s ease}
+    .view.on{display:block}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    /* ── HOME ── */
+    .hero{max-width:860px;margin:0 auto;padding:64px 24px 40px;text-align:center}
+    .hero-badge{
+      display:inline-flex;align-items:center;gap:6px;
+      background:var(--acc-g);border:1px solid rgba(79,142,247,.3);
+      color:var(--acc);padding:5px 14px;border-radius:100px;
+      font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
+    .hero h1{font-size:clamp(30px,5vw,50px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:14px}
+    .hero h1 .hl{background:linear-gradient(90deg,var(--acc),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero p{font-size:15px;color:var(--txt2);max-width:460px;margin:0 auto 36px}
+
+    .overall{
+      background:var(--bg3);border:1px solid var(--bdr);border-radius:12px;
+      padding:14px 18px;max-width:380px;margin:0 auto 56px;text-align:left}
+    .overall-top{display:flex;justify-content:space-between;font-size:12px;color:var(--txt2);margin-bottom:8px}
+    .overall-top strong{color:var(--txt);font-weight:600}
+    .pbar{height:6px;background:var(--bg4);border-radius:99px;overflow:hidden}
+    .pbar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--acc),#a78bfa);transition:width .5s ease}
+
+    .sec-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);margin-bottom:18px}
+    .topics-wrap{max-width:940px;margin:0 auto;padding:0 24px 80px}
+    .topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+
+    .tc{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+      padding:22px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
+    .tc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
+      background:var(--tc);opacity:0;transition:opacity .2s}
+    .tc:hover{border-color:var(--bdr2);transform:translateY(-2px)}
+    .tc:hover::after{opacity:1}
+
+    .tc-icon{
+      width:42px;height:42px;border-radius:9px;
+      background:color-mix(in srgb,var(--tc) 14%,transparent);
+      border:1px solid color-mix(in srgb,var(--tc) 28%,transparent);
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--mono);font-size:12px;font-weight:600;
+      color:var(--tc);margin-bottom:14px;letter-spacing:-1px}
+    .tc-title{font-size:16px;font-weight:700;margin-bottom:5px;letter-spacing:-.3px}
+    .tc-desc{font-size:12.5px;color:var(--txt2);line-height:1.5;margin-bottom:18px}
+    .tc-pbar{height:3px;background:var(--bg4);border-radius:99px;margin:0 0 14px;overflow:hidden}
+    .tc-pbar-fill{height:100%;border-radius:99px;background:var(--tc);transition:width .5s}
+    .tc-foot{display:flex;align-items:center;justify-content:space-between}
+    .tc-cnt{font-size:12px;color:var(--txt2)}
+    .tc-cnt strong{color:var(--tc)}
+
+    /* ── BUTTONS ── */
+    .btn{padding:8px 16px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;
+         cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px}
+    .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;filter:none!important}
+    .btn-p{background:var(--acc);color:#fff}
+    .btn-p:hover:not(:disabled){opacity:.85;transform:translateY(-1px)}
+    .btn-o{background:transparent;border:1px solid var(--bdr2);color:var(--txt)}
+    .btn-o:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
+    .btn-ok{background:var(--ok);color:#021a0d}
+    .btn-ok:hover:not(:disabled){opacity:.85}
+    .btn-s{padding:6px 12px;font-size:12px}
+
+    /* ── TOPIC VIEW ── */
+    .inner{max-width:920px;margin:0 auto;padding:30px 24px 80px}
+    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--txt2);
+               cursor:pointer;margin-bottom:28px;transition:color .2s}
+    .back-link:hover{color:var(--acc)}
+
+    .tv-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:36px}
+    .tv-icon{
+      width:52px;height:52px;border-radius:11px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:-1px}
+    .tv-meta h2{font-size:24px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
+    .tv-meta p{font-size:13px;color:var(--txt2)}
+
+    .ex-list{display:flex;flex-direction:column;gap:10px}
+    .ex-row{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+      padding:16px 18px;display:flex;align-items:center;gap:14px;
+      cursor:pointer;transition:all .2s}
+    .ex-row:hover{border-color:var(--bdr2);background:var(--bg3)}
+    .ex-row.done{border-color:rgba(62,207,142,.2)}
+    .ex-num{
+      width:34px;height:34px;border-radius:8px;flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      font-size:12px;font-weight:700;font-family:var(--mono);
+      background:var(--bg4);color:var(--txt2)}
+    .ex-row.done .ex-num{background:rgba(62,207,142,.15);color:var(--ok)}
+    .ex-info{flex:1}
+    .ex-ttl{font-size:14px;font-weight:600;margin-bottom:1px}
+    .ex-st{font-size:11.5px;color:var(--txt2)}
+    .ex-row.done .ex-st{color:var(--ok)}
+    .ex-arr{color:var(--txt3);font-size:18px;line-height:1}
+
+    /* ── EXERCISE VIEW ── */
+    .ev-wrap{max-width:760px;margin:0 auto;padding:28px 24px 80px}
+    .ev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+    .ev-ctr{font-size:11px;color:var(--txt2);background:var(--bg3);
+            padding:4px 12px;border-radius:99px;border:1px solid var(--bdr)}
+
+    .card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:26px;margin-bottom:16px}
+    .card.task-card{background:linear-gradient(135deg,var(--bg2),rgba(79,142,247,.04));border-color:rgba(79,142,247,.2)}
+
+    .chip{
+      display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:1.5px;
+      text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:12px}
+    .chip-t{background:rgba(79,142,247,.15);color:var(--acc)}
+    .chip-task{background:rgba(159,115,248,.15);color:#a78bfa}
+    .chip-ok{background:rgba(62,207,142,.15);color:var(--ok)}
+    .chip-err{background:rgba(248,113,113,.15);color:var(--err)}
+
+    .card h3{font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:12px}
+    .theory-body{font-size:13.5px;color:var(--txt2);line-height:1.85}
+    .theory-body code{
+      font-family:var(--mono);font-size:12px;background:var(--bg4);
+      padding:2px 6px;border-radius:4px;color:var(--acc)}
+    .theory-body strong{color:var(--txt);font-weight:600}
+
+    .task-body{font-size:14.5px;line-height:1.7}
+    .task-body code{font-family:var(--mono);font-size:12.5px;background:var(--bg4);padding:2px 6px;border-radius:4px;color:#a78bfa}
+    .task-body strong{font-weight:700}
+
+    .ans-lbl{display:flex;align-items:center;justify-content:space-between;
+             font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:8px}
+    .ans-ta{
+      width:100%;min-height:90px;background:var(--bg2);border:1px solid var(--bdr2);
+      border-radius:10px;padding:13px 15px;font-family:var(--mono);font-size:13px;
+      color:var(--txt);resize:vertical;outline:none;transition:border-color .2s,box-shadow .2s;line-height:1.6}
+    .ans-ta:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-g)}
+    .ans-ta::placeholder{color:var(--txt3)}
+
+    .hint-box{
+      background:var(--bg4);border:1px solid rgba(240,216,64,.2);border-radius:8px;
+      padding:9px 13px;font-size:13px;color:#f0d840;font-family:var(--mono);
+      margin-top:8px;display:none;animation:fadeUp .2s ease}
+    .hint-box.on{display:block}
+
+    .api-warn{
+      background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.22);
+      border-radius:8px;padding:9px 13px;font-size:12.5px;color:var(--warn);
+      margin-bottom:12px;display:none;align-items:center;gap:6px}
+    .api-warn.on{display:flex}
+    .api-warn button{background:none;border:none;color:var(--warn);text-decoration:underline;
+                     cursor:pointer;font-size:12.5px;font-family:var(--font);padding:0}
+
+    .ans-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+
+    .fb-card{
+      background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
+      padding:22px;margin-top:16px;display:none;animation:fadeUp .3s ease}
+    .fb-card.ok{border-color:rgba(62,207,142,.25)}
+    .fb-text{font-size:13.5px;line-height:1.85;color:var(--txt2);white-space:pre-wrap}
+    .fb-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+
+    .done-banner{
+      background:linear-gradient(135deg,rgba(62,207,142,.08),rgba(79,142,247,.06));
+      border:1px solid rgba(62,207,142,.22);border-radius:var(--r);
+      padding:28px;text-align:center;margin-top:20px;display:none;animation:fadeUp .4s ease}
+    .done-banner.on{display:block}
+    .done-banner h3{font-size:20px;margin-bottom:6px}
+    .done-banner p{color:var(--txt2);font-size:13.5px}
+
+    /* loading dots */
+    .dots{display:inline-flex;gap:4px;align-items:center}
+    .dots span{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:dot 1.2s infinite ease-in-out}
+    .dots span:nth-child(1){animation-delay:0s}
+    .dots span:nth-child(2){animation-delay:.2s}
+    .dots span:nth-child(3){animation-delay:.4s}
+    @keyframes dot{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+
+    /* ── MODAL ── */
+    .modal-ov{
+      position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);
+      z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+    .modal-ov.on{display:flex;animation:fadeUp .2s ease}
+    .modal{
+      background:var(--bg2);border:1px solid var(--bdr2);border-radius:16px;
+      padding:30px;width:100%;max-width:400px}
+    .modal h3{font-size:18px;font-weight:700;margin-bottom:6px}
+    .modal p{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.6}
+    .flbl{font-size:11px;font-weight:700;color:var(--txt2);display:block;margin-bottom:6px;letter-spacing:.5px}
+    .finp{
+      width:100%;background:var(--bg3);border:1px solid var(--bdr2);border-radius:8px;
+      padding:10px 13px;font-family:var(--mono);font-size:13px;color:var(--txt);outline:none;transition:border-color .2s}
+    .finp:focus{border-color:var(--acc)}
+    .modal-act{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px}
+
+    @media(max-width:600px){
+      .topics-grid{grid-template-columns:1fr}
+      .hero h1{font-size:26px}
+      .inner,.ev-wrap{padding:18px 14px 60px}
+    }
+  </style>
+</head>
+<body>
+<div id="root">
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="logo" onclick="goHome()">
+    <div class="logo-mark">&lt;/&gt;</div>
+    <div class="logo-name">Code<b>Path</b></div>
+  </div>
+  <div class="hdr-right">
+    <div class="lang-sw">
+      <button id="btn-ru" class="on" onclick="setLang('ru')">РУС</button>
+      <button id="btn-en" onclick="setLang('en')">ENG</button>
+    </div>
+    <button class="icon-btn" onclick="openSettings()" title="API">⚙</button>
+  </div>
+</header>
+
+<!-- ── HOME ── -->
+<div class="view on" id="view-home">
+  <div class="hero">
+    <div class="hero-badge" id="h-badge">🎓 IT Тренажёр</div>
+    <h1 id="h-title">Учись программировать<br><span class="hl">шаг за шагом</span></h1>
+    <p id="h-sub">Теория, практика и AI-проверка — всё в одном месте. Выбери тему и начни прямо сейчас.</p>
+    <div class="overall">
+      <div class="overall-top"><strong id="h-prog-lbl">Общий прогресс</strong><span id="h-prog-cnt">0 / 12</span></div>
+      <div class="pbar"><div class="pbar-fill" id="h-prog-fill" style="width:0%"></div></div>
+    </div>
+  </div>
+  <div class="topics-wrap">
+    <div class="sec-label" id="h-sec-lbl">ТЕМЫ</div>
+    <div class="topics-grid" id="topics-grid"></div>
+  </div>
+</div>
+
+<!-- ── TOPIC VIEW ── -->
+<div class="view" id="view-topic">
+  <div class="inner">
+    <div class="back-link" id="tv-back" onclick="goHome()">← <span id="tv-back-txt">Назад к темам</span></div>
+    <div class="tv-head">
+      <div class="tv-icon" id="tv-icon"></div>
+      <div class="tv-meta"><h2 id="tv-title"></h2><p id="tv-desc"></p></div>
+    </div>
+    <div class="sec-label" id="tv-sec-lbl">УПРАЖНЕНИЯ</div>
+    <div class="ex-list" id="ex-list"></div>
+  </div>
+</div>
+
+<!-- ── EXERCISE VIEW ── -->
+<div class="view" id="view-exercise">
+  <div class="ev-wrap">
+    <div class="ev-top">
+      <div class="back-link" id="ev-back" style="margin-bottom:0"></div>
+      <div class="ev-ctr" id="ev-ctr"></div>
+    </div>
+
+    <div class="card" id="theory-card">
+      <span class="chip chip-t" id="ev-theory-lbl">ТЕОРИЯ</span>
+      <h3 id="ev-title"></h3>
+      <div class="theory-body" id="ev-theory"></div>
+    </div>
+
+    <div class="card task-card">
+      <span class="chip chip-task" id="ev-task-lbl">ЗАДАНИЕ</span>
+      <div class="task-body" id="ev-task"></div>
+    </div>
+
+    <div class="api-warn" id="api-warn">
+      <span>⚠</span>
+      <span id="api-warn-txt"></span>
+    </div>
+
+    <div style="margin-bottom:14px">
+      <div class="ans-lbl">
+        <span id="ev-ans-lbl">Твой ответ</span>
+        <button class="btn btn-o btn-s" onclick="toggleHint()">💡 <span id="ev-hint-lbl">Подсказка</span></button>
+      </div>
+      <textarea class="ans-ta" id="ans-ta" rows="4"></textarea>
+      <div class="hint-box" id="hint-box"></div>
+    </div>
+
+    <div class="ans-actions">
+      <button class="btn btn-p" id="check-btn" onclick="checkAnswer()">
+        <span id="check-txt">Проверить ответ</span>
+      </button>
+    </div>
+
+    <div class="fb-card" id="fb-card">
+      <span class="chip" id="fb-chip">РЕЗУЛЬТАТ</span>
+      <div class="fb-text" id="fb-text"></div>
+      <div class="fb-actions" id="fb-acts"></div>
+    </div>
+
+    <div class="done-banner" id="done-banner">
+      <div style="font-size:38px;margin-bottom:10px">🎉</div>
+      <h3 id="done-title">Тема завершена!</h3>
+      <p id="done-sub">Ты выполнил все упражнения по этой теме</p>
+      <button class="btn btn-p" style="margin-top:14px" onclick="goHome()">← <span id="done-home">На главную</span></button>
+    </div>
+  </div>
+</div>
+
+</div><!-- #root -->
+
+<!-- ── MODAL ── -->
+<div class="modal-ov" id="modal-settings" onclick="if(event.target===this)closeSettings()">
+  <div class="modal">
+    <h3 id="m-title">Настройки API</h3>
+    <p id="m-desc">Ключ нужен для AI‑проверки ответов. Он хранится только в твоём браузере.</p>
+    <label class="flbl" id="m-lbl">Claude API ключ</label>
+    <input class="finp" type="password" id="api-input" placeholder="sk-ant-api03-...">
+    <div class="modal-act">
+      <button class="btn btn-o" onclick="closeSettings()" id="m-cancel">Отмена</button>
+      <button class="btn btn-p" onclick="saveSettings()" id="m-save">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────── STRINGS ───────────────────────────
+const STR = {
+  ru:{
+    badge:'🎓 IT Тренажёр',
+    title:'Учись программировать<br><span class="hl">шаг за шагом</span>',
+    sub:'Теория, практика и AI‑проверка — всё в одном месте. Выбери тему и начни прямо сейчас.',
+    progLbl:'Общий прогресс',topicsSec:'ТЕМЫ',exSec:'УПРАЖНЕНИЯ',
+    theoryLbl:'ТЕОРИЯ',taskLbl:'ЗАДАНИЕ',fbLbl:'РЕЗУЛЬТАТ',
+    ansLbl:'Твой ответ',hintLbl:'Подсказка',
+    checkBtn:'Проверить ответ',checking:'Проверяю...',
+    next:'→ Следующее',retry:'Попробовать снова',
+    back:'Назад к темам',home:'На главную',
+    start:'Начать',cont:'Продолжить',done:'✓ Завершено',
+    stDone:'✓ Выполнено',stPend:'Не выполнено',
+    warnPre:'Добавь API ключ в ',warnLink:'настройках',warnPost:' для AI‑проверки.',
+    doneTitle:'Тема завершена!',doneSub:'Ты выполнил все упражнения по этой теме',
+    mTitle:'Настройки API',
+    mDesc:'Ключ нужен для AI‑проверки ответов. Он хранится только в твоём браузере.',
+    mLbl:'Claude API ключ',mCancel:'Отмена',mSave:'Сохранить',
+    netErr:'⚠ Ошибка соединения. Проверь интернет и API ключ.',
+    keyErr:'⚠ API ключ не найден. Добавь его в настройках (⚙).',
+    of:'из',ph:'Напиши свой ответ здесь...'
+  },
+  en:{
+    badge:'🎓 IT Trainer',
+    title:'Learn to code<br><span class="hl">step by step</span>',
+    sub:'Theory, practice, and AI feedback — all in one place. Choose a topic and start now.',
+    progLbl:'Overall Progress',topicsSec:'TOPICS',exSec:'EXERCISES',
+    theoryLbl:'THEORY',taskLbl:'TASK',fbLbl:'RESULT',
+    ansLbl:'Your Answer',hintLbl:'Hint',
+    checkBtn:'Check Answer',checking:'Checking...',
+    next:'→ Next',retry:'Try Again',
+    back:'Back to Topics',home:'Home',
+    start:'Start',cont:'Continue',done:'✓ Done',
+    stDone:'✓ Completed',stPend:'Not completed',
+    warnPre:'Add an API key in ',warnLink:'settings',warnPost:' to enable AI checking.',
+    doneTitle:'Topic Completed!',doneSub:'You completed all exercises in this topic',
+    mTitle:'API Settings',
+    mDesc:'The key is used for AI answer checking. It is stored only in your browser.',
+    mLbl:'Claude API Key',mCancel:'Cancel',mSave:'Save',
+    netErr:'⚠ Connection error. Check your internet and API key.',
+    keyErr:'⚠ API key not found. Add it in settings (⚙).',
+    of:'of',ph:'Write your answer here...'
+  }
+};
+
+// ─────────────────────────── DATA ───────────────────────────
+const TOPICS = {
+  html:{
+    icon:'</>',color:'#f06240',
+    ru:{title:'HTML основы',desc:'Разметка веб-страниц — теги, атрибуты, структура'},
+    en:{title:'HTML Basics',desc:'Web page markup — tags, attributes, structure'},
+    exercises:[
+      {id:'html-1',
+       ru:{title:'Первый тег',
+           theory:`<strong>HTML</strong> — язык разметки для создания веб-страниц.<br><br>
+Каждый элемент описывается <strong>тегом</strong>:<br>
+<code>&lt;тег&gt;содержимое&lt;/тег&gt;</code><br><br>
+Заголовки: <code>&lt;h1&gt;</code> — самый крупный, <code>&lt;h6&gt;</code> — самый мелкий.`,
+           task:'Напиши HTML-код заголовка первого уровня с текстом: <strong>Привет, мир!</strong>',
+           hint:'&lt;h1&gt;Привет, мир!&lt;/h1&gt;'},
+       en:{title:'First Tag',
+           theory:`<strong>HTML</strong> is the markup language for web pages.<br><br>
+Every element is described with a <strong>tag</strong>:<br>
+<code>&lt;tag&gt;content&lt;/tag&gt;</code><br><br>
+Headings: <code>&lt;h1&gt;</code> is largest, <code>&lt;h6&gt;</code> is smallest.`,
+           task:'Write HTML code for a first-level heading with text: <strong>Hello, World!</strong>',
+           hint:'&lt;h1&gt;Hello, World!&lt;/h1&gt;'}},
+      {id:'html-2',
+       ru:{title:'Ссылки',
+           theory:`Ссылки — тег <code>&lt;a&gt;</code> с атрибутом <code>href</code>:<br>
+<code>&lt;a href="https://example.com"&gt;текст&lt;/a&gt;</code><br><br>
+Открыть в новой вкладке: <code>target="_blank"</code>`,
+           task:'Создай ссылку на <strong>https://google.com</strong> с текстом <strong>Поиск</strong>',
+           hint:'&lt;a href="https://google.com"&gt;Поиск&lt;/a&gt;'},
+       en:{title:'Links',
+           theory:`Links use the <code>&lt;a&gt;</code> tag with an <code>href</code> attribute:<br>
+<code>&lt;a href="https://example.com"&gt;text&lt;/a&gt;</code><br><br>
+Open in a new tab: <code>target="_blank"</code>`,
+           task:'Create a link to <strong>https://google.com</strong> with text <strong>Search</strong>',
+           hint:'&lt;a href="https://google.com"&gt;Search&lt;/a&gt;'}},
+      {id:'html-3',
+       ru:{title:'Списки',
+           theory:`Два вида списков:<br>
+• <code>&lt;ul&gt;</code> — маркированный<br>
+• <code>&lt;ol&gt;</code> — нумерованный<br><br>
+Каждый пункт — <code>&lt;li&gt;</code>:<br>
+<code>&lt;ul&gt;&lt;li&gt;Пункт&lt;/li&gt;&lt;li&gt;Пункт&lt;/li&gt;&lt;/ul&gt;</code>`,
+           task:'Создай маркированный список с тремя любыми языками программирования',
+           hint:'&lt;ul&gt;&lt;li&gt;Python&lt;/li&gt;&lt;li&gt;JavaScript&lt;/li&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;/ul&gt;'},
+       en:{title:'Lists',
+           theory:`Two list types:<br>
+• <code>&lt;ul&gt;</code> — unordered (bulleted)<br>
+• <code>&lt;ol&gt;</code> — ordered (numbered)<br><br>
+Each item uses <code>&lt;li&gt;</code>:<br>
+<code>&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</code>`,
+           task:'Create an unordered list with three programming languages',
+           hint:'&lt;ul&gt;&lt;li&gt;Python&lt;/li&gt;&lt;li&gt;JavaScript&lt;/li&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;/ul&gt;'}}
+    ]
+  },
+  css:{
+    icon:'{}',color:'#29a8e0',
+    ru:{title:'CSS стили',desc:'Дизайн страниц — цвета, шрифты, отступы, flexbox'},
+    en:{title:'CSS Styles',desc:'Page design — colors, fonts, spacing, flexbox'},
+    exercises:[
+      {id:'css-1',
+       ru:{title:'Цвет текста',
+           theory:`<strong>CSS</strong> задаёт внешний вид HTML-элементов.<br><br>
+Синтаксис: <code>селектор { свойство: значение; }</code><br><br>
+Цвет текста — <code>color</code>:<br>
+<code>p { color: red; }</code><br><br>
+Цвет фона — <code>background-color</code>:<br>
+<code>body { background-color: #fff; }</code>`,
+           task:'Напиши CSS, чтобы все <code>&lt;h1&gt;</code> были синими (<code>blue</code>)',
+           hint:'h1 { color: blue; }'},
+       en:{title:'Text Color',
+           theory:`<strong>CSS</strong> defines how HTML elements look.<br><br>
+Syntax: <code>selector { property: value; }</code><br><br>
+Text color — <code>color</code>:<br>
+<code>p { color: red; }</code><br><br>
+Background — <code>background-color</code>:<br>
+<code>body { background-color: #fff; }</code>`,
+           task:'Write CSS to make all <code>&lt;h1&gt;</code> tags blue',
+           hint:'h1 { color: blue; }'}},
+      {id:'css-2',
+       ru:{title:'Отступы',
+           theory:`• <code>padding</code> — внутренний отступ<br>
+• <code>margin</code> — внешний отступ<br><br>
+<code>div { padding: 20px; }</code> — со всех сторон<br>
+<code>div { margin-bottom: 10px; }</code> — только снизу`,
+           task:'CSS для <code>.card</code>: внутренний отступ <code>20px</code>, внешний снизу <code>10px</code>',
+           hint:'.card { padding: 20px; margin-bottom: 10px; }'},
+       en:{title:'Spacing',
+           theory:`• <code>padding</code> — inner spacing<br>
+• <code>margin</code> — outer spacing<br><br>
+<code>div { padding: 20px; }</code> — all sides<br>
+<code>div { margin-bottom: 10px; }</code> — bottom only`,
+           task:'CSS for <code>.card</code>: <code>20px</code> padding and <code>10px</code> bottom margin',
+           hint:'.card { padding: 20px; margin-bottom: 10px; }'}},
+      {id:'css-3',
+       ru:{title:'Flexbox',
+           theory:`<code>display: flex</code> — включает flexbox.<br><br>
+<code>justify-content</code> — по горизонтали:<br>
+<code>center</code>, <code>flex-start</code>, <code>space-between</code><br><br>
+<code>align-items</code> — по вертикали:<br>
+<code>center</code>, <code>flex-start</code>, <code>flex-end</code>`,
+           task:'CSS для <code>.container</code>: flexbox, элементы по центру горизонтально и вертикально',
+           hint:'.container { display: flex; justify-content: center; align-items: center; }'},
+       en:{title:'Flexbox',
+           theory:`<code>display: flex</code> — enables flexbox.<br><br>
+<code>justify-content</code> — horizontal alignment:<br>
+<code>center</code>, <code>flex-start</code>, <code>space-between</code><br><br>
+<code>align-items</code> — vertical alignment:<br>
+<code>center</code>, <code>flex-start</code>, <code>flex-end</code>`,
+           task:'CSS for <code>.container</code>: flexbox, elements centered horizontally and vertically',
+           hint:'.container { display: flex; justify-content: center; align-items: center; }'}}
+    ]
+  },
+  js:{
+    icon:'JS',color:'#f0d840',
+    ru:{title:'JavaScript',desc:'Логика и интерактивность — переменные, функции, условия'},
+    en:{title:'JavaScript',desc:'Logic and interactivity — variables, functions, conditions'},
+    exercises:[
+      {id:'js-1',
+       ru:{title:'Переменные',
+           theory:`Три способа объявить переменную:<br><br>
+• <code>let</code> — можно переопределить<br>
+• <code>const</code> — нельзя переопределить<br>
+• <code>var</code> — устаревший, лучше не использовать<br><br>
+<code>let name = "Алибек";</code><br>
+<code>const pi = 3.14;</code>`,
+           task:'Объяви <code>let greeting</code> со значением <code>"Привет, мир!"</code>',
+           hint:'let greeting = "Привет, мир!";'},
+       en:{title:'Variables',
+           theory:`Three ways to declare a variable:<br><br>
+• <code>let</code> — can be reassigned<br>
+• <code>const</code> — cannot be reassigned<br>
+• <code>var</code> — old, avoid if possible<br><br>
+<code>let name = "Alex";</code><br>
+<code>const pi = 3.14;</code>`,
+           task:'Declare <code>let greeting</code> with value <code>"Hello, World!"</code>',
+           hint:'let greeting = "Hello, World!";'}},
+      {id:'js-2',
+       ru:{title:'Функции',
+           theory:`Функция — блок кода с именем:<br><br>
+<code>function name(a, b) {<br>
+&nbsp;&nbsp;return a + b;<br>
+}</code><br><br>
+Вызов: <code>name(2, 3)</code> → <code>5</code>`,
+           task:'Напиши функцию <code>multiply(a, b)</code>, возвращающую произведение двух чисел',
+           hint:'function multiply(a, b) { return a * b; }'},
+       en:{title:'Functions',
+           theory:`A function is a named block of code:<br><br>
+<code>function name(a, b) {<br>
+&nbsp;&nbsp;return a + b;<br>
+}</code><br><br>
+Call: <code>name(2, 3)</code> → <code>5</code>`,
+           task:'Write a function <code>multiply(a, b)</code> that returns the product of two numbers',
+           hint:'function multiply(a, b) { return a * b; }'}},
+      {id:'js-3',
+       ru:{title:'Условие if/else',
+           theory:`<code>if</code> — выполняет код при условии:<br><br>
+<code>if (условие) {<br>
+&nbsp;&nbsp;// если true<br>
+} else {<br>
+&nbsp;&nbsp;// если false<br>
+}</code><br><br>
+<code>===</code> равно · <code>!==</code> не равно<br>
+<code>&gt;</code> больше · <code>&lt;</code> меньше`,
+           task:'Напиши функцию <code>isAdult(age)</code>: возвращает <code>true</code> если >= 18, иначе <code>false</code>',
+           hint:'function isAdult(age) { if (age >= 18) return true; return false; }'},
+       en:{title:'if/else Condition',
+           theory:`<code>if</code> runs code conditionally:<br><br>
+<code>if (condition) {<br>
+&nbsp;&nbsp;// if true<br>
+} else {<br>
+&nbsp;&nbsp;// if false<br>
+}</code><br><br>
+<code>===</code> equal · <code>!==</code> not equal<br>
+<code>&gt;</code> greater · <code>&lt;</code> less`,
+           task:'Write a function <code>isAdult(age)</code>: returns <code>true</code> if >= 18, else <code>false</code>',
+           hint:'function isAdult(age) { if (age >= 18) return true; return false; }'}}
+    ]
+  },
+  prog:{
+    icon:'∑',color:'#9f73f8',
+    ru:{title:'Основы программирования',desc:'Алгоритмическое мышление — циклы, массивы, алгоритмы'},
+    en:{title:'Programming Basics',desc:'Algorithmic thinking — loops, arrays, algorithms'},
+    exercises:[
+      {id:'prog-1',
+       ru:{title:'Цикл for',
+           theory:`Цикл повторяет блок кода.<br><br>
+<code>for</code> — когда знаешь сколько раз:<br>
+<code>for (let i = 0; i &lt; 5; i++) {<br>
+&nbsp;&nbsp;console.log(i);<br>
+}</code><br><br>
+Выведет: 0, 1, 2, 3, 4`,
+           task:'Напиши цикл <code>for</code>, выводящий числа от <strong>1 до 5</strong> через <code>console.log</code>',
+           hint:'for (let i = 1; i &lt;= 5; i++) { console.log(i); }'},
+       en:{title:'for Loop',
+           theory:`A loop repeats a block of code.<br><br>
+<code>for</code> — when you know how many times:<br>
+<code>for (let i = 0; i &lt; 5; i++) {<br>
+&nbsp;&nbsp;console.log(i);<br>
+}</code><br><br>
+Prints: 0, 1, 2, 3, 4`,
+           task:'Write a <code>for</code> loop that prints numbers from <strong>1 to 5</strong> via <code>console.log</code>',
+           hint:'for (let i = 1; i &lt;= 5; i++) { console.log(i); }'}},
+      {id:'prog-2',
+       ru:{title:'Массивы',
+           theory:`Массив хранит несколько значений:<br><br>
+<code>let fruits = ["яблоко", "банан"];</code><br><br>
+Индексы — с нуля: <code>fruits[0]</code> → "яблоко"<br>
+Длина: <code>fruits.length</code><br>
+Добавить: <code>fruits.push("груша")</code>`,
+           task:'Создай массив <code>colors</code> с тремя цветами: "красный", "синий", "зелёный"',
+           hint:'let colors = ["красный", "синий", "зелёный"];'},
+       en:{title:'Arrays',
+           theory:`An array stores multiple values:<br><br>
+<code>let fruits = ["apple", "banana"];</code><br><br>
+Indexes start at 0: <code>fruits[0]</code> → "apple"<br>
+Length: <code>fruits.length</code><br>
+Add: <code>fruits.push("pear")</code>`,
+           task:'Create an array <code>colors</code> with three colors: "red", "blue", "green"',
+           hint:'let colors = ["red", "blue", "green"];'}},
+      {id:'prog-3',
+       ru:{title:'Функция max',
+           theory:`Алгоритм — последовательность шагов для решения задачи.<br><br>
+Пример — найти максимум двух чисел:<br>
+<code>function max(a, b) {<br>
+&nbsp;&nbsp;if (a > b) return a;<br>
+&nbsp;&nbsp;return b;<br>
+}</code>`,
+           task:'Напиши функцию <code>sum(arr)</code>, которая принимает массив чисел и возвращает их сумму',
+           hint:'function sum(arr) { let t=0; for(let i=0;i&lt;arr.length;i++) t+=arr[i]; return t; }'},
+       en:{title:'max Function',
+           theory:`An algorithm is a sequence of steps to solve a problem.<br><br>
+Example — find the maximum of two numbers:<br>
+<code>function max(a, b) {<br>
+&nbsp;&nbsp;if (a > b) return a;<br>
+&nbsp;&nbsp;return b;<br>
+}</code>`,
+           task:'Write a function <code>sum(arr)</code> that takes an array of numbers and returns their sum',
+           hint:'function sum(arr) { let t=0; for(let i=0;i&lt;arr.length;i++) t+=arr[i]; return t; }'}}
+    ]
+  }
+};
+
+const TOPIC_KEYS = ['html','css','js','prog'];
+const TOTAL = TOPIC_KEYS.reduce((s,k)=>s+TOPICS[k].exercises.length,0);
+
+// ─────────────────────────── STATE ───────────────────────────
+let S = {
+  lang: localStorage.getItem('cp_lang')||'ru',
+  apiKey: localStorage.getItem('cp_apikey')||'',
+  progress: JSON.parse(localStorage.getItem('cp_prog')||'{}'),
+  view: 'home',
+  topic: null,
+  exIdx: 0,
+  hintOn: false,
+};
+
+function t(k){ return STR[S.lang][k]||k; }
+function save(){ localStorage.setItem('cp_lang',S.lang); localStorage.setItem('cp_prog',JSON.stringify(S.progress)); }
+function isDone(id){ return !!S.progress[id]; }
+function markDone(id){ S.progress[id]=true; save(); }
+
+function topicProgress(key){
+  const exs=TOPICS[key].exercises;
+  return {done:exs.filter(e=>isDone(e.id)).length, total:exs.length};
+}
+function totalDone(){ return TOPIC_KEYS.reduce((s,k)=>s+topicProgress(k).done,0); }
+
+// ─────────────────────────── NAV ───────────────────────────
+function showView(name){
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+  document.getElementById('view-'+name).classList.add('on');
+  S.view=name; window.scrollTo(0,0);
+}
+function goHome(){ renderHome(); showView('home'); }
+function goTopic(key){ S.topic=key; renderTopic(key); showView('topic'); }
+function goEx(key,idx){ S.topic=key; S.exIdx=idx; renderEx(); showView('exercise'); }
+
+// ─────────────────────────── RENDER HOME ───────────────────────────
+function renderHome(){
+  const l=S.lang;
+  document.getElementById('h-badge').textContent=t('badge');
+  document.getElementById('h-title').innerHTML=t('title');
+  document.getElementById('h-sub').textContent=t('sub');
+  document.getElementById('h-prog-lbl').textContent=t('progLbl');
+  document.getElementById('h-sec-lbl').textContent=t('topicsSec');
+
+  const d=totalDone();
+  document.getElementById('h-prog-cnt').textContent=d+' '+t('of')+' '+TOTAL;
+  document.getElementById('h-prog-fill').style.width=(d/TOTAL*100)+'%';
+
+  const grid=document.getElementById('topics-grid');
+  grid.innerHTML='';
+  TOPIC_KEYS.forEach(key=>{
+    const tp=TOPICS[key];
+    const {done:td,total}=topicProgress(key);
+    const pct=Math.round(td/total*100);
+    const complete=td===total, started=td>0;
+    const btnTxt=complete?t('done'):started?t('cont'):t('start');
+    const btnCls=complete?'btn-ok':'btn-p';
+    const pendIdx=tp.exercises.findIndex(e=>!isDone(e.id));
+    const target=pendIdx>=0?pendIdx:0;
+
+    const c=document.createElement('div');
+    c.className='tc';
+    c.style.cssText=`--tc:${tp.color}`;
+    c.innerHTML=`
+      <div class="tc-icon">${tp.icon}</div>
+      <div class="tc-title">${tp[l].title}</div>
+      <div class="tc-desc">${tp[l].desc}</div>
+      <div class="tc-pbar"><div class="tc-pbar-fill" style="width:${pct}%"></div></div>
+      <div class="tc-foot">
+        <div class="tc-cnt"><strong>${td}</strong> / ${total}</div>
+        <button class="btn ${btnCls} btn-s" onclick="event.stopPropagation();goEx('${key}',${target})">${btnTxt}</button>
+      </div>`;
+    c.addEventListener('click',()=>goTopic(key));
+    grid.appendChild(c);
+  });
+}
+
+// ─────────────────────────── RENDER TOPIC ───────────────────────────
+function renderTopic(key){
+  const l=S.lang, tp=TOPICS[key];
+  document.getElementById('tv-back-txt').textContent=t('back');
+  document.getElementById('tv-sec-lbl').textContent=t('exSec');
+
+  const ico=document.getElementById('tv-icon');
+  ico.textContent=tp.icon;
+  ico.style.cssText=`background:color-mix(in srgb,${tp.color} 14%,transparent);border:1px solid color-mix(in srgb,${tp.color} 28%,transparent);color:${tp.color};font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:-1px`;
+
+  document.getElementById('tv-title').textContent=tp[l].title;
+  document.getElementById('tv-desc').textContent=tp[l].desc;
+
+  const list=document.getElementById('ex-list');
+  list.innerHTML='';
+  tp.exercises.forEach((ex,i)=>{
+    const done=isDone(ex.id);
+    const row=document.createElement('div');
+    row.className='ex-row'+(done?' done':'');
+    row.innerHTML=`
+      <div class="ex-num">${done?'✓':(i+1)}</div>
+      <div class="ex-info">
+        <div class="ex-ttl">${ex[l].title}</div>
+        <div class="ex-st">${done?t('stDone'):t('stPend')}</div>
+      </div>
+      <div class="ex-arr">›</div>`;
+    row.addEventListener('click',()=>goEx(key,i));
+    list.appendChild(row);
+  });
+}
+
+// ─────────────────────────── RENDER EXERCISE ───────────────────────────
+function renderEx(){
+  const l=S.lang, key=S.topic, idx=S.exIdx;
+  const tp=TOPICS[key], ex=tp.exercises[idx];
+
+  // back breadcrumb
+  const back=document.getElementById('ev-back');
+  back.innerHTML=`← <span style="color:var(--txt3)">${tp[l].title}</span>`;
+  back.onclick=()=>goTopic(key);
+
+  document.getElementById('ev-ctr').textContent=`${idx+1} ${t('of')} ${tp.exercises.length}`;
+  document.getElementById('ev-theory-lbl').textContent=t('theoryLbl');
+  document.getElementById('ev-task-lbl').textContent=t('taskLbl');
+  document.getElementById('ev-title').textContent=ex[l].title;
+  document.getElementById('ev-theory').innerHTML=ex[l].theory;
+  document.getElementById('ev-task').innerHTML=ex[l].task;
+  document.getElementById('ev-ans-lbl').textContent=t('ansLbl');
+  document.getElementById('ev-hint-lbl').textContent=t('hintLbl');
+  document.getElementById('check-txt').textContent=t('checkBtn');
+
+  const ta=document.getElementById('ans-ta');
+  ta.value=''; ta.placeholder=t('ph');
+
+  S.hintOn=false;
+  const hb=document.getElementById('hint-box');
+  hb.classList.remove('on'); hb.innerHTML=ex[l].hint;
+
+  // API warning
+  const warn=document.getElementById('api-warn');
+  if(!S.apiKey){
+    warn.classList.add('on');
+    document.getElementById('api-warn-txt').innerHTML=
+      t('warnPre')+'<button onclick="openSettings()">'+t('warnLink')+'</button>'+t('warnPost');
+  } else { warn.classList.remove('on'); }
+
+  // reset feedback
+  document.getElementById('fb-card').style.display='none';
+  document.getElementById('done-banner').classList.remove('on');
+  const cb=document.getElementById('check-btn');
+  cb.disabled=false;
+  document.getElementById('check-txt').textContent=t('checkBtn');
+}
+
+function toggleHint(){
+  S.hintOn=!S.hintOn;
+  document.getElementById('hint-box').classList.toggle('on',S.hintOn);
+}
+
+// ─────────────────────────── CHECK ANSWER ───────────────────────────
+async function checkAnswer(){
+  const ans=document.getElementById('ans-ta').value.trim();
+  if(!ans){ document.getElementById('ans-ta').focus(); return; }
+
+  const btn=document.getElementById('check-btn');
+  btn.disabled=true;
+  document.getElementById('check-txt').innerHTML='<span class="dots"><span></span><span></span><span></span></span>';
+
+  const l=S.lang, key=S.topic, idx=S.exIdx;
+  const ex=TOPICS[key].exercises[idx];
+
+  if(!S.apiKey){
+    showFeedback(t('keyErr'),false);
+    btn.disabled=false;
+    document.getElementById('check-txt').textContent=t('checkBtn');
+    return;
+  }
+
+  const taskClean=ex[l].task.replace(/<[^>]*>/g,'');
+  const sys=l==='ru'
+    ?`Ты — дружелюбный IT-наставник для начинающих. Ученик выполняет упражнение "${ex[l].title}".
+Задание: "${taskClean}"
+Проверь ответ. Напиши 4–6 предложений на русском:
+1. Правильно ли выполнено (да/нет/частично)
+2. Что сделано верно
+3. Если есть ошибки — объясни просто
+4. Подбадривание`
+    :`You are a friendly IT mentor for beginners. The student is solving "${ex[l].title}".
+Task: "${taskClean}"
+Check the answer. Write 4–6 sentences in English:
+1. Whether correct (yes/no/partially)
+2. What is done right
+3. If errors — explain simply
+4. Encouragement`;
+
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'x-api-key':S.apiKey,
+        'anthropic-version':'2023-06-01',
+        'anthropic-dangerous-direct-browser-access':'true'
+      },
+      body:JSON.stringify({
+        model:'claude-3-5-haiku-20241022',
+        max_tokens:500,
+        system:sys,
+        messages:[{role:'user',content:(l==='ru'?'Ответ ученика: ':'Student answer: ')+ans}]
+      })
+    });
+    const data=await res.json();
+    if(data.content&&data.content[0]){
+      const fb=data.content[0].text;
+      const ok=/правильно|верно|отлично|молодец|correct|right|great|well done|perfect|good job/i.test(fb);
+      showFeedback(fb,ok);
+      if(ok) markDone(ex.id);
+    } else { showFeedback(t('netErr'),false); }
+  }catch(e){ showFeedback(t('netErr'),false); }
+
+  btn.disabled=false;
+  document.getElementById('check-txt').textContent=t('checkBtn');
+}
+
+function showFeedback(text,ok){
+  const card=document.getElementById('fb-card');
+  const chip=document.getElementById('fb-chip');
+  card.style.display='block';
+  card.className='fb-card'+(ok?' ok':'');
+  chip.textContent=t('fbLbl');
+  chip.className='chip '+(ok?'chip-ok':'chip-err');
+  document.getElementById('fb-text').textContent=text;
+
+  const acts=document.getElementById('fb-acts');
+  acts.innerHTML='';
+  const key=S.topic, idx=S.exIdx, tp=TOPICS[key];
+  const hasNext=idx<tp.exercises.length-1;
+
+  if(ok&&hasNext){
+    const nb=document.createElement('button');
+    nb.className='btn btn-p';
+    nb.textContent=t('next');
+    nb.onclick=()=>goEx(key,idx+1);
+    acts.appendChild(nb);
+  }
+  if(!ok){
+    const rb=document.createElement('button');
+    rb.className='btn btn-o';
+    rb.textContent=t('retry');
+    rb.onclick=()=>{ card.style.display='none'; document.getElementById('ans-ta').focus(); };
+    acts.appendChild(rb);
+  }
+  if(ok&&tp.exercises.every(e=>isDone(e.id))){
+    const db=document.getElementById('done-banner');
+    db.classList.add('on');
+    document.getElementById('done-title').textContent=t('doneTitle');
+    document.getElementById('done-sub').textContent=t('doneSub');
+    document.getElementById('done-home').textContent=t('home');
+  }
+}
+
+// ─────────────────────────── SETTINGS ───────────────────────────
+function openSettings(){
+  document.getElementById('m-title').textContent=t('mTitle');
+  document.getElementById('m-desc').textContent=t('mDesc');
+  document.getElementById('m-lbl').textContent=t('mLbl');
+  document.getElementById('m-cancel').textContent=t('mCancel');
+  document.getElementById('m-save').textContent=t('mSave');
+  document.getElementById('api-input').value=S.apiKey;
+  document.getElementById('modal-settings').classList.add('on');
+}
+function closeSettings(){ document.getElementById('modal-settings').classList.remove('on'); }
+function saveSettings(){
+  S.apiKey=document.getElementById('api-input').value.trim();
+  localStorage.setItem('cp_apikey',S.apiKey);
+  closeSettings();
+  if(S.view==='exercise'){
+    const w=document.getElementById('api-warn');
+    S.apiKey?w.classList.remove('on'):w.classList.add('on');
+  }
+}
+
+// ─────────────────────────── LANG ───────────────────────────
+function setLang(l){
+  S.lang=l;
+  localStorage.setItem('cp_lang',l);
+  document.getElementById('btn-ru').classList.toggle('on',l==='ru');
+  document.getElementById('btn-en').classList.toggle('on',l==='en');
+  if(S.view==='home') renderHome();
+  else if(S.view==='topic') renderTopic(S.topic);
+  else if(S.view==='exercise') renderEx();
+}
+
+// ─────────────────────────── INIT ───────────────────────────
+setLang(S.lang);
+renderHome();
+</script>
+</body>
+</html>
