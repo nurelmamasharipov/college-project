@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IT Start Lab</title>
+    <meta
+      name="description"
+      content="Интерактивный тренажёр по IT для начинающих: HTML, CSS, JavaScript, Python, Java и основы программирования."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="data.js" defer></script>
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <div class="page-backdrop" aria-hidden="true">
+      <div class="backdrop-orb backdrop-orb--teal"></div>
+      <div class="backdrop-orb backdrop-orb--orange"></div>
+      <div class="backdrop-grid"></div>
+    </div>
+
+    <header class="site-header container">
+      <a class="brand" href="index.html" aria-label="IT Start Lab">
+        <span class="brand__mark">&lt;/&gt;</span>
+        <span class="brand__copy">
+          <strong id="brandTitle"></strong>
+          <small id="brandSubtitle"></small>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <div class="lang-switch" aria-label="Language switch">
+          <button type="button" data-lang-option="ru">RU</button>
+          <button type="button" data-lang-option="en">EN</button>
+        </div>
+        <button class="ghost-button" id="resetProgressBtn" type="button"></button>
+      </div>
+    </header>
+
+    <main class="container page-layout">
+      <section class="hero panel">
+        <div class="hero__content">
+          <p class="eyebrow" id="heroKicker"></p>
+          <h1 id="heroTitle"></h1>
+          <p class="hero__lead" id="heroLead"></p>
+
+          <div class="hero__actions">
+            <button class="primary-button" id="continueBtn" type="button"></button>
+            <button class="secondary-button" id="randomLessonBtn" type="button"></button>
+          </div>
+        </div>
+
+        <div class="hero__stats">
+          <article class="stat-card">
+            <strong id="topicsCount">0</strong>
+            <span id="topicsStatLabel"></span>
+          </article>
+          <article class="stat-card">
+            <strong id="lessonsCount">0</strong>
+            <span id="lessonsStatLabel"></span>
+          </article>
+          <article class="stat-card">
+            <strong id="completedCount">0</strong>
+            <span id="completedStatLabel"></span>
+          </article>
+        </div>
+      </section>
+
+      <section class="dashboard">
+        <aside class="sidebar">
+          <section class="panel sidebar-card">
+            <div class="section-head">
+              <p class="eyebrow" id="topicsKicker"></p>
+              <h2 id="topicsTitle"></h2>
+              <p class="section-copy" id="topicsLead"></p>
+            </div>
+            <div id="topicCards" class="topic-stack"></div>
+          </section>
+
+          <section class="panel sidebar-card progress-card">
+            <div class="section-head">
+              <p class="eyebrow" id="progressKicker"></p>
+              <h2 id="progressTitle"></h2>
+              <p class="section-copy" id="progressLead"></p>
+            </div>
+
+            <div class="overall-progress">
+              <div class="overall-progress__ring" id="overallProgressRing">
+                <span id="overallProgressValue">0%</span>
+              </div>
+              <div class="overall-progress__copy">
+                <strong id="overallProgressTitle"></strong>
+                <p id="overallProgressText"></p>
+                <span class="saved-pill" id="savedPill"></span>
+              </div>
+            </div>
+
+            <div id="topicProgressList" class="topic-progress-list"></div>
+          </section>
+        </aside>
+
+        <section class="workspace">
+          <section class="panel lesson-card">
+            <div class="lesson-card__top">
+              <div>
+                <p class="eyebrow" id="lessonKicker"></p>
+                <div class="active-path" id="activePath"></div>
+                <h2 id="lessonTitle"></h2>
+                <p class="lesson-meta" id="lessonMeta"></p>
+              </div>
+
+              <div class="lesson-nav">
+                <button class="small-button" id="prevLessonBtn" type="button"></button>
+                <button class="small-button" id="nextLessonBtn" type="button"></button>
+              </div>
+            </div>
+
+            <div class="lesson-grid">
+              <article class="mini-lesson">
+                <div class="mini-lesson__head">
+                  <h3 id="miniLessonTitle"></h3>
+                  <span class="type-badge" id="lessonTypeBadge"></span>
+                </div>
+                <p id="lessonSummary"></p>
+                <ul id="lessonPoints" class="lesson-points"></ul>
+                <div class="tag-list" id="lessonTags"></div>
+              </article>
+
+              <article class="practice-card">
+                <div class="practice-card__head">
+                  <h3 id="practiceTitle"></h3>
+                  <span class="practice-status" id="practiceStatus"></span>
+                </div>
+
+                <p id="lessonTask" class="task-copy"></p>
+                <div id="starterNote" class="starter-note"></div>
+
+                <label class="editor-label" for="answerEditor">
+                  <span id="editorLabel"></span>
+                </label>
+                <textarea id="answerEditor" spellcheck="false"></textarea>
+
+                <div class="editor-actions">
+                  <button class="secondary-button" id="runPreviewBtn" type="button"></button>
+                  <button class="primary-button" id="checkAnswerBtn" type="button"></button>
+                  <button class="ghost-button" id="resetLessonBtn" type="button"></button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <div class="workspace-grid">
+            <section class="panel preview-card">
+              <div class="panel-head">
+                <h3 id="previewTitle"></h3>
+                <span class="panel-status" id="previewStatus"></span>
+              </div>
+
+              <p id="previewEmpty" class="empty-note"></p>
+              <div id="previewWrap" class="preview-wrap">
+                <iframe
+                  id="previewFrame"
+                  title="Lesson preview"
+                  sandbox="allow-scripts"
+                ></iframe>
+              </div>
+            </section>
+
+            <section class="panel feedback-card">
+              <div class="panel-head">
+                <h3 id="aiTitle"></h3>
+                <span class="panel-status" id="lastCheckLabel"></span>
+              </div>
+
+              <p id="feedbackEmpty" class="empty-note"></p>
+
+              <div id="feedbackContent" class="feedback-content" hidden>
+                <div class="feedback-summary">
+                  <div class="score-badge" id="scoreBadge">
+                    <span id="scoreValue">0%</span>
+                  </div>
+                  <div class="feedback-summary__copy">
+                    <span class="feedback-state" id="feedbackState"></span>
+                    <h3 id="feedbackHeadline"></h3>
+                    <p id="feedbackSummary"></p>
+                  </div>
+                </div>
+
+                <div class="feedback-block">
+                  <h4 id="checklistTitle"></h4>
+                  <div id="feedbackChecklist" class="feedback-list"></div>
+                </div>
+
+                <div class="feedback-block">
+                  <h4 id="tipsTitle"></h4>
+                  <div id="feedbackTips" class="feedback-list"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <p id="footerNote"></p>
+    </footer>
+  </body>
+</html>
