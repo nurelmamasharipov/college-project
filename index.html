@@ -1,981 +1,3766 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CodePath — IT Тренажёр</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg:   #07090f;
-      --bg2:  #0d1220;
-      --bg3:  #131b2e;
-      --bg4:  #1a2540;
-      --bdr:  rgba(255,255,255,0.06);
-      --bdr2: rgba(255,255,255,0.13);
-      --txt:  #dde4f0;
-      --txt2: #6b7fa0;
-      --txt3: #3d5070;
-      --acc:  #4f8ef7;
-      --acc-g:rgba(79,142,247,0.13);
-      --c-html:#f06240;
-      --c-css: #29a8e0;
-      --c-js:  #f0d840;
-      --c-prog:#9f73f8;
-      --ok:   #3ecf8e;
-      --err:  #f87171;
-      --warn: #fbbf24;
-      --r: 13px;
-      --font: 'Syne', sans-serif;
-      --mono: 'JetBrains Mono', monospace;
-    }
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    html{scroll-behavior:smooth}
-    body{font-family:var(--font);background:var(--bg);color:var(--txt);min-height:100vh;line-height:1.6;overflow-x:hidden}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IT Start Lab</title>
+    <meta
+      name="description"
+      content="–Ш–љ—В–µ—А–∞–Ї—В–Є–≤–љ—Л–є —В—А–µ–љ–∞–ґ—С—А –њ–Њ IT –і–ї—П –љ–∞—З–Є–љ–∞—О—Й–Є—Е: HTML, CSS, JavaScript, Python, Java –Є –Њ—Б–љ–Њ–≤—Л –њ—А–Њ–≥—А–∞–Љ–Љ–Є—А–Њ–≤–∞–љ–Є—П."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+:root {
+  --bg: #f4efe8;
+  --bg-soft: #fbf7f1;
+  --surface: rgba(255, 251, 245, 0.88);
+  --surface-strong: rgba(255, 255, 255, 0.95);
+  --surface-muted: rgba(245, 239, 231, 0.96);
+  --text: #182235;
+  --muted: #5f6e82;
+  --line: rgba(24, 34, 53, 0.12);
+  --line-strong: rgba(24, 34, 53, 0.18);
+  --primary: #0f766e;
+  --primary-strong: #115e59;
+  --secondary: #2563eb;
+  --accent: #ea580c;
+  --success: #1f9254;
+  --warning: #b45309;
+  --danger: #c2410c;
+  --shadow: 0 28px 80px rgba(24, 34, 53, 0.12);
+  --radius-xl: 30px;
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --radius-sm: 14px;
+  --container: 1240px;
+  --transition: 180ms ease;
+}
 
-    /* background grid */
-    body::before{content:'';position:fixed;inset:0;
-      background-image:linear-gradient(rgba(79,142,247,.04) 1px,transparent 1px),
-                       linear-gradient(90deg,rgba(79,142,247,.04) 1px,transparent 1px);
-      background-size:44px 44px;pointer-events:none;z-index:0}
+* {
+  box-sizing: border-box;
+}
 
-    /* glow orbs */
-    body::after{content:'';position:fixed;width:700px;height:700px;
-      background:radial-gradient(circle,rgba(79,142,247,.07) 0%,transparent 70%);
-      top:-200px;right:-150px;pointer-events:none;z-index:0}
+html {
+  scroll-behavior: smooth;
+}
 
-    #root{position:relative;z-index:1;min-height:100vh}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Manrope", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(15, 118, 110, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(234, 88, 12, 0.18), transparent 24%),
+    linear-gradient(180deg, #f7f3ee 0%, var(--bg) 55%, #efe7dd 100%);
+}
 
-    /* ── HEADER ── */
-    header{
-      position:sticky;top:0;z-index:100;
-      background:rgba(7,9,15,.88);backdrop-filter:blur(20px);
-      border-bottom:1px solid var(--bdr);
-      padding:0 24px;height:62px;
-      display:flex;align-items:center;justify-content:space-between}
+button,
+textarea {
+  font: inherit;
+}
 
-    .logo{display:flex;align-items:center;gap:10px;cursor:pointer;text-decoration:none;color:inherit}
-    .logo-mark{
-      width:36px;height:36px;border-radius:8px;
-      background:linear-gradient(135deg,var(--acc),#7c3aed);
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;letter-spacing:-1px}
-    .logo-name{font-size:18px;font-weight:800;letter-spacing:-.5px}
-    .logo-name b{color:var(--acc);font-weight:800}
+button {
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
 
-    .hdr-right{display:flex;align-items:center;gap:10px}
-    .lang-sw{display:flex;background:var(--bg3);border:1px solid var(--bdr2);border-radius:8px;overflow:hidden}
-    .lang-sw button{
-      padding:6px 12px;font-family:var(--font);font-size:12px;font-weight:700;
-      border:none;background:transparent;color:var(--txt2);cursor:pointer;transition:all .2s}
-    .lang-sw button.on{background:var(--acc);color:#fff}
-    .icon-btn{
-      width:38px;height:38px;border:1px solid var(--bdr2);background:var(--bg3);border-radius:8px;
-      color:var(--txt2);cursor:pointer;display:flex;align-items:center;justify-content:center;
-      font-size:15px;transition:all .2s}
-    .icon-btn:hover{border-color:var(--acc);color:var(--acc);background:var(--acc-g)}
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
 
-    /* ── VIEWS ── */
-    .view{display:none;animation:fadeUp .25s ease}
-    .view.on{display:block}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    /* ── HOME ── */
-    .hero{max-width:860px;margin:0 auto;padding:64px 24px 40px;text-align:center}
-    .hero-badge{
-      display:inline-flex;align-items:center;gap:6px;
-      background:var(--acc-g);border:1px solid rgba(79,142,247,.3);
-      color:var(--acc);padding:5px 14px;border-radius:100px;
-      font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
-    .hero h1{font-size:clamp(30px,5vw,50px);font-weight:800;letter-spacing:-1.5px;line-height:1.1;margin-bottom:14px}
-    .hero h1 .hl{background:linear-gradient(90deg,var(--acc),#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .hero p{font-size:15px;color:var(--txt2);max-width:460px;margin:0 auto 36px}
+img,
+iframe {
+  max-width: 100%;
+}
 
-    .overall{
-      background:var(--bg3);border:1px solid var(--bdr);border-radius:12px;
-      padding:14px 18px;max-width:380px;margin:0 auto 56px;text-align:left}
-    .overall-top{display:flex;justify-content:space-between;font-size:12px;color:var(--txt2);margin-bottom:8px}
-    .overall-top strong{color:var(--txt);font-weight:600}
-    .pbar{height:6px;background:var(--bg4);border-radius:99px;overflow:hidden}
-    .pbar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--acc),#a78bfa);transition:width .5s ease}
+[hidden] {
+  display: none !important;
+}
 
-    .sec-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--txt3);margin-bottom:18px}
-    .topics-wrap{max-width:940px;margin:0 auto;padding:0 24px 80px}
-    .topics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px}
+.page-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
 
-    .tc{
-      background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-      padding:22px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden}
-    .tc::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;
-      background:var(--tc);opacity:0;transition:opacity .2s}
-    .tc:hover{border-color:var(--bdr2);transform:translateY(-2px)}
-    .tc:hover::after{opacity:1}
+.backdrop-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(20px);
+  opacity: 0.78;
+}
 
-    .tc-icon{
-      width:42px;height:42px;border-radius:9px;
-      background:color-mix(in srgb,var(--tc) 14%,transparent);
-      border:1px solid color-mix(in srgb,var(--tc) 28%,transparent);
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--mono);font-size:12px;font-weight:600;
-      color:var(--tc);margin-bottom:14px;letter-spacing:-1px}
-    .tc-title{font-size:16px;font-weight:700;margin-bottom:5px;letter-spacing:-.3px}
-    .tc-desc{font-size:12.5px;color:var(--txt2);line-height:1.5;margin-bottom:18px}
-    .tc-pbar{height:3px;background:var(--bg4);border-radius:99px;margin:0 0 14px;overflow:hidden}
-    .tc-pbar-fill{height:100%;border-radius:99px;background:var(--tc);transition:width .5s}
-    .tc-foot{display:flex;align-items:center;justify-content:space-between}
-    .tc-cnt{font-size:12px;color:var(--txt2)}
-    .tc-cnt strong{color:var(--tc)}
+.backdrop-orb--teal {
+  width: 380px;
+  height: 380px;
+  left: -120px;
+  top: -70px;
+  background: rgba(15, 118, 110, 0.18);
+}
 
-    /* ── BUTTONS ── */
-    .btn{padding:8px 16px;border-radius:8px;font-family:var(--font);font-size:13px;font-weight:600;
-         cursor:pointer;transition:all .2s;border:none;display:inline-flex;align-items:center;gap:6px}
-    .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;filter:none!important}
-    .btn-p{background:var(--acc);color:#fff}
-    .btn-p:hover:not(:disabled){opacity:.85;transform:translateY(-1px)}
-    .btn-o{background:transparent;border:1px solid var(--bdr2);color:var(--txt)}
-    .btn-o:hover:not(:disabled){border-color:var(--acc);color:var(--acc)}
-    .btn-ok{background:var(--ok);color:#021a0d}
-    .btn-ok:hover:not(:disabled){opacity:.85}
-    .btn-s{padding:6px 12px;font-size:12px}
+.backdrop-orb--orange {
+  width: 320px;
+  height: 320px;
+  right: -70px;
+  top: 140px;
+  background: rgba(234, 88, 12, 0.16);
+}
 
-    /* ── TOPIC VIEW ── */
-    .inner{max-width:920px;margin:0 auto;padding:30px 24px 80px}
-    .back-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--txt2);
-               cursor:pointer;margin-bottom:28px;transition:color .2s}
-    .back-link:hover{color:var(--acc)}
+.backdrop-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(24, 34, 53, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(24, 34, 53, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.45), transparent 86%);
+}
 
-    .tv-head{display:flex;align-items:flex-start;gap:18px;margin-bottom:36px}
-    .tv-icon{
-      width:52px;height:52px;border-radius:11px;flex-shrink:0;
-      display:flex;align-items:center;justify-content:center;
-      font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:-1px}
-    .tv-meta h2{font-size:24px;font-weight:800;letter-spacing:-.4px;margin-bottom:4px}
-    .tv-meta p{font-size:13px;color:var(--txt2)}
+.container {
+  width: min(var(--container), calc(100% - 32px));
+  margin: 0 auto;
+}
 
-    .ex-list{display:flex;flex-direction:column;gap:10px}
-    .ex-row{
-      background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-      padding:16px 18px;display:flex;align-items:center;gap:14px;
-      cursor:pointer;transition:all .2s}
-    .ex-row:hover{border-color:var(--bdr2);background:var(--bg3)}
-    .ex-row.done{border-color:rgba(62,207,142,.2)}
-    .ex-num{
-      width:34px;height:34px;border-radius:8px;flex-shrink:0;
-      display:flex;align-items:center;justify-content:center;
-      font-size:12px;font-weight:700;font-family:var(--mono);
-      background:var(--bg4);color:var(--txt2)}
-    .ex-row.done .ex-num{background:rgba(62,207,142,.15);color:var(--ok)}
-    .ex-info{flex:1}
-    .ex-ttl{font-size:14px;font-weight:600;margin-bottom:1px}
-    .ex-st{font-size:11.5px;color:var(--txt2)}
-    .ex-row.done .ex-st{color:var(--ok)}
-    .ex-arr{color:var(--txt3);font-size:18px;line-height:1}
+.panel {
+  background: var(--surface);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: var(--shadow);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(16px);
+}
 
-    /* ── EXERCISE VIEW ── */
-    .ev-wrap{max-width:760px;margin:0 auto;padding:28px 24px 80px}
-    .ev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-    .ev-ctr{font-size:11px;color:var(--txt2);background:var(--bg3);
-            padding:4px 12px;border-radius:99px;border:1px solid var(--bdr)}
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 0 12px;
+}
 
-    .card{background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);padding:26px;margin-bottom:16px}
-    .card.task-card{background:linear-gradient(135deg,var(--bg2),rgba(79,142,247,.04));border-color:rgba(79,142,247,.2)}
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
 
-    .chip{
-      display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:1.5px;
-      text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:12px}
-    .chip-t{background:rgba(79,142,247,.15);color:var(--acc)}
-    .chip-task{background:rgba(159,115,248,.15);color:#a78bfa}
-    .chip-ok{background:rgba(62,207,142,.15);color:var(--ok)}
-    .chip-err{background:rgba(248,113,113,.15);color:var(--err)}
+.brand__mark {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  box-shadow: 0 18px 35px rgba(15, 118, 110, 0.22);
+}
 
-    .card h3{font-size:17px;font-weight:700;letter-spacing:-.3px;margin-bottom:12px}
-    .theory-body{font-size:13.5px;color:var(--txt2);line-height:1.85}
-    .theory-body code{
-      font-family:var(--mono);font-size:12px;background:var(--bg4);
-      padding:2px 6px;border-radius:4px;color:var(--acc)}
-    .theory-body strong{color:var(--txt);font-weight:600}
+.brand__copy strong,
+.brand__copy small {
+  display: block;
+}
 
-    .task-body{font-size:14.5px;line-height:1.7}
-    .task-body code{font-family:var(--mono);font-size:12.5px;background:var(--bg4);padding:2px 6px;border-radius:4px;color:#a78bfa}
-    .task-body strong{font-weight:700}
+.brand__copy strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+}
 
-    .ans-lbl{display:flex;align-items:center;justify-content:space-between;
-             font-size:12px;font-weight:600;color:var(--txt2);margin-bottom:8px}
-    .ans-ta{
-      width:100%;min-height:90px;background:var(--bg2);border:1px solid var(--bdr2);
-      border-radius:10px;padding:13px 15px;font-family:var(--mono);font-size:13px;
-      color:var(--txt);resize:vertical;outline:none;transition:border-color .2s,box-shadow .2s;line-height:1.6}
-    .ans-ta:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-g)}
-    .ans-ta::placeholder{color:var(--txt3)}
+.brand__copy small {
+  margin-top: 4px;
+  color: var(--muted);
+}
 
-    .hint-box{
-      background:var(--bg4);border:1px solid rgba(240,216,64,.2);border-radius:8px;
-      padding:9px 13px;font-size:13px;color:#f0d840;font-family:var(--mono);
-      margin-top:8px;display:none;animation:fadeUp .2s ease}
-    .hint-box.on{display:block}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
-    .api-warn{
-      background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.22);
-      border-radius:8px;padding:9px 13px;font-size:12.5px;color:var(--warn);
-      margin-bottom:12px;display:none;align-items:center;gap:6px}
-    .api-warn.on{display:flex}
-    .api-warn button{background:none;border:none;color:var(--warn);text-decoration:underline;
-                     cursor:pointer;font-size:12.5px;font-family:var(--font);padding:0}
+.lang-switch {
+  display: inline-flex;
+  padding: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid var(--line);
+}
 
-    .ans-actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.lang-switch button {
+  min-width: 52px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--muted);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  transition: background var(--transition), color var(--transition), transform var(--transition);
+}
 
-    .fb-card{
-      background:var(--bg2);border:1px solid var(--bdr);border-radius:var(--r);
-      padding:22px;margin-top:16px;display:none;animation:fadeUp .3s ease}
-    .fb-card.ok{border-color:rgba(62,207,142,.25)}
-    .fb-text{font-size:13.5px;line-height:1.85;color:var(--txt2);white-space:pre-wrap}
-    .fb-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+.lang-switch button.is-active {
+  color: white;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+}
 
-    .done-banner{
-      background:linear-gradient(135deg,rgba(62,207,142,.08),rgba(79,142,247,.06));
-      border:1px solid rgba(62,207,142,.22);border-radius:var(--r);
-      padding:28px;text-align:center;margin-top:20px;display:none;animation:fadeUp .4s ease}
-    .done-banner.on{display:block}
-    .done-banner h3{font-size:20px;margin-bottom:6px}
-    .done-banner p{color:var(--txt2);font-size:13.5px}
+.ghost-button,
+.small-button,
+.secondary-button,
+.primary-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 18px;
+  border-radius: 16px;
+  font-weight: 800;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+}
 
-    /* loading dots */
-    .dots{display:inline-flex;gap:4px;align-items:center}
-    .dots span{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:dot 1.2s infinite ease-in-out}
-    .dots span:nth-child(1){animation-delay:0s}
-    .dots span:nth-child(2){animation-delay:.2s}
-    .dots span:nth-child(3){animation-delay:.4s}
-    @keyframes dot{0%,80%,100%{transform:scale(.5);opacity:.3}40%{transform:scale(1);opacity:1}}
+.primary-button {
+  color: white;
+  background: linear-gradient(135deg, var(--primary), #138178);
+  box-shadow: 0 18px 36px rgba(15, 118, 110, 0.22);
+}
 
-    /* ── MODAL ── */
-    .modal-ov{
-      position:fixed;inset:0;background:rgba(0,0,0,.65);backdrop-filter:blur(5px);
-      z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
-    .modal-ov.on{display:flex;animation:fadeUp .2s ease}
-    .modal{
-      background:var(--bg2);border:1px solid var(--bdr2);border-radius:16px;
-      padding:30px;width:100%;max-width:400px}
-    .modal h3{font-size:18px;font-weight:700;margin-bottom:6px}
-    .modal p{font-size:13px;color:var(--txt2);margin-bottom:20px;line-height:1.6}
-    .flbl{font-size:11px;font-weight:700;color:var(--txt2);display:block;margin-bottom:6px;letter-spacing:.5px}
-    .finp{
-      width:100%;background:var(--bg3);border:1px solid var(--bdr2);border-radius:8px;
-      padding:10px 13px;font-family:var(--mono);font-size:13px;color:var(--txt);outline:none;transition:border-color .2s}
-    .finp:focus{border-color:var(--acc)}
-    .modal-act{display:flex;gap:10px;justify-content:flex-end;margin-top:18px}
+.secondary-button {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.84);
+  border: 1px solid var(--line);
+}
 
-    ::-webkit-scrollbar{width:5px}
-    ::-webkit-scrollbar-track{background:var(--bg)}
-    ::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:99px}
+.ghost-button,
+.small-button {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.62);
+  border: 1px solid var(--line);
+}
 
-    @media(max-width:600px){
-      .topics-grid{grid-template-columns:1fr}
-      .hero h1{font-size:26px}
-      .inner,.ev-wrap{padding:18px 14px 60px}
-    }
-  </style>
-</head>
-<body>
-<div id="root">
+.primary-button:hover,
+.secondary-button:hover,
+.ghost-button:hover,
+.small-button:hover {
+  transform: translateY(-1px);
+}
 
-<!-- ── HEADER ── -->
-<header>
-  <div class="logo" onclick="goHome()">
-    <div class="logo-mark">&lt;/&gt;</div>
-    <div class="logo-name">Code<b>Path</b></div>
-  </div>
-  <div class="hdr-right">
-    <div class="lang-sw">
-      <button id="btn-ru" class="on" onclick="setLang('ru')">РУС</button>
-      <button id="btn-en" onclick="setLang('en')">ENG</button>
-    </div>
-    <button class="icon-btn" onclick="openSettings()" title="API">⚙</button>
-  </div>
-</header>
+.page-layout {
+  padding-bottom: 32px;
+}
 
-<!-- ── HOME ── -->
-<div class="view on" id="view-home">
-  <div class="hero">
-    <div class="hero-badge" id="h-badge">🎓 IT Тренажёр</div>
-    <h1 id="h-title">Учись программировать<br><span class="hl">шаг за шагом</span></h1>
-    <p id="h-sub">Теория, практика и AI-проверка — всё в одном месте. Выбери тему и начни прямо сейчас.</p>
-    <div class="overall">
-      <div class="overall-top"><strong id="h-prog-lbl">Общий прогресс</strong><span id="h-prog-cnt">0 / 12</span></div>
-      <div class="pbar"><div class="pbar-fill" id="h-prog-fill" style="width:0%"></div></div>
-    </div>
-  </div>
-  <div class="topics-wrap">
-    <div class="sec-label" id="h-sec-lbl">ТЕМЫ</div>
-    <div class="topics-grid" id="topics-grid"></div>
-  </div>
-</div>
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr 0.8fr;
+  gap: 24px;
+  padding: 34px;
+  margin-top: 10px;
+  animation: rise 420ms ease;
+}
 
-<!-- ── TOPIC VIEW ── -->
-<div class="view" id="view-topic">
-  <div class="inner">
-    <div class="back-link" id="tv-back" onclick="goHome()">← <span id="tv-back-txt">Назад к темам</span></div>
-    <div class="tv-head">
-      <div class="tv-icon" id="tv-icon"></div>
-      <div class="tv-meta"><h2 id="tv-title"></h2><p id="tv-desc"></p></div>
-    </div>
-    <div class="sec-label" id="tv-sec-lbl">УПРАЖНЕНИЯ</div>
-    <div class="ex-list" id="ex-list"></div>
-  </div>
-</div>
+.hero__content h1 {
+  margin: 0;
+  max-width: 720px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.3rem, 4vw, 4.15rem);
+  line-height: 0.98;
+  letter-spacing: -0.06em;
+}
 
-<!-- ── EXERCISE VIEW ── -->
-<div class="view" id="view-exercise">
-  <div class="ev-wrap">
-    <div class="ev-top">
-      <div class="back-link" id="ev-back" style="margin-bottom:0"></div>
-      <div class="ev-ctr" id="ev-ctr"></div>
-    </div>
+.hero__lead {
+  max-width: 680px;
+  margin: 18px 0 0;
+  font-size: 1.06rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
 
-    <div class="card" id="theory-card">
-      <span class="chip chip-t" id="ev-theory-lbl">ТЕОРИЯ</span>
-      <h3 id="ev-title"></h3>
-      <div class="theory-body" id="ev-theory"></div>
-    </div>
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
 
-    <div class="card task-card">
-      <span class="chip chip-task" id="ev-task-lbl">ЗАДАНИЕ</span>
-      <div class="task-body" id="ev-task"></div>
-    </div>
+.hero__stats {
+  display: grid;
+  gap: 12px;
+}
 
-    <div class="api-warn" id="api-warn">
-      <span>⚠</span>
-      <span id="api-warn-txt"></span>
-    </div>
+.stat-card {
+  display: grid;
+  gap: 8px;
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(250, 246, 240, 0.88));
+  border: 1px solid rgba(24, 34, 53, 0.08);
+}
 
-    <div style="margin-bottom:14px">
-      <div class="ans-lbl">
-        <span id="ev-ans-lbl">Твой ответ</span>
-        <button class="btn btn-o btn-s" onclick="toggleHint()">💡 <span id="ev-hint-lbl">Подсказка</span></button>
-      </div>
-      <textarea class="ans-ta" id="ans-ta" rows="4"></textarea>
-      <div class="hint-box" id="hint-box"></div>
-    </div>
+.stat-card strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.3rem;
+  line-height: 1;
+}
 
-    <div class="ans-actions">
-      <button class="btn btn-p" id="check-btn" onclick="checkAnswer()">
-        <span id="check-txt">Проверить ответ</span>
-      </button>
-    </div>
+.stat-card span {
+  color: var(--muted);
+  font-weight: 700;
+}
 
-    <div class="fb-card" id="fb-card">
-      <span class="chip" id="fb-chip">РЕЗУЛЬТАТ</span>
-      <div class="fb-text" id="fb-text"></div>
-      <div class="fb-actions" id="fb-acts"></div>
-    </div>
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--accent);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
 
-    <div class="done-banner" id="done-banner">
-      <div style="font-size:38px;margin-bottom:10px">🎉</div>
-      <h3 id="done-title">Тема завершена!</h3>
-      <p id="done-sub">Ты выполнил все упражнения по этой теме</p>
-      <button class="btn btn-p" style="margin-top:14px" onclick="goHome()">← <span id="done-home">На главную</span></button>
-    </div>
-  </div>
-</div>
+.dashboard {
+  display: grid;
+  grid-template-columns: 360px minmax(0, 1fr);
+  gap: 20px;
+  margin-top: 20px;
+}
 
-</div><!-- #root -->
+.sidebar {
+  display: grid;
+  gap: 20px;
+  align-self: start;
+  position: sticky;
+  top: 16px;
+}
 
-<!-- ── MODAL ── -->
-<div class="modal-ov" id="modal-settings" onclick="if(event.target===this)closeSettings()">
-  <div class="modal">
-    <h3 id="m-title">Настройки API</h3>
-    <p id="m-desc">Ключ нужен для AI‑проверки ответов. Он хранится только в твоём браузере.</p>
-    <label class="flbl" id="m-lbl">Claude API ключ</label>
-    <input class="finp" type="password" id="api-input" placeholder="sk-ant-api03-...">
-    <div class="modal-act">
-      <button class="btn btn-o" onclick="closeSettings()" id="m-cancel">Отмена</button>
-      <button class="btn btn-p" onclick="saveSettings()" id="m-save">Сохранить</button>
-    </div>
-  </div>
-</div>
+.sidebar-card,
+.lesson-card,
+.preview-card,
+.feedback-card {
+  padding: 26px;
+}
 
-<script>
-// ─────────────────────────── STRINGS ───────────────────────────
-const STR = {
-  ru:{
-    badge:'🎓 IT Тренажёр',
-    title:'Учись программировать<br><span class="hl">шаг за шагом</span>',
-    sub:'Теория, практика и AI‑проверка — всё в одном месте. Выбери тему и начни прямо сейчас.',
-    progLbl:'Общий прогресс',topicsSec:'ТЕМЫ',exSec:'УПРАЖНЕНИЯ',
-    theoryLbl:'ТЕОРИЯ',taskLbl:'ЗАДАНИЕ',fbLbl:'РЕЗУЛЬТАТ',
-    ansLbl:'Твой ответ',hintLbl:'Подсказка',
-    checkBtn:'Проверить ответ',checking:'Проверяю...',
-    next:'→ Следующее',retry:'Попробовать снова',
-    back:'Назад к темам',home:'На главную',
-    start:'Начать',cont:'Продолжить',done:'✓ Завершено',
-    stDone:'✓ Выполнено',stPend:'Не выполнено',
-    warnPre:'Добавь API ключ в ',warnLink:'настройках',warnPost:' для AI‑проверки.',
-    doneTitle:'Тема завершена!',doneSub:'Ты выполнил все упражнения по этой теме',
-    mTitle:'Настройки API',
-    mDesc:'Ключ нужен для AI‑проверки ответов. Он хранится только в твоём браузере.',
-    mLbl:'Claude API ключ',mCancel:'Отмена',mSave:'Сохранить',
-    netErr:'⚠ Ошибка соединения. Проверь интернет и API ключ.',
-    keyErr:'⚠ API ключ не найден. Добавь его в настройках (⚙).',
-    of:'из',ph:'Напиши свой ответ здесь...'
-  },
-  en:{
-    badge:'🎓 IT Trainer',
-    title:'Learn to code<br><span class="hl">step by step</span>',
-    sub:'Theory, practice, and AI feedback — all in one place. Choose a topic and start now.',
-    progLbl:'Overall Progress',topicsSec:'TOPICS',exSec:'EXERCISES',
-    theoryLbl:'THEORY',taskLbl:'TASK',fbLbl:'RESULT',
-    ansLbl:'Your Answer',hintLbl:'Hint',
-    checkBtn:'Check Answer',checking:'Checking...',
-    next:'→ Next',retry:'Try Again',
-    back:'Back to Topics',home:'Home',
-    start:'Start',cont:'Continue',done:'✓ Done',
-    stDone:'✓ Completed',stPend:'Not completed',
-    warnPre:'Add an API key in ',warnLink:'settings',warnPost:' to enable AI checking.',
-    doneTitle:'Topic Completed!',doneSub:'You completed all exercises in this topic',
-    mTitle:'API Settings',
-    mDesc:'The key is used for AI answer checking. It is stored only in your browser.',
-    mLbl:'Claude API Key',mCancel:'Cancel',mSave:'Save',
-    netErr:'⚠ Connection error. Check your internet and API key.',
-    keyErr:'⚠ API key not found. Add it in settings (⚙).',
-    of:'of',ph:'Write your answer here...'
+.section-head h2,
+.lesson-card h2,
+.panel-head h3,
+.mini-lesson__head h3,
+.practice-card__head h3 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.section-copy {
+  margin: 12px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.topic-stack {
+  display: grid;
+  gap: 14px;
+}
+
+.topic-card {
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.74);
+  border: 1px solid transparent;
+  transition: border-color var(--transition), transform var(--transition), background var(--transition);
+}
+
+.topic-card.is-active {
+  border-color: var(--topic-accent);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(249, 245, 239, 0.9));
+  box-shadow: inset 4px 0 0 var(--topic-accent);
+}
+
+.topic-card__head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  text-align: left;
+}
+
+.topic-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(24, 34, 53, 0.08);
+  color: var(--topic-accent);
+  font-weight: 800;
+}
+
+.topic-card__copy strong,
+.topic-card__copy small {
+  display: block;
+}
+
+.topic-card__copy strong {
+  font-size: 1rem;
+}
+
+.topic-card__copy small {
+  margin-top: 4px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.topic-card__count {
+  min-width: 44px;
+  text-align: right;
+  font-weight: 800;
+  color: var(--topic-accent);
+}
+
+.topic-card__lessons {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.lesson-pill {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--line);
+  transition: transform var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.lesson-pill:hover {
+  transform: translateY(-1px);
+}
+
+.lesson-pill__number {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  background: rgba(24, 34, 53, 0.06);
+  font-size: 0.78rem;
+  font-weight: 800;
+  color: var(--muted);
+}
+
+.lesson-pill__text {
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.lesson-pill--done {
+  border-color: rgba(31, 146, 84, 0.2);
+  background: rgba(31, 146, 84, 0.08);
+}
+
+.lesson-pill--done .lesson-pill__number {
+  background: rgba(31, 146, 84, 0.14);
+  color: var(--success);
+}
+
+.lesson-pill--draft {
+  border-color: rgba(180, 83, 9, 0.18);
+  background: rgba(180, 83, 9, 0.07);
+}
+
+.lesson-pill--draft .lesson-pill__number {
+  background: rgba(180, 83, 9, 0.14);
+  color: var(--warning);
+}
+
+.lesson-pill.is-current {
+  border-color: var(--secondary);
+  box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+}
+
+.overall-progress {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(246, 241, 234, 0.9));
+  border: 1px solid var(--line);
+}
+
+.overall-progress__ring,
+.score-badge {
+  --progress: 0%;
+  --score: 0%;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, white 56%, transparent 57%),
+    conic-gradient(var(--primary) var(--progress), rgba(24, 34, 53, 0.12) 0);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.score-badge {
+  background:
+    radial-gradient(circle at center, white 56%, transparent 57%),
+    conic-gradient(var(--secondary) var(--score), rgba(24, 34, 53, 0.12) 0);
+}
+
+.overall-progress__copy strong {
+  display: block;
+  font-size: 1.08rem;
+}
+
+.overall-progress__copy p {
+  margin: 8px 0;
+  color: var(--muted);
+}
+
+.saved-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--primary);
+  font-size: 0.86rem;
+  font-weight: 800;
+}
+
+.topic-progress-list {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.topic-progress-row__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.topic-progress-row__top span {
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.topic-progress-row__bar {
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(24, 34, 53, 0.08);
+  overflow: hidden;
+}
+
+.topic-progress-row__bar span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.workspace {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.lesson-card__top,
+.panel-head,
+.practice-card__head,
+.mini-lesson__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.lesson-nav {
+  display: flex;
+  gap: 10px;
+}
+
+.active-path {
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.lesson-card__top h2 {
+  font-size: clamp(1.8rem, 2vw, 2.45rem);
+}
+
+.lesson-meta {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.lesson-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: 20px;
+  margin-top: 22px;
+}
+
+.mini-lesson,
+.practice-card {
+  padding: 22px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+}
+
+.type-badge,
+.practice-status,
+.panel-status,
+.feedback-state {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
+.type-badge {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--secondary);
+}
+
+.practice-status {
+  background: rgba(15, 118, 110, 0.1);
+  color: var(--primary);
+}
+
+.panel-status {
+  background: rgba(24, 34, 53, 0.08);
+  color: var(--muted);
+}
+
+.feedback-state {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--secondary);
+}
+
+.lesson-points {
+  margin: 18px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.lesson-points li + li {
+  margin-top: 8px;
+}
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.tag-list span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: rgba(24, 34, 53, 0.07);
+  color: var(--text);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.task-copy {
+  margin: 16px 0 0;
+  color: var(--text);
+  font-weight: 700;
+  line-height: 1.65;
+}
+
+.starter-note {
+  margin-top: 14px;
+  padding: 16px;
+  border-radius: 18px;
+  background: var(--surface-muted);
+  border: 1px solid rgba(24, 34, 53, 0.08);
+}
+
+.starter-note p,
+.starter-reference strong {
+  margin: 0;
+}
+
+.starter-reference {
+  display: grid;
+  gap: 10px;
+}
+
+.starter-reference + .starter-reference,
+.starter-note p + .starter-reference {
+  margin-top: 14px;
+}
+
+.starter-note pre {
+  margin: 0;
+  padding: 14px;
+  border-radius: 16px;
+  background: #142033;
+  color: #f3f7ff;
+  overflow-x: auto;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.editor-label {
+  display: block;
+  margin-top: 18px;
+  font-weight: 800;
+}
+
+#answerEditor {
+  width: 100%;
+  min-height: 280px;
+  margin-top: 10px;
+  padding: 18px;
+  resize: vertical;
+  border-radius: 18px;
+  border: 1px solid var(--line-strong);
+  background: #122033;
+  color: #f6f8fb;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.96rem;
+  line-height: 1.65;
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+#answerEditor:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+}
+
+.editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+}
+
+.empty-note {
+  margin: 18px 0 0;
+  padding: 18px;
+  border-radius: var(--radius-md);
+  background: rgba(24, 34, 53, 0.05);
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.preview-wrap {
+  margin-top: 18px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: white;
+}
+
+#previewFrame {
+  display: block;
+  width: 100%;
+  height: 360px;
+  border: 0;
+  background: white;
+}
+
+.feedback-content {
+  display: grid;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.feedback-summary {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(248, 244, 237, 0.92));
+  border: 1px solid var(--line);
+}
+
+.feedback-summary__copy h3 {
+  margin: 8px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.feedback-summary__copy p {
+  margin: 10px 0 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.feedback-block {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+}
+
+.feedback-block h4 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.feedback-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.feedback-item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.feedback-item__marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 54px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.feedback-item strong {
+  display: block;
+  line-height: 1.4;
+}
+
+.feedback-item p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.feedback-item--pass .feedback-item__marker {
+  background: rgba(31, 146, 84, 0.12);
+  color: var(--success);
+}
+
+.feedback-item--fail .feedback-item__marker {
+  background: rgba(194, 65, 12, 0.12);
+  color: var(--danger);
+}
+
+.feedback-item--tip .feedback-item__marker {
+  background: rgba(37, 99, 235, 0.12);
+  color: var(--secondary);
+}
+
+.site-footer {
+  padding: 8px 0 34px;
+}
+
+.site-footer p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
   }
-};
-
-// ─────────────────────────── DATA ───────────────────────────
-const TOPICS = {
-  html:{
-    icon:'</>',color:'#f06240',
-    ru:{title:'HTML основы',desc:'Разметка веб-страниц — теги, атрибуты, структура'},
-    en:{title:'HTML Basics',desc:'Web page markup — tags, attributes, structure'},
-    exercises:[
-      {id:'html-1',
-       ru:{title:'Первый тег',
-           theory:`<strong>HTML</strong> — язык разметки для создания веб-страниц.<br><br>
-Каждый элемент описывается <strong>тегом</strong>:<br>
-<code>&lt;тег&gt;содержимое&lt;/тег&gt;</code><br><br>
-Заголовки: <code>&lt;h1&gt;</code> — самый крупный, <code>&lt;h6&gt;</code> — самый мелкий.`,
-           task:'Напиши HTML-код заголовка первого уровня с текстом: <strong>Привет, мир!</strong>',
-           hint:'&lt;h1&gt;Привет, мир!&lt;/h1&gt;'},
-       en:{title:'First Tag',
-           theory:`<strong>HTML</strong> is the markup language for web pages.<br><br>
-Every element is described with a <strong>tag</strong>:<br>
-<code>&lt;tag&gt;content&lt;/tag&gt;</code><br><br>
-Headings: <code>&lt;h1&gt;</code> is largest, <code>&lt;h6&gt;</code> is smallest.`,
-           task:'Write HTML code for a first-level heading with text: <strong>Hello, World!</strong>',
-           hint:'&lt;h1&gt;Hello, World!&lt;/h1&gt;'}},
-      {id:'html-2',
-       ru:{title:'Ссылки',
-           theory:`Ссылки — тег <code>&lt;a&gt;</code> с атрибутом <code>href</code>:<br>
-<code>&lt;a href="https://example.com"&gt;текст&lt;/a&gt;</code><br><br>
-Открыть в новой вкладке: <code>target="_blank"</code>`,
-           task:'Создай ссылку на <strong>https://google.com</strong> с текстом <strong>Поиск</strong>',
-           hint:'&lt;a href="https://google.com"&gt;Поиск&lt;/a&gt;'},
-       en:{title:'Links',
-           theory:`Links use the <code>&lt;a&gt;</code> tag with an <code>href</code> attribute:<br>
-<code>&lt;a href="https://example.com"&gt;text&lt;/a&gt;</code><br><br>
-Open in a new tab: <code>target="_blank"</code>`,
-           task:'Create a link to <strong>https://google.com</strong> with text <strong>Search</strong>',
-           hint:'&lt;a href="https://google.com"&gt;Search&lt;/a&gt;'}},
-      {id:'html-3',
-       ru:{title:'Списки',
-           theory:`Два вида списков:<br>
-• <code>&lt;ul&gt;</code> — маркированный<br>
-• <code>&lt;ol&gt;</code> — нумерованный<br><br>
-Каждый пункт — <code>&lt;li&gt;</code>:<br>
-<code>&lt;ul&gt;&lt;li&gt;Пункт&lt;/li&gt;&lt;li&gt;Пункт&lt;/li&gt;&lt;/ul&gt;</code>`,
-           task:'Создай маркированный список с тремя любыми языками программирования',
-           hint:'&lt;ul&gt;&lt;li&gt;Python&lt;/li&gt;&lt;li&gt;JavaScript&lt;/li&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;/ul&gt;'},
-       en:{title:'Lists',
-           theory:`Two list types:<br>
-• <code>&lt;ul&gt;</code> — unordered (bulleted)<br>
-• <code>&lt;ol&gt;</code> — ordered (numbered)<br><br>
-Each item uses <code>&lt;li&gt;</code>:<br>
-<code>&lt;ul&gt;&lt;li&gt;Item&lt;/li&gt;&lt;li&gt;Item&lt;/li&gt;&lt;/ul&gt;</code>`,
-           task:'Create an unordered list with three programming languages',
-           hint:'&lt;ul&gt;&lt;li&gt;Python&lt;/li&gt;&lt;li&gt;JavaScript&lt;/li&gt;&lt;li&gt;HTML&lt;/li&gt;&lt;/ul&gt;'}}
-    ]
-  },
-  css:{
-    icon:'{}',color:'#29a8e0',
-    ru:{title:'CSS стили',desc:'Дизайн страниц — цвета, шрифты, отступы, flexbox'},
-    en:{title:'CSS Styles',desc:'Page design — colors, fonts, spacing, flexbox'},
-    exercises:[
-      {id:'css-1',
-       ru:{title:'Цвет текста',
-           theory:`<strong>CSS</strong> задаёт внешний вид HTML-элементов.<br><br>
-Синтаксис: <code>селектор { свойство: значение; }</code><br><br>
-Цвет текста — <code>color</code>:<br>
-<code>p { color: red; }</code><br><br>
-Цвет фона — <code>background-color</code>:<br>
-<code>body { background-color: #fff; }</code>`,
-           task:'Напиши CSS, чтобы все <code>&lt;h1&gt;</code> были синими (<code>blue</code>)',
-           hint:'h1 { color: blue; }'},
-       en:{title:'Text Color',
-           theory:`<strong>CSS</strong> defines how HTML elements look.<br><br>
-Syntax: <code>selector { property: value; }</code><br><br>
-Text color — <code>color</code>:<br>
-<code>p { color: red; }</code><br><br>
-Background — <code>background-color</code>:<br>
-<code>body { background-color: #fff; }</code>`,
-           task:'Write CSS to make all <code>&lt;h1&gt;</code> tags blue',
-           hint:'h1 { color: blue; }'}},
-      {id:'css-2',
-       ru:{title:'Отступы',
-           theory:`• <code>padding</code> — внутренний отступ<br>
-• <code>margin</code> — внешний отступ<br><br>
-<code>div { padding: 20px; }</code> — со всех сторон<br>
-<code>div { margin-bottom: 10px; }</code> — только снизу`,
-           task:'CSS для <code>.card</code>: внутренний отступ <code>20px</code>, внешний снизу <code>10px</code>',
-           hint:'.card { padding: 20px; margin-bottom: 10px; }'},
-       en:{title:'Spacing',
-           theory:`• <code>padding</code> — inner spacing<br>
-• <code>margin</code> — outer spacing<br><br>
-<code>div { padding: 20px; }</code> — all sides<br>
-<code>div { margin-bottom: 10px; }</code> — bottom only`,
-           task:'CSS for <code>.card</code>: <code>20px</code> padding and <code>10px</code> bottom margin',
-           hint:'.card { padding: 20px; margin-bottom: 10px; }'}},
-      {id:'css-3',
-       ru:{title:'Flexbox',
-           theory:`<code>display: flex</code> — включает flexbox.<br><br>
-<code>justify-content</code> — по горизонтали:<br>
-<code>center</code>, <code>flex-start</code>, <code>space-between</code><br><br>
-<code>align-items</code> — по вертикали:<br>
-<code>center</code>, <code>flex-start</code>, <code>flex-end</code>`,
-           task:'CSS для <code>.container</code>: flexbox, элементы по центру горизонтально и вертикально',
-           hint:'.container { display: flex; justify-content: center; align-items: center; }'},
-       en:{title:'Flexbox',
-           theory:`<code>display: flex</code> — enables flexbox.<br><br>
-<code>justify-content</code> — horizontal alignment:<br>
-<code>center</code>, <code>flex-start</code>, <code>space-between</code><br><br>
-<code>align-items</code> — vertical alignment:<br>
-<code>center</code>, <code>flex-start</code>, <code>flex-end</code>`,
-           task:'CSS for <code>.container</code>: flexbox, elements centered horizontally and vertically',
-           hint:'.container { display: flex; justify-content: center; align-items: center; }'}}
-    ]
-  },
-  js:{
-    icon:'JS',color:'#f0d840',
-    ru:{title:'JavaScript',desc:'Логика и интерактивность — переменные, функции, условия'},
-    en:{title:'JavaScript',desc:'Logic and interactivity — variables, functions, conditions'},
-    exercises:[
-      {id:'js-1',
-       ru:{title:'Переменные',
-           theory:`Три способа объявить переменную:<br><br>
-• <code>let</code> — можно переопределить<br>
-• <code>const</code> — нельзя переопределить<br>
-• <code>var</code> — устаревший, лучше не использовать<br><br>
-<code>let name = "Алибек";</code><br>
-<code>const pi = 3.14;</code>`,
-           task:'Объяви <code>let greeting</code> со значением <code>"Привет, мир!"</code>',
-           hint:'let greeting = "Привет, мир!";'},
-       en:{title:'Variables',
-           theory:`Three ways to declare a variable:<br><br>
-• <code>let</code> — can be reassigned<br>
-• <code>const</code> — cannot be reassigned<br>
-• <code>var</code> — old, avoid if possible<br><br>
-<code>let name = "Alex";</code><br>
-<code>const pi = 3.14;</code>`,
-           task:'Declare <code>let greeting</code> with value <code>"Hello, World!"</code>',
-           hint:'let greeting = "Hello, World!";'}},
-      {id:'js-2',
-       ru:{title:'Функции',
-           theory:`Функция — блок кода с именем:<br><br>
-<code>function name(a, b) {<br>
-&nbsp;&nbsp;return a + b;<br>
-}</code><br><br>
-Вызов: <code>name(2, 3)</code> → <code>5</code>`,
-           task:'Напиши функцию <code>multiply(a, b)</code>, возвращающую произведение двух чисел',
-           hint:'function multiply(a, b) { return a * b; }'},
-       en:{title:'Functions',
-           theory:`A function is a named block of code:<br><br>
-<code>function name(a, b) {<br>
-&nbsp;&nbsp;return a + b;<br>
-}</code><br><br>
-Call: <code>name(2, 3)</code> → <code>5</code>`,
-           task:'Write a function <code>multiply(a, b)</code> that returns the product of two numbers',
-           hint:'function multiply(a, b) { return a * b; }'}},
-      {id:'js-3',
-       ru:{title:'Условие if/else',
-           theory:`<code>if</code> — выполняет код при условии:<br><br>
-<code>if (условие) {<br>
-&nbsp;&nbsp;// если true<br>
-} else {<br>
-&nbsp;&nbsp;// если false<br>
-}</code><br><br>
-<code>===</code> равно · <code>!==</code> не равно<br>
-<code>&gt;</code> больше · <code>&lt;</code> меньше`,
-           task:'Напиши функцию <code>isAdult(age)</code>: возвращает <code>true</code> если >= 18, иначе <code>false</code>',
-           hint:'function isAdult(age) { if (age >= 18) return true; return false; }'},
-       en:{title:'if/else Condition',
-           theory:`<code>if</code> runs code conditionally:<br><br>
-<code>if (condition) {<br>
-&nbsp;&nbsp;// if true<br>
-} else {<br>
-&nbsp;&nbsp;// if false<br>
-}</code><br><br>
-<code>===</code> equal · <code>!==</code> not equal<br>
-<code>&gt;</code> greater · <code>&lt;</code> less`,
-           task:'Write a function <code>isAdult(age)</code>: returns <code>true</code> if >= 18, else <code>false</code>',
-           hint:'function isAdult(age) { if (age >= 18) return true; return false; }'}}
-    ]
-  },
-  prog:{
-    icon:'∑',color:'#9f73f8',
-    ru:{title:'Основы программирования',desc:'Алгоритмическое мышление — циклы, массивы, алгоритмы'},
-    en:{title:'Programming Basics',desc:'Algorithmic thinking — loops, arrays, algorithms'},
-    exercises:[
-      {id:'prog-1',
-       ru:{title:'Цикл for',
-           theory:`Цикл повторяет блок кода.<br><br>
-<code>for</code> — когда знаешь сколько раз:<br>
-<code>for (let i = 0; i &lt; 5; i++) {<br>
-&nbsp;&nbsp;console.log(i);<br>
-}</code><br><br>
-Выведет: 0, 1, 2, 3, 4`,
-           task:'Напиши цикл <code>for</code>, выводящий числа от <strong>1 до 5</strong> через <code>console.log</code>',
-           hint:'for (let i = 1; i &lt;= 5; i++) { console.log(i); }'},
-       en:{title:'for Loop',
-           theory:`A loop repeats a block of code.<br><br>
-<code>for</code> — when you know how many times:<br>
-<code>for (let i = 0; i &lt; 5; i++) {<br>
-&nbsp;&nbsp;console.log(i);<br>
-}</code><br><br>
-Prints: 0, 1, 2, 3, 4`,
-           task:'Write a <code>for</code> loop that prints numbers from <strong>1 to 5</strong> via <code>console.log</code>',
-           hint:'for (let i = 1; i &lt;= 5; i++) { console.log(i); }'}},
-      {id:'prog-2',
-       ru:{title:'Массивы',
-           theory:`Массив хранит несколько значений:<br><br>
-<code>let fruits = ["яблоко", "банан"];</code><br><br>
-Индексы — с нуля: <code>fruits[0]</code> → "яблоко"<br>
-Длина: <code>fruits.length</code><br>
-Добавить: <code>fruits.push("груша")</code>`,
-           task:'Создай массив <code>colors</code> с тремя цветами: "красный", "синий", "зелёный"',
-           hint:'let colors = ["красный", "синий", "зелёный"];'},
-       en:{title:'Arrays',
-           theory:`An array stores multiple values:<br><br>
-<code>let fruits = ["apple", "banana"];</code><br><br>
-Indexes start at 0: <code>fruits[0]</code> → "apple"<br>
-Length: <code>fruits.length</code><br>
-Add: <code>fruits.push("pear")</code>`,
-           task:'Create an array <code>colors</code> with three colors: "red", "blue", "green"',
-           hint:'let colors = ["red", "blue", "green"];'}},
-      {id:'prog-3',
-       ru:{title:'Функция max',
-           theory:`Алгоритм — последовательность шагов для решения задачи.<br><br>
-Пример — найти максимум двух чисел:<br>
-<code>function max(a, b) {<br>
-&nbsp;&nbsp;if (a > b) return a;<br>
-&nbsp;&nbsp;return b;<br>
-}</code>`,
-           task:'Напиши функцию <code>sum(arr)</code>, которая принимает массив чисел и возвращает их сумму',
-           hint:'function sum(arr) { let t=0; for(let i=0;i&lt;arr.length;i++) t+=arr[i]; return t; }'},
-       en:{title:'max Function',
-           theory:`An algorithm is a sequence of steps to solve a problem.<br><br>
-Example — find the maximum of two numbers:<br>
-<code>function max(a, b) {<br>
-&nbsp;&nbsp;if (a > b) return a;<br>
-&nbsp;&nbsp;return b;<br>
-}</code>`,
-           task:'Write a function <code>sum(arr)</code> that takes an array of numbers and returns their sum',
-           hint:'function sum(arr) { let t=0; for(let i=0;i&lt;arr.length;i++) t+=arr[i]; return t; }'}}
-    ]
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-};
-
-const TOPIC_KEYS = ['html','css','js','prog'];
-const TOTAL = TOPIC_KEYS.reduce((s,k)=>s+TOPICS[k].exercises.length,0);
-
-// ─────────────────────────── STATE ───────────────────────────
-let S = {
-  lang: localStorage.getItem('cp_lang')||'ru',
-  apiKey: localStorage.getItem('cp_apikey')||'',
-  progress: JSON.parse(localStorage.getItem('cp_prog')||'{}'),
-  view: 'home',
-  topic: null,
-  exIdx: 0,
-  hintOn: false,
-};
-
-function t(k){ return STR[S.lang][k]||k; }
-function save(){ localStorage.setItem('cp_lang',S.lang); localStorage.setItem('cp_prog',JSON.stringify(S.progress)); }
-function isDone(id){ return !!S.progress[id]; }
-function markDone(id){ S.progress[id]=true; save(); }
-
-function topicProgress(key){
-  const exs=TOPICS[key].exercises;
-  return {done:exs.filter(e=>isDone(e.id)).length, total:exs.length};
-}
-function totalDone(){ return TOPIC_KEYS.reduce((s,k)=>s+topicProgress(k).done,0); }
-
-// ─────────────────────────── NAV ───────────────────────────
-function showView(name){
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
-  document.getElementById('view-'+name).classList.add('on');
-  S.view=name; window.scrollTo(0,0);
-}
-function goHome(){ renderHome(); showView('home'); }
-function goTopic(key){ S.topic=key; renderTopic(key); showView('topic'); }
-function goEx(key,idx){ S.topic=key; S.exIdx=idx; renderEx(); showView('exercise'); }
-
-// ─────────────────────────── RENDER HOME ───────────────────────────
-function renderHome(){
-  const l=S.lang;
-  document.getElementById('h-badge').textContent=t('badge');
-  document.getElementById('h-title').innerHTML=t('title');
-  document.getElementById('h-sub').textContent=t('sub');
-  document.getElementById('h-prog-lbl').textContent=t('progLbl');
-  document.getElementById('h-sec-lbl').textContent=t('topicsSec');
-
-  const d=totalDone();
-  document.getElementById('h-prog-cnt').textContent=d+' '+t('of')+' '+TOTAL;
-  document.getElementById('h-prog-fill').style.width=(d/TOTAL*100)+'%';
-
-  const grid=document.getElementById('topics-grid');
-  grid.innerHTML='';
-  TOPIC_KEYS.forEach(key=>{
-    const tp=TOPICS[key];
-    const {done:td,total}=topicProgress(key);
-    const pct=Math.round(td/total*100);
-    const complete=td===total, started=td>0;
-    const btnTxt=complete?t('done'):started?t('cont'):t('start');
-    const btnCls=complete?'btn-ok':'btn-p';
-    const pendIdx=tp.exercises.findIndex(e=>!isDone(e.id));
-    const target=pendIdx>=0?pendIdx:0;
-
-    const c=document.createElement('div');
-    c.className='tc';
-    c.style.cssText=`--tc:${tp.color}`;
-    c.innerHTML=`
-      <div class="tc-icon">${tp.icon}</div>
-      <div class="tc-title">${tp[l].title}</div>
-      <div class="tc-desc">${tp[l].desc}</div>
-      <div class="tc-pbar"><div class="tc-pbar-fill" style="width:${pct}%"></div></div>
-      <div class="tc-foot">
-        <div class="tc-cnt"><strong>${td}</strong> / ${total}</div>
-        <button class="btn ${btnCls} btn-s" onclick="event.stopPropagation();goEx('${key}',${target})">${btnTxt}</button>
-      </div>`;
-    c.addEventListener('click',()=>goTopic(key));
-    grid.appendChild(c);
-  });
 }
 
-// ─────────────────────────── RENDER TOPIC ───────────────────────────
-function renderTopic(key){
-  const l=S.lang, tp=TOPICS[key];
-  document.getElementById('tv-back-txt').textContent=t('back');
-  document.getElementById('tv-sec-lbl').textContent=t('exSec');
-
-  const ico=document.getElementById('tv-icon');
-  ico.textContent=tp.icon;
-  ico.style.cssText=`background:color-mix(in srgb,${tp.color} 14%,transparent);border:1px solid color-mix(in srgb,${tp.color} 28%,transparent);color:${tp.color};font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:-1px`;
-
-  document.getElementById('tv-title').textContent=tp[l].title;
-  document.getElementById('tv-desc').textContent=tp[l].desc;
-
-  const list=document.getElementById('ex-list');
-  list.innerHTML='';
-  tp.exercises.forEach((ex,i)=>{
-    const done=isDone(ex.id);
-    const row=document.createElement('div');
-    row.className='ex-row'+(done?' done':'');
-    row.innerHTML=`
-      <div class="ex-num">${done?'✓':(i+1)}</div>
-      <div class="ex-info">
-        <div class="ex-ttl">${ex[l].title}</div>
-        <div class="ex-st">${done?t('stDone'):t('stPend')}</div>
-      </div>
-      <div class="ex-arr">›</div>`;
-    row.addEventListener('click',()=>goEx(key,i));
-    list.appendChild(row);
-  });
-}
-
-// ─────────────────────────── RENDER EXERCISE ───────────────────────────
-function renderEx(){
-  const l=S.lang, key=S.topic, idx=S.exIdx;
-  const tp=TOPICS[key], ex=tp.exercises[idx];
-
-  // back breadcrumb
-  const back=document.getElementById('ev-back');
-  back.innerHTML=`← <span style="color:var(--txt3)">${tp[l].title}</span>`;
-  back.onclick=()=>goTopic(key);
-
-  document.getElementById('ev-ctr').textContent=`${idx+1} ${t('of')} ${tp.exercises.length}`;
-  document.getElementById('ev-theory-lbl').textContent=t('theoryLbl');
-  document.getElementById('ev-task-lbl').textContent=t('taskLbl');
-  document.getElementById('ev-title').textContent=ex[l].title;
-  document.getElementById('ev-theory').innerHTML=ex[l].theory;
-  document.getElementById('ev-task').innerHTML=ex[l].task;
-  document.getElementById('ev-ans-lbl').textContent=t('ansLbl');
-  document.getElementById('ev-hint-lbl').textContent=t('hintLbl');
-  document.getElementById('check-txt').textContent=t('checkBtn');
-
-  const ta=document.getElementById('ans-ta');
-  ta.value=''; ta.placeholder=t('ph');
-
-  S.hintOn=false;
-  const hb=document.getElementById('hint-box');
-  hb.classList.remove('on'); hb.innerHTML=ex[l].hint;
-
-  // API warning
-  const warn=document.getElementById('api-warn');
-  if(!S.apiKey){
-    warn.classList.add('on');
-    document.getElementById('api-warn-txt').innerHTML=
-      t('warnPre')+'<button onclick="openSettings()">'+t('warnLink')+'</button>'+t('warnPost');
-  } else { warn.classList.remove('on'); }
-
-  // reset feedback
-  document.getElementById('fb-card').style.display='none';
-  document.getElementById('done-banner').classList.remove('on');
-  const cb=document.getElementById('check-btn');
-  cb.disabled=false;
-  document.getElementById('check-txt').textContent=t('checkBtn');
-}
-
-function toggleHint(){
-  S.hintOn=!S.hintOn;
-  document.getElementById('hint-box').classList.toggle('on',S.hintOn);
-}
-
-// ─────────────────────────── CHECK ANSWER ───────────────────────────
-async function checkAnswer(){
-  const ans=document.getElementById('ans-ta').value.trim();
-  if(!ans){ document.getElementById('ans-ta').focus(); return; }
-
-  const btn=document.getElementById('check-btn');
-  btn.disabled=true;
-  document.getElementById('check-txt').innerHTML='<span class="dots"><span></span><span></span><span></span></span>';
-
-  const l=S.lang, key=S.topic, idx=S.exIdx;
-  const ex=TOPICS[key].exercises[idx];
-
-  if(!S.apiKey){
-    showFeedback(t('keyErr'),false);
-    btn.disabled=false;
-    document.getElementById('check-txt').textContent=t('checkBtn');
-    return;
+@media (max-width: 1180px) {
+  .dashboard {
+    grid-template-columns: 1fr;
   }
 
-  const taskClean=ex[l].task.replace(/<[^>]*>/g,'');
-  const sys=l==='ru'
-    ?`Ты — дружелюбный IT-наставник для начинающих. Ученик выполняет упражнение "${ex[l].title}".
-Задание: "${taskClean}"
-Проверь ответ. Напиши 4–6 предложений на русском:
-1. Правильно ли выполнено (да/нет/частично)
-2. Что сделано верно
-3. Если есть ошибки — объясни просто
-4. Подбадривание`
-    :`You are a friendly IT mentor for beginners. The student is solving "${ex[l].title}".
-Task: "${taskClean}"
-Check the answer. Write 4–6 sentences in English:
-1. Whether correct (yes/no/partially)
-2. What is done right
-3. If errors — explain simply
-4. Encouragement`;
+  .sidebar {
+    position: static;
+  }
 
-  try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'x-api-key':S.apiKey,
-        'anthropic-version':'2023-06-01',
-        'anthropic-dangerous-direct-browser-access':'true'
+  .lesson-grid,
+  .workspace-grid,
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 820px) {
+  .site-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .header-actions {
+    justify-content: space-between;
+  }
+
+  .hero,
+  .sidebar-card,
+  .lesson-card,
+  .preview-card,
+  .feedback-card {
+    padding: 20px;
+  }
+
+  .lesson-card__top,
+  .panel-head,
+  .practice-card__head,
+  .mini-lesson__head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .overall-progress,
+  .feedback-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 560px) {
+  .container {
+    width: min(var(--container), calc(100% - 20px));
+  }
+
+  .brand {
+    align-items: flex-start;
+  }
+
+  .brand__copy strong {
+    font-size: 0.96rem;
+  }
+
+  .header-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .lang-switch {
+    justify-content: space-between;
+  }
+
+  .lang-switch button {
+    flex: 1;
+  }
+
+  .hero__actions,
+  .editor-actions,
+  .lesson-nav {
+    flex-direction: column;
+  }
+
+  .primary-button,
+  .secondary-button,
+  .ghost-button,
+  .small-button {
+    width: 100%;
+  }
+
+  .topic-card__head {
+    grid-template-columns: auto 1fr;
+  }
+
+  .topic-card__count {
+    grid-column: 2;
+    justify-self: start;
+    text-align: left;
+    margin-top: -4px;
+  }
+
+  .feedback-item {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+    <script>
+window.TRAINER_APP = {
+  ui: {
+    brandTitle: {
+      ru: "IT Start Lab",
+      en: "IT Start Lab",
+    },
+    brandSubtitle: {
+      ru: "–°—В–∞—А—В –≤ IT –±–µ–Ј –ї–Є—И–љ–µ–є –≤–Њ–і—Л",
+      en: "A clean start in IT",
+    },
+    heroKicker: {
+      ru: "GitHub Pages Ready",
+      en: "GitHub Pages Ready",
+    },
+    heroTitle: {
+      ru: "–Ш–љ—В–µ—А–∞–Ї—В–Є–≤–љ—Л–є —В—А–µ–љ–∞–ґ—С—А –њ–Њ IT –і–ї—П –љ–∞—З–Є–љ–∞—О—Й–Є—Е",
+      en: "Interactive IT trainer for beginners",
+    },
+    heroLead: {
+      ru: "–Т—Л–±–Є—А–∞–є —В–µ–Љ—Г, —З–Є—В–∞–є –Љ–Є–љ–Є-—Г—А–Њ–Ї, —А–µ—И–∞–є –Ј–∞–і–∞–љ–Є–µ –њ—А—П–Љ–Њ –≤ –±—А–∞—Г–Ј–µ—А–µ –Є –њ–Њ–ї—Г—З–∞–є –њ–Њ–љ—П—В–љ—Г—О –њ—А–Њ–≤–µ—А–Ї—Г. –Я—А–Њ–≥—А–µ—Б—Б –Є –Њ—В–≤–µ—В—Л —Б–Њ—Е—А–∞–љ—П—О—В—Б—П –ї–Њ–Ї–∞–ї—М–љ–Њ.",
+      en: "Pick a topic, read a mini lesson, solve a task in the browser, and get clear feedback. Progress and drafts are saved locally.",
+    },
+    continueBtn: {
+      ru: "–Я—А–Њ–і–Њ–ї–ґ–Є—В—М",
+      en: "Continue",
+    },
+    randomLessonBtn: {
+      ru: "–°–ї—Г—З–∞–є–љ—Л–є —Г—А–Њ–Ї",
+      en: "Random lesson",
+    },
+    statTopics: {
+      ru: "—В–µ–Љ",
+      en: "topics",
+    },
+    statLessons: {
+      ru: "—Г—А–Њ–Ї–Њ–≤",
+      en: "lessons",
+    },
+    statCompleted: {
+      ru: "–≤—Л–њ–Њ–ї–љ–µ–љ–Њ",
+      en: "completed",
+    },
+    topicsKicker: {
+      ru: "–Ґ–µ–Љ—Л",
+      en: "Topics",
+    },
+    topicsTitle: {
+      ru: "–І—В–Њ –±—Г–і–µ–Љ –Є–Ј—Г—З–∞—В—М",
+      en: "What you will learn",
+    },
+    topicsLead: {
+      ru: "–Э–∞–ґ–Љ–Є –љ–∞ —В–µ–Љ—Г –Є –њ–µ—А–µ—Е–Њ–і–Є –Ї –њ—А–∞–Ї—В–Є–Ї–µ.",
+      en: "Pick a topic and jump into practice.",
+    },
+    progressKicker: {
+      ru: "–Я—А–Њ–≥—А–µ—Б—Б",
+      en: "Progress",
+    },
+    progressTitle: {
+      ru: "–Ґ–≤–Њ–є –њ—А–Њ–≥—А–µ—Б—Б",
+      en: "Your progress",
+    },
+    progressLead: {
+      ru: "–°–∞–є—В –Ј–∞–њ–Њ–Љ–Є–љ–∞–µ—В –Њ—В–≤–µ—В—Л —З–µ—А–µ–Ј localStorage.",
+      en: "The site saves your work through localStorage.",
+    },
+    overallProgressTitle: {
+      ru: "–Ю–±—Й–Є–є –њ—А–Њ–≥—А–µ—Б—Б",
+      en: "Overall progress",
+    },
+    savedPill: {
+      ru: "–°–Њ—Е—А–∞–љ–µ–љ–Њ –ї–Њ–Ї–∞–ї—М–љ–Њ",
+      en: "Saved locally",
+    },
+    lessonKicker: {
+      ru: "–£—А–Њ–Ї",
+      en: "Lesson",
+    },
+    miniLessonTitle: {
+      ru: "–Ь–Є–љ–Є-—Г—А–Њ–Ї",
+      en: "Mini lesson",
+    },
+    practiceTitle: {
+      ru: "–Я—А–∞–Ї—В–Є–Ї–∞",
+      en: "Practice",
+    },
+    editorLabel: {
+      ru: "–Ґ–≤–Њ–є –Њ—В–≤–µ—В",
+      en: "Your answer",
+    },
+    runPreviewBtn: {
+      ru: "–Ю–±–љ–Њ–≤–Є—В—М –њ—А–µ–і–њ—А–Њ—Б–Љ–Њ—В—А",
+      en: "Refresh preview",
+    },
+    checkAnswerBtn: {
+      ru: "–Я—А–Њ–≤–µ—А–Є—В—М —Б AI",
+      en: "Check with AI",
+    },
+    resetLessonBtn: {
+      ru: "–°–±—А–Њ—Б–Є—В—М –Ї–Њ–і",
+      en: "Reset code",
+    },
+    prevLessonBtn: {
+      ru: "–Э–∞–Ј–∞–і",
+      en: "Previous",
+    },
+    nextLessonBtn: {
+      ru: "–Ф–∞–ї—М—И–µ",
+      en: "Next",
+    },
+    previewTitle: {
+      ru: "–Я—А–µ–і–њ—А–Њ—Б–Љ–Њ—В—А",
+      en: "Preview",
+    },
+    previewEmpty: {
+      ru: "–Ф–ї—П —Н—В–Њ–є —В–µ–Љ—Л –ґ–Є–≤–Њ–є –њ—А–µ–і–њ—А–Њ—Б–Љ–Њ—В—А –љ–µ –љ—Г–ґ–µ–љ. –Я—А–Њ–≤–µ—А–Ї–∞ —Б–Љ–Њ—В—А–Є—В –љ–∞ —Б—В—А—Г–Ї—В—Г—А—Г —А–µ—И–µ–љ–Є—П.",
+      en: "This lesson does not need a live preview. The checker focuses on the structure of your solution.",
+    },
+    previewReady: {
+      ru: "–У–Њ—В–Њ–≤–Њ",
+      en: "Ready",
+    },
+    previewUnavailable: {
+      ru: "–С–µ–Ј –њ—А–µ–і–њ—А–Њ—Б–Љ–Њ—В—А–∞",
+      en: "No preview",
+    },
+    aiTitle: {
+      ru: "AI-–њ—А–Њ–≤–µ—А–Ї–∞",
+      en: "AI review",
+    },
+    feedbackEmpty: {
+      ru: "–Я–Њ—Б–ї–µ –њ—А–Њ–≤–µ—А–Ї–Є –Ј–і–µ—Б—М –њ–Њ—П–≤—П—В—Б—П –±–∞–ї–ї—Л, –Њ—И–Є–±–Ї–Є –Є –њ–Њ–і—Б–Ї–∞–Ј–Ї–Є.",
+      en: "After checking, this area will show score, mistakes, and hints.",
+    },
+    checklistTitle: {
+      ru: "–І—В–Њ —Г–ґ–µ –љ–∞–є–і–µ–љ–Њ",
+      en: "What was detected",
+    },
+    tipsTitle: {
+      ru: "–І—В–Њ —Г–ї—Г—З—И–Є—В—М",
+      en: "What to improve",
+    },
+    markerPass: {
+      ru: "OK",
+      en: "OK",
+    },
+    markerFix: {
+      ru: "–Ш—Б–њ—А.",
+      en: "Fix",
+    },
+    markerTip: {
+      ru: "–°–Њ–≤–µ—В",
+      en: "Tip",
+    },
+    footerNote: {
+      ru: "–Я–Њ–ї–љ–Њ—Б—В—М—О —Б—В–∞—В–Є—З–µ—Б–Ї–Є–є —Б–∞–є—В –і–ї—П GitHub Pages: –Є–љ—В–µ—А—Д–µ–є—Б –і–≤—Г—П–Ј—Л—З–љ—Л–є, –Њ—В–≤–µ—В—Л —Б–Њ—Е—А–∞–љ—П—О—В—Б—П –≤ –±—А–∞—Г–Ј–µ—А–µ, –њ—А–Њ–≤–µ—А–Ї–∞ —А–∞–±–Њ—В–∞–µ—В –љ–∞ –Ї–ї–Є–µ–љ—В–µ.",
+      en: "A fully static GitHub Pages site: bilingual UI, browser-based saved progress, and client-side answer checking.",
+    },
+    resetProgressBtn: {
+      ru: "–°–±—А–Њ—Б–Є—В—М –њ—А–Њ–≥—А–µ—Б—Б",
+      en: "Reset progress",
+    },
+    resetProgressConfirm: {
+      ru: "–£–і–∞–ї–Є—В—М –≤–µ—Б—М –њ—А–Њ–≥—А–µ—Б—Б, –±–∞–ї–ї—Л –Є —З–µ—А–љ–Њ–≤–Є–Ї–Є?",
+      en: "Delete all progress, scores, and drafts?",
+    },
+    practicePending: {
+      ru: "–Э–µ –њ—А–Њ–≤–µ—А–µ–љ–Њ",
+      en: "Not checked yet",
+    },
+    practiceDone: {
+      ru: "–£—А–Њ–Ї –Ј–∞—Б—З–Є—В–∞–љ",
+      en: "Lesson completed",
+    },
+    practiceDraft: {
+      ru: "–І–µ—А–љ–Њ–≤–Є–Ї —Б–Њ—Е—А–∞–љ—С–љ",
+      en: "Draft saved",
+    },
+    lessonCompleted: {
+      ru: "–У–Њ—В–Њ–≤–Њ",
+      en: "Done",
+    },
+    lessonInProgress: {
+      ru: "–Т —А–∞–±–Њ—В–µ",
+      en: "In progress",
+    },
+    lessonNotStarted: {
+      ru: "–°—В–∞—А—В",
+      en: "Start",
+    },
+    feedbackStrong: {
+      ru: "–°–Є–ї—М–љ–Њ–µ —А–µ—И–µ–љ–Є–µ",
+      en: "Strong solution",
+    },
+    feedbackAlmost: {
+      ru: "–Я–Њ—З—В–Є –≥–Њ—В–Њ–≤–Њ",
+      en: "Almost there",
+    },
+    feedbackRetry: {
+      ru: "–Э—Г–ґ–љ–Њ –і–Њ—А–∞–±–Њ—В–∞—В—М",
+      en: "Needs work",
+    },
+    feedbackStrongSummary: {
+      ru: "AI –≤–Є–і–Є—В –Ї–ї—О—З–µ–≤—Л–µ –Ї–Њ–љ—Б—В—А—Г–Ї—Ж–Є–Є. –Ь–Њ–ґ–љ–Њ –њ–µ—А–µ—Е–Њ–і–Є—В—М –і–∞–ї—М—И–µ –Є–ї–Є —Г–ї—Г—З—И–Є—В—М —Б—В–Є–ї—М –њ–Њ –ґ–µ–ї–∞–љ–Є—О.",
+      en: "The AI checker sees the key pieces. You can move on or polish the style if you want.",
+    },
+    feedbackAlmostSummary: {
+      ru: "–Ю—Б–љ–Њ–≤–∞ —Г–ґ–µ –µ—Б—В—М, –љ–Њ –љ–µ —Е–≤–∞—В–∞–µ—В –љ–µ—Б–Ї–Њ–ї—М–Ї–Є—Е –Њ–±—П–Ј–∞—В–µ–ї—М–љ—Л—Е —Н–ї–µ–Љ–µ–љ—В–Њ–≤.",
+      en: "The base is there, but a few required elements are still missing.",
+    },
+    feedbackRetrySummary: {
+      ru: "–°–µ–є—З–∞—Б –≤ —А–µ—И–µ–љ–Є–Є –љ–µ —Е–≤–∞—В–∞–µ—В –±–∞–Ј–Њ–≤—Л—Е —З–∞—Б—В–µ–є. –Ш—Б–њ—А–∞–≤—М –њ—Г–љ–Ї—В—Л –љ–Є–ґ–µ –Є –њ—А–Њ–≤–µ—А—М –µ—Й—С —А–∞–Ј.",
+      en: "The solution is still missing core parts. Fix the items below and run the check again.",
+    },
+    completedFromTotal: {
+      ru: "—Г—А–Њ–Ї–Њ–≤ –Ј–∞–≤–µ—А—И–µ–љ–Њ",
+      en: "lessons completed",
+    },
+    lastCheckPrefix: {
+      ru: "–Я–Њ—Б–ї–µ–і–љ—П—П –њ—А–Њ–≤–µ—А–Ї–∞",
+      en: "Last check",
+    },
+    levelLabel: {
+      ru: "–£—А–Њ–≤–µ–љ—М",
+      en: "Level",
+    },
+    durationLabel: {
+      ru: "–Т—А–µ–Љ—П",
+      en: "Time",
+    },
+    languageLabel: {
+      ru: "–Ґ–µ–Љ–∞",
+      en: "Track",
+    },
+    minutes: {
+      ru: "–Љ–Є–љ",
+      en: "min",
+    },
+    lessonButtonPrefix: {
+      ru: "–£—А–Њ–Ї",
+      en: "Lesson",
+    },
+  },
+  topics: [
+    {
+      id: "basics",
+      icon: "01",
+      accent: "#0f766e",
+      title: {
+        ru: "–Ю—Б–љ–Њ–≤—Л –њ—А–Њ–≥—А–∞–Љ–Љ–Є—А–Њ–≤–∞–љ–Є—П",
+        en: "Programming Basics",
       },
-      body:JSON.stringify({
-        model:'claude-3-5-haiku-20241022',
-        max_tokens:500,
-        system:sys,
-        messages:[{role:'user',content:(l==='ru'?'Ответ ученика: ':'Student answer: ')+ans}]
-      })
-    });
-    const data=await res.json();
-    if(data.content&&data.content[0]){
-      const fb=data.content[0].text;
-      const ok=/правильно|верно|отлично|молодец|correct|right|great|well done|perfect|good job/i.test(fb);
-      showFeedback(fb,ok);
-      if(ok) markDone(ex.id);
-    } else { showFeedback(t('netErr'),false); }
-  }catch(e){ showFeedback(t('netErr'),false); }
+      blurb: {
+        ru: "–Я–µ—А–µ–Љ–µ–љ–љ—Л–µ, —Г—Б–ї–Њ–≤–Є—П –Є –±–∞–Ј–Њ–≤–∞—П –ї–Њ–≥–Є–Ї–∞.",
+        en: "Variables, conditions, and core logic.",
+      },
+      lessons: [
+        {
+          id: "basics-variables",
+          language: "logic",
+          duration: 8,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–Я–µ—А–µ–Љ–µ–љ–љ—Л–µ –Є –≤—Л–≤–Њ–і",
+            en: "Variables and output",
+          },
+          summary: {
+            ru: "–Я–µ—А–µ–Љ–µ–љ–љ–∞—П —Е—А–∞–љ–Є—В –Ј–љ–∞—З–µ–љ–Є–µ. –°–љ–∞—З–∞–ї–∞ —Б–Њ–Ј–і–∞—С–Љ –і–∞–љ–љ—Л–µ, –њ–Њ—В–Њ–Љ –Є—Б–њ–Њ–ї—М–Ј—Г–µ–Љ –Є—Е –≤ –≤—Л–≤–Њ–і–µ.",
+            en: "A variable stores a value. First you create data, then you use it in output.",
+          },
+          points: {
+            ru: [
+              "–°—В—А–Њ–Ї–Є –Њ–±—Л—З–љ–Њ –њ–Є—И—Г—В –≤ –Ї–∞–≤—Л—З–Ї–∞—Е.",
+              "–Ш–Љ–µ–љ–∞ –њ–µ—А–µ–Љ–µ–љ–љ—Л—Е –і–Њ–ї–ґ–љ—Л –±—Л—В—М –њ–Њ–љ—П—В–љ—Л–Љ–Є.",
+              "–Т—Л–≤–Њ–і –њ–Њ–Љ–Њ–≥–∞–µ—В —Г–≤–Є–і–µ—В—М —А–µ–Ј—Г–ї—М—В–∞—В –њ—А–Њ–≥—А–∞–Љ–Љ—Л.",
+            ],
+            en: [
+              "Strings are usually wrapped in quotes.",
+              "Variable names should be clear.",
+              "Output lets you see the result of a program.",
+            ],
+          },
+          tags: {
+            ru: ["–њ–µ—А–µ–Љ–µ–љ–љ—Л–µ", "—Б—В—А–Њ–Ї–Є", "–≤—Л–≤–Њ–і"],
+            en: ["variables", "strings", "output"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є –њ–µ—А–µ–Љ–µ–љ–љ—Л–µ `name` –Є `goal`, –Ј–∞—В–µ–Љ –≤—Л–≤–µ–і–Є –Њ–±–µ –њ–µ—А–µ–Љ–µ–љ–љ—Л–µ –њ–Њ –Њ—В–і–µ–ї—М–љ–Њ—Б—В–Є.",
+              en: "Create `name` and `goal` variables, then output each variable on its own line.",
+            },
+            note: {
+              ru: "–Ь–Њ–ґ–љ–Њ –њ–Є—Б–∞—В—М –≤ —Б—В–Є–ї–µ Python –Є–ї–Є –њ–Њ–љ—П—В–љ–Њ–≥–Њ –њ—Б–µ–≤–і–Њ–Ї–Њ–і–∞.",
+              en: "You can write in Python style or simple pseudocode.",
+            },
+            starterCode: `name = ""
+goal = ""
 
-  btn.disabled=false;
-  document.getElementById('check-txt').textContent=t('checkBtn');
+# output name
+# output goal`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+        {
+          id: "basics-condition",
+          language: "logic",
+          duration: 10,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–£—Б–ї–Њ–≤–Є–µ if / else",
+            en: "The if / else condition",
+          },
+          summary: {
+            ru: "–£—Б–ї–Њ–≤–Є–µ –њ–Њ–Љ–Њ–≥–∞–µ—В –≤—Л–±—А–∞—В—М –Њ–і–љ–Њ –і–µ–є—Б—В–≤–Є–µ –Є–Ј –і–≤—Г—Е: –µ—Б–ї–Є –њ—А–∞–≤–Є–ї–Њ –≤—Л–њ–Њ–ї–љ—П–µ—В—Б—П, –Є–і—С–Љ –њ–Њ –Њ–і–љ–Њ–є –≤–µ—В–Ї–µ, –Є–љ–∞—З–µ –њ–Њ –і—А—Г–≥–Њ–є.",
+            en: "A condition lets your program choose between two actions: one branch if the rule is true, another if it is false.",
+          },
+          points: {
+            ru: [
+              "–°—А–∞–≤–љ–µ–љ–Є–µ —З–∞—Б—В–Њ —Б—В—А–Њ–Є—В—Б—П —З–µ—А–µ–Ј `>`, `<`, `>=`, `==`.",
+              "–Т–µ—В–Ї–∞ `if` –Њ—В–≤–µ—З–∞–µ—В –Ј–∞ –≥–ї–∞–≤–љ—Л–є —Б—Ж–µ–љ–∞—А–Є–є.",
+              "–Т–µ—В–Ї–∞ `else` –Ј–∞–Ї—А—Л–≤–∞–µ—В –Њ—Б—В–∞–ї—М–љ—Л–µ —Б–ї—Г—З–∞–Є.",
+            ],
+            en: [
+              "Comparisons often use `>`, `<`, `>=`, or `==`.",
+              "The `if` branch handles the main scenario.",
+              "The `else` branch covers the remaining case.",
+            ],
+          },
+          tags: {
+            ru: ["if", "else", "—Б—А–∞–≤–љ–µ–љ–Є–µ"],
+            en: ["if", "else", "comparison"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є `score = 75`. –Х—Б–ї–Є `score >= 60`, –≤—Л–≤–µ–і–Є `pass`, –Є–љ–∞—З–µ –≤—Л–≤–µ–і–Є `try again`.",
+              en: "Create `score = 75`. If `score >= 60`, output `pass`; otherwise output `try again`.",
+            },
+            note: {
+              ru: "–Я—А–Њ–≤–µ—А–Ї–∞ —Б–Љ–Њ—В—А–Є—В –љ–∞ –љ–∞–ї–Є—З–Є–µ —Г—Б–ї–Њ–≤–Є—П, –њ–Њ—А–Њ–≥–∞ `60` –Є –і–≤—Г—Е –≤–∞—А–Є–∞–љ—В–Њ–≤ –≤—Л–≤–Њ–і–∞.",
+              en: "The checker looks for a condition, the `60` threshold, and both output branches.",
+            },
+            starterCode: `score = 75
+
+if score >= :
+    print("")
+else:
+    print("")`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+      ],
+    },
+    {
+      id: "html",
+      icon: "02",
+      accent: "#ea580c",
+      title: {
+        ru: "HTML",
+        en: "HTML",
+      },
+      blurb: {
+        ru: "–°—В—А—Г–Ї—В—Г—А–∞ —Б—В—А–∞–љ–Є—Ж—Л –Є —Д–Њ—А–Љ—Л.",
+        en: "Page structure and forms.",
+      },
+      lessons: [
+        {
+          id: "html-card",
+          language: "html",
+          duration: 9,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–Ъ–∞—А—В–Њ—З–Ї–∞ –њ—А–Њ—Д–Є–ї—П",
+            en: "Profile card",
+          },
+          summary: {
+            ru: "HTML –Ј–∞–і–∞—С—В —Б–Ї–µ–ї–µ—В –Є–љ—В–µ—А—Д–µ–є—Б–∞. –Ч–∞–≥–Њ–ї–Њ–≤–Ї–Є, –∞–±–Ј–∞—Ж—Л –Є –Ї–љ–Њ–њ–Ї–Є –Њ–њ–Є—Б—Л–≤–∞—О—В —Б–Љ—Л—Б–ї –Ї–Њ–љ—В–µ–љ—В–∞.",
+            en: "HTML gives your interface its structure. Headings, paragraphs, and buttons define the meaning of the content.",
+          },
+          points: {
+            ru: [
+              "–Ш—Б–њ–Њ–ї—М–Ј—Г–є —Б–µ–Љ–∞–љ—В–Є—З–љ—Л–є –Ї–Њ–љ—В–µ–є–љ–µ—А, –µ—Б–ї–Є —Н—В–Њ —Г–Љ–µ—Б—В–љ–Њ.",
+              "–£ –Ј–∞–≥–Њ–ї–Њ–≤–Ї–∞ –і–Њ–ї–ґ–љ–∞ –±—Л—В—М –≥–ї–∞–≤–љ–∞—П –Љ—Л—Б–ї—М.",
+              "–Ъ–љ–Њ–њ–Ї–∞ –њ–Њ–і—Е–Њ–і–Є—В –і–ї—П –і–µ–є—Б—В–≤–Є—П.",
+            ],
+            en: [
+              "Use a semantic container when it makes sense.",
+              "The heading should carry the main point.",
+              "A button is used for an action.",
+            ],
+          },
+          tags: {
+            ru: ["section", "h1", "button"],
+            en: ["section", "h1", "button"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є –Ї–∞—А—В–Њ—З–Ї—Г —Б –Ї–Њ–љ—В–µ–є–љ–µ—А–Њ–Љ, –Ј–∞–≥–Њ–ї–Њ–≤–Ї–Њ–Љ `h1`, –∞–±–Ј–∞—Ж–µ–Љ `p` –Є –Ї–љ–Њ–њ–Ї–Њ–є `button`.",
+              en: "Create a card with a container, an `h1` heading, a `p` paragraph, and a `button`.",
+            },
+            note: {
+              ru: "–Ь–Њ–ґ–љ–Њ –Є—Б–њ–Њ–ї—М–Ј–Њ–≤–∞—В—М `section`, `article` –Є–ї–Є `div` –Ї–∞–Ї –Ї–Њ–љ—В–µ–є–љ–µ—А.",
+              en: "You can use `section`, `article`, or `div` as the main container.",
+            },
+            starterCode: `<section class="profile-card">
+  <!-- add title, text and button -->
+</section>`,
+          },
+          preview: {
+            mode: "html",
+            baseCss: `body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f6f5ef;
+  color: #172033;
+  padding: 24px;
 }
 
-function showFeedback(text,ok){
-  const card=document.getElementById('fb-card');
-  const chip=document.getElementById('fb-chip');
-  card.style.display='block';
-  card.className='fb-card'+(ok?' ok':'');
-  chip.textContent=t('fbLbl');
-  chip.className='chip '+(ok?'chip-ok':'chip-err');
-  document.getElementById('fb-text').textContent=text;
-
-  const acts=document.getElementById('fb-acts');
-  acts.innerHTML='';
-  const key=S.topic, idx=S.exIdx, tp=TOPICS[key];
-  const hasNext=idx<tp.exercises.length-1;
-
-  if(ok&&hasNext){
-    const nb=document.createElement('button');
-    nb.className='btn btn-p';
-    nb.textContent=t('next');
-    nb.onclick=()=>goEx(key,idx+1);
-    acts.appendChild(nb);
-  }
-  if(!ok){
-    const rb=document.createElement('button');
-    rb.className='btn btn-o';
-    rb.textContent=t('retry');
-    rb.onclick=()=>{ card.style.display='none'; document.getElementById('ans-ta').focus(); };
-    acts.appendChild(rb);
-  }
-  if(ok&&tp.exercises.every(e=>isDone(e.id))){
-    const db=document.getElementById('done-banner');
-    db.classList.add('on');
-    document.getElementById('done-title').textContent=t('doneTitle');
-    document.getElementById('done-sub').textContent=t('doneSub');
-    document.getElementById('done-home').textContent=t('home');
-  }
+.profile-card {
+  max-width: 340px;
+  padding: 20px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #d4d8e2;
+  box-shadow: 0 18px 40px rgba(23, 32, 51, 0.08);
 }
 
-// ─────────────────────────── SETTINGS ───────────────────────────
-function openSettings(){
-  document.getElementById('m-title').textContent=t('mTitle');
-  document.getElementById('m-desc').textContent=t('mDesc');
-  document.getElementById('m-lbl').textContent=t('mLbl');
-  document.getElementById('m-cancel').textContent=t('mCancel');
-  document.getElementById('m-save').textContent=t('mSave');
-  document.getElementById('api-input').value=S.apiKey;
-  document.getElementById('modal-settings').classList.add('on');
-}
-function closeSettings(){ document.getElementById('modal-settings').classList.remove('on'); }
-function saveSettings(){
-  S.apiKey=document.getElementById('api-input').value.trim();
-  localStorage.setItem('cp_apikey',S.apiKey);
-  closeSettings();
-  if(S.view==='exercise'){
-    const w=document.getElementById('api-warn');
-    S.apiKey?w.classList.remove('on'):w.classList.add('on');
-  }
+button {
+  margin-top: 12px;
+  padding: 10px 16px;
+  border: 0;
+  border-radius: 999px;
+  background: #0f766e;
+  color: white;
+}`,
+          },
+        },
+        {
+          id: "html-form",
+          language: "html",
+          duration: 10,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–§–Њ—А–Љ–∞ –њ–Њ–і–њ–Є—Б–Ї–Є",
+            en: "Signup form",
+          },
+          summary: {
+            ru: "–§–Њ—А–Љ–∞ —Б–Њ–±–Є—А–∞–µ—В –і–∞–љ–љ—Л–µ –њ–Њ–ї—М–Ј–Њ–≤–∞—В–µ–ї—П. –•–Њ—А–Њ—И–∞—П —Б—В—А—Г–Ї—В—Г—А–∞ –і–µ–ї–∞–µ—В –Є–љ—В–µ—А—Д–µ–є—Б –њ–Њ–љ—П—В–љ—Л–Љ –Є –і–Њ—Б—В—Г–њ–љ—Л–Љ.",
+            en: "A form collects data from the user. A good structure keeps the interface clear and accessible.",
+          },
+          points: {
+            ru: [
+              "–£ –њ–Њ–ї—П –≤–≤–Њ–і–∞ –і–Њ–ї–ґ–µ–љ –±—Л—В—М –њ–Њ–љ—П—В–љ—Л–є `label`.",
+              "–Ґ–Є–њ `email` –њ–Њ–Љ–Њ–≥–∞–µ—В –±—А–∞—Г–Ј–µ—А—Г –њ–Њ–љ—П—В—М –Њ–ґ–Є–і–∞–µ–Љ—Л–µ –і–∞–љ–љ—Л–µ.",
+              "–Ъ–љ–Њ–њ–Ї–∞ –Њ—В–њ—А–∞–≤–Ї–Є –Ј–∞–≤–µ—А—И–∞–µ—В —Б—Ж–µ–љ–∞—А–Є–є.",
+            ],
+            en: [
+              "An input should have a clear `label`.",
+              "The `email` type tells the browser what kind of data is expected.",
+              "A submit button completes the flow.",
+            ],
+          },
+          tags: {
+            ru: ["form", "label", "input"],
+            en: ["form", "label", "input"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є `form` —Б `label`, –њ–Њ–ї–µ–Љ `input type=\"email\"` –Є –Ї–љ–Њ–њ–Ї–Њ–є –Њ—В–њ—А–∞–≤–Ї–Є.",
+              en: "Create a `form` with a `label`, an `input type=\"email\"`, and a submit button.",
+            },
+            note: {
+              ru: "–Я—А–Њ–≤–µ—А–Ї–∞ –ґ–і—С—В –Є–Љ–µ–љ–љ–Њ —Д–Њ—А–Љ—Г, –њ–Њ–і–њ–Є—Б—М –Ї –њ–Њ–ї—О –Є email-–≤–≤–Њ–і.",
+              en: "The checker expects a real form, a label, and an email input.",
+            },
+            starterCode: `<form class="signup-form">
+  <!-- add label, email input and button -->
+</form>`,
+          },
+          preview: {
+            mode: "html",
+            baseCss: `body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #fff7ed;
+  color: #172033;
+  padding: 24px;
 }
 
-// ─────────────────────────── LANG ───────────────────────────
-function setLang(l){
-  S.lang=l;
-  localStorage.setItem('cp_lang',l);
-  document.getElementById('btn-ru').classList.toggle('on',l==='ru');
-  document.getElementById('btn-en').classList.toggle('on',l==='en');
-  if(S.view==='home') renderHome();
-  else if(S.view==='topic') renderTopic(S.topic);
-  else if(S.view==='exercise') renderEx();
+.signup-form {
+  max-width: 360px;
+  display: grid;
+  gap: 12px;
+  padding: 20px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #f3d9c5;
 }
 
-// ─────────────────────────── INIT ───────────────────────────
-setLang(S.lang);
-renderHome();
+input,
+button {
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid #cfd6e4;
+}
+
+button {
+  background: #ea580c;
+  color: white;
+  border: 0;
+}`,
+          },
+        },
+      ],
+    },
+    {
+      id: "css",
+      icon: "03",
+      accent: "#2563eb",
+      title: {
+        ru: "CSS",
+        en: "CSS",
+      },
+      blurb: {
+        ru: "–°—В–Є–ї–Є, –Ї–љ–Њ–њ–Ї–Є –Є layout.",
+        en: "Styles, buttons, and layout.",
+      },
+      lessons: [
+        {
+          id: "css-button",
+          language: "css",
+          duration: 9,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–Ю—Д–Њ—А–Љ–ї–µ–љ–Є–µ –Ї–љ–Њ–њ–Ї–Є",
+            en: "Button styling",
+          },
+          summary: {
+            ru: "CSS –Њ—В–≤–µ—З–∞–µ—В –Ј–∞ –≤–љ–µ—И–љ–Є–є –≤–Є–і. –Ф–∞–ґ–µ –љ–µ—Б–Ї–Њ–ї—М–Ї–Њ —Б–≤–Њ–є—Б—В–≤ –Љ–Њ–≥—Г—В –Ј–∞–Љ–µ—В–љ–Њ —Г–ї—Г—З—И–Є—В—М –Є–љ—В–µ—А—Д–µ–є—Б.",
+            en: "CSS controls the look of the UI. Even a few properties can make an interface feel polished.",
+          },
+          points: {
+            ru: [
+              "–§–Њ–љ –Ј–∞–і–∞—С—В—Б—П —З–µ—А–µ–Ј `background` –Є–ї–Є `background-color`.",
+              "–¶–≤–µ—В —В–µ–Ї—Б—В–∞ –Ј–∞–і–∞—С—В—Б—П —З–µ—А–µ–Ј `color`.",
+              "–Ю—В—Б—В—Г–њ—Л –Є —Б–Ї—А—Г–≥–ї–µ–љ–Є–µ –њ–Њ–Љ–Њ–≥–∞—О—В –Ї–љ–Њ–њ–Ї–µ –≤—Л–≥–ї—П–і–µ—В—М –∞–Ї–Ї—Г—А–∞—В–љ–Њ.",
+            ],
+            en: [
+              "Use `background` or `background-color` for the fill.",
+              "Use `color` for text color.",
+              "Padding and border radius make the button feel polished.",
+            ],
+          },
+          tags: {
+            ru: ["background", "padding", "border-radius"],
+            en: ["background", "padding", "border-radius"],
+          },
+          task: {
+            instruction: {
+              ru: "–Ю—Д–Њ—А–Љ–Є `.cta-button`: –і–Њ–±–∞–≤—М —Д–Њ–љ, —Б–≤–µ—В–ї—Л–є —Ж–≤–µ—В —В–µ–Ї—Б—В–∞, `padding` –Є `border-radius`.",
+              en: "Style `.cta-button`: add a background, a light text color, `padding`, and `border-radius`.",
+            },
+            note: {
+              ru: "–С–∞–Ј–∞ –і–ї—П –њ—А–µ–і–њ—А–Њ—Б–Љ–Њ—В—А–∞ –њ–Њ–Ї–∞–Ј–∞–љ–∞ –љ–Є–ґ–µ.",
+              en: "The base markup for the preview is shown below.",
+            },
+            referenceTitle: {
+              ru: "–С–∞–Ј–Њ–≤–∞—П HTML-—А–∞–Ј–Љ–µ—В–Ї–∞",
+              en: "Base HTML markup",
+            },
+            referenceCode: `<button class="cta-button">Join course</button>`,
+            starterCode: `.cta-button {
+
+}`,
+          },
+          preview: {
+            mode: "css",
+            baseHtml: `<button class="cta-button">Join course</button>`,
+            baseCss: `body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: #eff6ff;
+  font-family: Arial, sans-serif;
+}`,
+          },
+        },
+        {
+          id: "css-layout",
+          language: "css",
+          duration: 11,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–†—П–і –Ї–∞—А—В–Њ—З–µ–Ї —З–µ—А–µ–Ј flex",
+            en: "Card row with flex",
+          },
+          summary: {
+            ru: "Flexbox –њ–Њ–Љ–Њ–≥–∞–µ—В –±—Л—Б—В—А–Њ –≤—Л—Б—В—А–Њ–Є—В—М —Н–ї–µ–Љ–µ–љ—В—Л –≤ —А—П–і –Є–ї–Є –Ї–Њ–ї–Њ–љ–Ї—Г –Є —Г–њ—А–∞–≤–ї—П—В—М —А–∞—Б—Б—В–Њ—П–љ–Є–µ–Љ –Љ–µ–ґ–і—Г –љ–Є–Љ–Є.",
+            en: "Flexbox helps you place elements in a row or column and control the spacing between them.",
+          },
+          points: {
+            ru: [
+              "–Ф–ї—П —А—П–і–∞ –љ—Г–ґ–µ–љ `display: flex`.",
+              "–†–∞—Б—Б—В–Њ—П–љ–Є–µ –Љ–µ–ґ–і—Г –Ї–∞—А—В–Њ—З–Ї–∞–Љ–Є —Г–і–Њ–±–љ–Њ –Ј–∞–і–∞–≤–∞—В—М —З–µ—А–µ–Ј `gap`.",
+              "–Ъ–∞—А—В–Њ—З–Ї–Є –ї—Г—З—И–µ —Б–і–µ–ї–∞—В—М —З–Є—В–∞–µ–Љ—Л–Љ–Є —Б –њ–Њ–Љ–Њ—Й—М—О `padding` –Є —Д–Њ–љ–∞.",
+            ],
+            en: [
+              "Use `display: flex` to create a row.",
+              "Use `gap` for spacing between cards.",
+              "Make the cards readable with padding and a background.",
+            ],
+          },
+          tags: {
+            ru: ["flex", "gap", "cards"],
+            en: ["flex", "gap", "cards"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–і–µ–ї–∞–є `.cards` flex-–Ї–Њ–љ—В–µ–є–љ–µ—А–Њ–Љ —Б `gap`, –∞ –і–ї—П `.cards article` –і–Њ–±–∞–≤—М —Д–Њ–љ –Є –≤–љ—Г—В—А–µ–љ–љ–Є–є –Њ—В—Б—В—Г–њ.",
+              en: "Turn `.cards` into a flex container with `gap`, then add a background and padding to `.cards article`.",
+            },
+            note: {
+              ru: "–Ч–і–µ—Б—М –≤–∞–ґ–љ–Њ –Є–Љ–µ–љ–љ–Њ —А–∞—Б–њ–Њ–ї–Њ–ґ–µ–љ–Є–µ —З–µ—А–µ–Ј flex –Є –±–∞–Ј–Њ–≤–Њ–µ –Њ—Д–Њ—А–Љ–ї–µ–љ–Є–µ –Ї–∞—А—В–Њ—З–µ–Ї.",
+              en: "The important part here is the flex layout and basic card styling.",
+            },
+            referenceTitle: {
+              ru: "–С–∞–Ј–Њ–≤–∞—П HTML-—А–∞–Ј–Љ–µ—В–Ї–∞",
+              en: "Base HTML markup",
+            },
+            referenceCode: `<div class="cards">
+  <article>HTML</article>
+  <article>CSS</article>
+  <article>JS</article>
+</div>`,
+            starterCode: `.cards {
+
+}
+
+.cards article {
+
+}`,
+          },
+          preview: {
+            mode: "css",
+            baseHtml: `<div class="cards">
+  <article>HTML</article>
+  <article>CSS</article>
+  <article>JS</article>
+</div>`,
+            baseCss: `body {
+  margin: 0;
+  padding: 32px;
+  background: #f8fafc;
+  font-family: Arial, sans-serif;
+}
+
+.cards article {
+  border: 1px solid #d7dfea;
+}`,
+          },
+        },
+      ],
+    },
+    {
+      id: "javascript",
+      icon: "04",
+      accent: "#ca8a04",
+      title: {
+        ru: "JavaScript",
+        en: "JavaScript",
+      },
+      blurb: {
+        ru: "–Я–µ—А–µ–Љ–µ–љ–љ—Л–µ, DOM –Є —Д—Г–љ–Ї—Ж–Є–Є.",
+        en: "Variables, DOM, and functions.",
+      },
+      lessons: [
+        {
+          id: "js-greeting",
+          language: "javascript",
+          duration: 10,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–Я—А–Є–≤–µ—В—Б—В–≤–Є–µ –≤ –±—А–∞—Г–Ј–µ—А–µ",
+            en: "Greeting in the browser",
+          },
+          summary: {
+            ru: "JavaScript –і–µ–ї–∞–µ—В —Б—В—А–∞–љ–Є—Ж—Г –ґ–Є–≤–Њ–є. –І–µ—А–µ–Ј DOM –Љ–Њ–ґ–љ–Њ –Љ–µ–љ—П—В—М —В–µ–Ї—Б—В –Є –њ–Њ–≤–µ–і–µ–љ–Є–µ —Н–ї–µ–Љ–µ–љ—В–Њ–≤.",
+            en: "JavaScript makes a page interactive. Through the DOM you can update text and behavior on the page.",
+          },
+          points: {
+            ru: [
+              "–Я–µ—А–µ–Љ–µ–љ–љ–∞—П —Е—А–∞–љ–Є—В –і–∞–љ–љ—Л–µ, –љ–∞–њ—А–Є–Љ–µ—А –Є–Љ—П –њ–Њ–ї—М–Ј–Њ–≤–∞—В–µ–ї—П.",
+              "–І–µ—А–µ–Ј `querySelector` –Љ–Њ–ґ–љ–Њ –љ–∞–є—В–Є —Н–ї–µ–Љ–µ–љ—В.",
+              "–°–≤–Њ–є—Б—В–≤–Њ `textContent` –Љ–µ–љ—П–µ—В —В–µ–Ї—Б—В –≤–љ—Г—В—А–Є –±–ї–Њ–Ї–∞.",
+            ],
+            en: [
+              "A variable stores data such as a user's name.",
+              "Use `querySelector` to find an element.",
+              "Use `textContent` to change the text inside a block.",
+            ],
+          },
+          tags: {
+            ru: ["DOM", "querySelector", "textContent"],
+            en: ["DOM", "querySelector", "textContent"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є `userName`, –љ–∞–є–і–Є `#output` –Є –≤—Л–≤–µ–і–Є —В—Г–і–∞ –њ—А–Є–≤–µ—В—Б—В–≤–Є–µ —Б –Є–Љ–µ–љ–µ–Љ.",
+              en: "Create `userName`, find `#output`, and render a greeting with the name inside it.",
+            },
+            note: {
+              ru: "–Я—А–µ–і–њ—А–Њ—Б–Љ–Њ—В—А –≤—Л–њ–Њ–ї–љ–Є—В –Ї–Њ–і –њ—А—П–Љ–Њ –≤ iframe.",
+              en: "The preview runs your code inside an iframe.",
+            },
+            referenceTitle: {
+              ru: "–С–∞–Ј–Њ–≤–∞—П HTML-—А–∞–Ј–Љ–µ—В–Ї–∞",
+              en: "Base HTML markup",
+            },
+            referenceCode: `<div class="demo-card">
+  <h3>Greeting</h3>
+  <div id="output"></div>
+</div>`,
+            starterCode: `const userName = "";
+
+const output = document.querySelector("#output");
+
+// write your greeting here`,
+          },
+          preview: {
+            mode: "javascript",
+            baseHtml: `<div class="demo-card">
+  <h3>Greeting</h3>
+  <div id="output"></div>
+  <div id="__preview_console" class="console">Console ready</div>
+</div>`,
+            baseCss: `body {
+  margin: 0;
+  padding: 24px;
+  background: #fffbeb;
+  font-family: Arial, sans-serif;
+  color: #172033;
+}
+
+.demo-card {
+  max-width: 340px;
+  padding: 20px;
+  border-radius: 18px;
+  background: white;
+  border: 1px solid #f5df94;
+}
+
+#output {
+  min-height: 28px;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.console {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #7c2d12;
+}`,
+          },
+        },
+        {
+          id: "js-function",
+          language: "javascript",
+          duration: 12,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–§—Г–љ–Ї—Ж–Є—П —Б —Г—Б–ї–Њ–≤–Є–µ–Љ",
+            en: "Function with a condition",
+          },
+          summary: {
+            ru: "–§—Г–љ–Ї—Ж–Є—П —Б–Њ–±–Є—А–∞–µ—В –њ–Њ–≤—В–Њ—А—П–µ–Љ—Г—О –ї–Њ–≥–Є–Ї—Г –≤ –Њ–і–љ–Њ–Љ –Љ–µ—Б—В–µ. –Т–Њ–Ј–≤—А–∞—В –Ј–љ–∞—З–µ–љ–Є—П —З–µ—А–µ–Ј `return` –і–µ–ї–∞–µ—В —Д—Г–љ–Ї—Ж–Є—О –њ–Њ–ї–µ–Ј–љ–Њ–є –і–ї—П –і–∞–ї—М–љ–µ–є—И–Є—Е –≤—Л—З–Є—Б–ї–µ–љ–Є–є.",
+            en: "A function keeps reusable logic in one place. Returning a value with `return` makes it useful in later code.",
+          },
+          points: {
+            ru: [
+              "–§—Г–љ–Ї—Ж–Є—П –њ–Њ–ї—Г—З–∞–µ—В –њ–∞—А–∞–Љ–µ—В—А—Л –≤ –Ї—А—Г–≥–ї—Л—Е —Б–Ї–Њ–±–Ї–∞—Е.",
+              "–£—Б–ї–Њ–≤–Є–µ –≤–љ—Г—В—А–Є —Д—Г–љ–Ї—Ж–Є–Є –њ–Њ–Љ–Њ–≥–∞–µ—В –≤–µ—А–љ—Г—В—М —А–∞–Ј–љ—Л–є —А–µ–Ј—Г–ї—М—В–∞—В.",
+              "–Т–Њ–Ј–≤—А–∞—Й–∞–є –Ј–љ–∞—З–µ–љ–Є—П —З–µ—А–µ–Ј `return`, –∞ –љ–µ —В–Њ–ї—М–Ї–Њ —З–µ—А–µ–Ј –≤—Л–≤–Њ–і –љ–∞ —Н–Ї—А–∞–љ.",
+            ],
+            en: [
+              "A function receives parameters inside parentheses.",
+              "A condition inside the function helps return different results.",
+              "Return values with `return`, not only with screen output.",
+            ],
+          },
+          tags: {
+            ru: ["function", "if", "return"],
+            en: ["function", "if", "return"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є —Д—Г–љ–Ї—Ж–Є—О `checkAge(age)`. –Х—Б–ї–Є `age >= 18`, –≤–µ—А–љ–Є `adult`, –Є–љ–∞—З–µ –≤–µ—А–љ–Є `junior`.",
+              en: "Create a `checkAge(age)` function. If `age >= 18`, return `adult`; otherwise return `junior`.",
+            },
+            note: {
+              ru: "–Ч–і–µ—Б—М –≤–∞–ґ–љ—Л —Д—Г–љ–Ї—Ж–Є—П, —Г—Б–ї–Њ–≤–Є–µ, –њ–Њ—А–Њ–≥ `18` –Є –Њ–±–∞ –≤–∞—А–Є–∞–љ—В–∞ `return`.",
+              en: "This task requires a function, a condition, the `18` threshold, and both return values.",
+            },
+            starterCode: `function checkAge(age) {
+
+}`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+      ],
+    },
+    {
+      id: "python",
+      icon: "05",
+      accent: "#7c3aed",
+      title: {
+        ru: "Python",
+        en: "Python",
+      },
+      blurb: {
+        ru: "–°–њ–Є—Б–Ї–Є, —Ж–Є–Ї–ї—Л –Є —Д—Г–љ–Ї—Ж–Є–Є.",
+        en: "Lists, loops, and functions.",
+      },
+      lessons: [
+        {
+          id: "python-loop",
+          language: "python",
+          duration: 9,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–°–њ–Є—Б–Њ–Ї –Є —Ж–Є–Ї–ї",
+            en: "List and loop",
+          },
+          summary: {
+            ru: "–°–њ–Є—Б–Њ–Ї —Е—А–∞–љ–Є—В –љ–µ—Б–Ї–Њ–ї—М–Ї–Њ –Ј–љ–∞—З–µ–љ–Є–є, –∞ —Ж–Є–Ї–ї –њ–Њ–Ј–≤–Њ–ї—П–µ—В –њ—А–Њ–є—В–Є –њ–Њ –Ї–∞–ґ–і–Њ–Љ—Г —Н–ї–µ–Љ–µ–љ—В—Г –±–µ–Ј –њ–Њ–≤—В–Њ—А–µ–љ–Є—П –Ї–Њ–і–∞.",
+            en: "A list stores multiple values, and a loop lets you go through each item without repeating code.",
+          },
+          points: {
+            ru: [
+              "–°–њ–Є—Б–Њ–Ї –≤ Python –Ј–∞–њ–Є—Б—Л–≤–∞—О—В –≤ –Ї–≤–∞–і—А–∞—В–љ—Л—Е —Б–Ї–Њ–±–Ї–∞—Е.",
+              "–¶–Є–Ї–ї `for` —А–∞–±–Њ—В–∞–µ—В –њ–Њ —Б—Е–µ–Љ–µ `for item in list:`.",
+              "–Т–љ—Г—В—А–Є —Ж–Є–Ї–ї–∞ —Г–і–Њ–±–љ–Њ –Є—Б–њ–Њ–ї—М–Ј–Њ–≤–∞—В—М `print()`.",
+            ],
+            en: [
+              "A Python list is written with square brackets.",
+              "A `for` loop follows the `for item in list:` pattern.",
+              "Use `print()` inside the loop to display each item.",
+            ],
+          },
+          tags: {
+            ru: ["list", "for", "print"],
+            en: ["list", "for", "print"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є —Б–њ–Є—Б–Њ–Ї `topics` –Є–Ј —В—А—С—Е IT-—В–µ–Љ –Є –≤—Л–≤–µ–і–Є –Ї–∞–ґ–і—Л–є —Н–ї–µ–Љ–µ–љ—В —З–µ—А–µ–Ј —Ж–Є–Ї–ї `for`.",
+              en: "Create a `topics` list with three IT topics and print each item with a `for` loop.",
+            },
+            note: {
+              ru: "–Я—А–Њ–≤–µ—А–Ї–∞ —Б–Љ–Њ—В—А–Є—В –љ–∞ —Б–њ–Є—Б–Њ–Ї, —Ж–Є–Ї–ї –Є –≤—Л–≤–Њ–і —Н–ї–µ–Љ–µ–љ—В–Њ–≤.",
+              en: "The checker looks for a list, a loop, and printed items.",
+            },
+            starterCode: `topics = []
+
+for item in topics:
+    print(item)`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+        {
+          id: "python-function",
+          language: "python",
+          duration: 10,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–§—Г–љ–Ї—Ж–Є—П calculate_total",
+            en: "The calculate_total function",
+          },
+          summary: {
+            ru: "–§—Г–љ–Ї—Ж–Є—П –≤ Python –љ–∞—З–Є–љ–∞–µ—В—Б—П —Б `def`. –Х—Б–ї–Є —Д—Г–љ–Ї—Ж–Є—П —Б—З–Є—В–∞–µ—В –Ј–љ–∞—З–µ–љ–Є–µ, —А–µ–Ј—Г–ї—М—В–∞—В –ї—Г—З—И–µ –≤–µ—А–љ—Г—В—М —З–µ—А–µ–Ј `return`.",
+            en: "A Python function starts with `def`. If the function computes a value, it should usually return it with `return`.",
+          },
+          points: {
+            ru: [
+              "–Я–∞—А–∞–Љ–µ—В—А—Л –њ–Є—И—Г—В –≤–љ—Г—В—А–Є —Б–Ї–Њ–±–Њ–Ї –њ–Њ—Б–ї–µ –Є–Љ–µ–љ–Є —Д—Г–љ–Ї—Ж–Є–Є.",
+              "–Ю–њ–µ—А–∞—В–Њ—А `return` –Њ—В–і–∞—С—В –≥–Њ—В–Њ–≤—Л–є —А–µ–Ј—Г–ї—М—В–∞—В.",
+              "–£–Љ–љ–Њ–ґ–µ–љ–Є–µ –Ј–∞–њ–Є—Б—Л–≤–∞–µ—В—Б—П —З–µ—А–µ–Ј `*`.",
+            ],
+            en: [
+              "Parameters go inside parentheses after the function name.",
+              "`return` sends back the final result.",
+              "Multiplication is written with `*`.",
+            ],
+          },
+          tags: {
+            ru: ["def", "return", "multiply"],
+            en: ["def", "return", "multiply"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є —Д—Г–љ–Ї—Ж–Є—О `calculate_total(price, quantity)`, –Ї–Њ—В–Њ—А–∞—П –≤–Њ–Ј–≤—А–∞—Й–∞–µ—В `price * quantity`.",
+              en: "Create a `calculate_total(price, quantity)` function that returns `price * quantity`.",
+            },
+            note: {
+              ru: "–Я—А–Њ–≤–µ—А–Ї–∞ –Є—Й–µ—В –њ—А–∞–≤–Є–ї—М–љ–Њ–µ –Є–Љ—П —Д—Г–љ–Ї—Ж–Є–Є, –і–≤–∞ –њ–∞—А–∞–Љ–µ—В—А–∞ –Є `return` —Б —Г–Љ–љ–Њ–ґ–µ–љ–Є–µ–Љ.",
+              en: "The checker expects the right function name, two parameters, and a multiplication inside `return`.",
+            },
+            starterCode: `def calculate_total(price, quantity):
+    return`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+      ],
+    },
+    {
+      id: "java",
+      icon: "06",
+      accent: "#dc2626",
+      title: {
+        ru: "Java",
+        en: "Java",
+      },
+      blurb: {
+        ru: "–Ъ–ї–∞—Б—Б, main –Є —Г—Б–ї–Њ–≤–Є—П.",
+        en: "Class, main, and conditions.",
+      },
+      lessons: [
+        {
+          id: "java-main",
+          language: "java",
+          duration: 10,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "–Ъ–ї–∞—Б—Б Main –Є –≤—Л–≤–Њ–і",
+            en: "Main class and output",
+          },
+          summary: {
+            ru: "–Т Java –Ї–Њ–і –Њ–±—Л—З–љ–Њ –ґ–Є–≤—С—В –≤–љ—Г—В—А–Є –Ї–ї–∞—Б—Б–∞. –Ґ–Њ—З–Ї–∞ –≤—Е–Њ–і–∞ –≤ –њ—А–Њ—Б—В—Л—Е –њ—А–Є–Љ–µ—А–∞—Е –љ–∞—Е–Њ–і–Є—В—Б—П –≤ –Љ–µ—В–Њ–і–µ `main`.",
+            en: "In Java, code usually lives inside a class. In simple examples, the entry point is the `main` method.",
+          },
+          points: {
+            ru: [
+              "–Ш–Љ—П –Ї–ї–∞—Б—Б–∞ –Є –Є–Љ—П —Д–∞–є–ї–∞ —З–∞—Б—В–Њ —Б–Њ–≤–њ–∞–і–∞—О—В.",
+              "–Ь–µ—В–Њ–і `main` –љ—Г–ґ–µ–љ –і–ї—П –Ј–∞–њ—Г—Б–Ї–∞ –њ—А–Њ–≥—А–∞–Љ–Љ—Л.",
+              "–Ф–ї—П –≤—Л–≤–Њ–і–∞ –Є—Б–њ–Њ–ї—М–Ј—Г—О—В `System.out.println()`.",
+            ],
+            en: [
+              "The class name and file name often match.",
+              "The `main` method is needed to start the program.",
+              "`System.out.println()` is used for output.",
+            ],
+          },
+          tags: {
+            ru: ["class", "main", "println"],
+            en: ["class", "main", "println"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є –Ї–ї–∞—Б—Б `Main` —Б –Љ–µ—В–Њ–і–Њ–Љ `main` –Є –≤—Л–≤–µ–і–Є —Б—В—А–Њ–Ї—Г `Hello, coder!`.",
+              en: "Create a `Main` class with a `main` method and print `Hello, coder!`.",
+            },
+            note: {
+              ru: "–Я—А–Њ–≤–µ—А–Ї–∞ –Њ—Ж–µ–љ–Є–≤–∞–µ—В –±–∞–Ј–Њ–≤—Г—О Java-—Б—В—А—Г–Ї—В—Г—А—Г –Є –≤—Л–≤–Њ–і —Б—В—А–Њ–Ї–Є.",
+              en: "The checker looks for the basic Java structure and the printed string.",
+            },
+            starterCode: `public class Main {
+    public static void main(String[] args) {
+
+    }
+}`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+        {
+          id: "java-condition",
+          language: "java",
+          duration: 12,
+          difficulty: {
+            ru: "–°—В–∞—А—В",
+            en: "Starter",
+          },
+          title: {
+            ru: "if / else –≤ Java",
+            en: "if / else in Java",
+          },
+          summary: {
+            ru: "–£—Б–ї–Њ–≤–љ—Л–µ –Ї–Њ–љ—Б—В—А—Г–Ї—Ж–Є–Є –≤ Java –њ–Њ—Е–Њ–ґ–Є –љ–∞ JavaScript, –љ–Њ –Њ–±—Л—З–љ–Њ —В—А–µ–±—Г—О—В —Д–Є–≥—Г—А–љ—Л–µ —Б–Ї–Њ–±–Ї–Є –Є —Б—В—А–Њ–≥—Г—О —Б—В—А—Г–Ї—В—Г—А—Г –±–ї–Њ–Ї–∞.",
+            en: "Conditional logic in Java looks similar to JavaScript, but it usually relies on braces and a stricter block structure.",
+          },
+          points: {
+            ru: [
+              "–Я–µ—А–µ–Љ–µ–љ–љ—Г—О –Љ–Њ–ґ–љ–Њ —Б–Њ–Ј–і–∞—В—М –Ї–∞–Ї `int age = 18;`.",
+              "–£—Б–ї–Њ–≤–Є–µ —Б—В–∞–≤–Є—В—Б—П –≤ –Ї—А—Г–≥–ї—Л–µ —Б–Ї–Њ–±–Ї–Є –њ–Њ—Б–ї–µ `if`.",
+              "–Ъ–∞–ґ–і—Г—О –≤–µ—В–Ї—Г —Г–і–Њ–±–љ–Њ –Њ—Д–Њ—А–Љ–ї—П—В—М –≤ —Д–Є–≥—Г—А–љ—Л—Е —Б–Ї–Њ–±–Ї–∞—Е.",
+            ],
+            en: [
+              "You can create a variable like `int age = 18;`.",
+              "The condition goes inside parentheses after `if`.",
+              "It is best to wrap each branch in braces.",
+            ],
+          },
+          tags: {
+            ru: ["int", "if", "else"],
+            en: ["int", "if", "else"],
+          },
+          task: {
+            instruction: {
+              ru: "–°–Њ–Ј–і–∞–є `int age = 18;`. –Х—Б–ї–Є `age >= 18`, –≤—Л–≤–µ–і–Є `Access granted`, –Є–љ–∞—З–µ –≤—Л–≤–µ–і–Є `Too early`.",
+              en: "Create `int age = 18;`. If `age >= 18`, print `Access granted`; otherwise print `Too early`.",
+            },
+            note: {
+              ru: "–Я—А–Њ–≤–µ—А–Ї–∞ –Є—Й–µ—В –њ–µ—А–µ–Љ–µ–љ–љ—Г—О, —Г—Б–ї–Њ–≤–Є–µ, –≤–µ—В–Ї—Г `else` –Є –Њ–±–∞ –≤—Л–≤–Њ–і–∞.",
+              en: "The checker expects the variable, the condition, the `else` branch, and both outputs.",
+            },
+            starterCode: `public class Main {
+    public static void main(String[] args) {
+        int age = 18;
+
+    }
+}`,
+          },
+          preview: {
+            mode: "none",
+          },
+        },
+      ],
+    },
+  ],
+};
+
 </script>
-</body>
+    <script>
+const STORAGE_KEY = "it-start-lab-state-v1";
+const PASS_SCORE = 75;
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (!window.TRAINER_APP) return;
+  initTrainer();
+});
+
+function initTrainer() {
+  const app = window.TRAINER_APP;
+  const topics = app.topics;
+  const lessons = flattenLessons(topics);
+  const lessonMap = Object.fromEntries(lessons.map((lesson) => [lesson.id, lesson]));
+  const topicMap = Object.fromEntries(topics.map((topic) => [topic.id, topic]));
+  const ui = app.ui;
+
+  const elements = {
+    brandTitle: document.querySelector("#brandTitle"),
+    brandSubtitle: document.querySelector("#brandSubtitle"),
+    heroKicker: document.querySelector("#heroKicker"),
+    heroTitle: document.querySelector("#heroTitle"),
+    heroLead: document.querySelector("#heroLead"),
+    continueBtn: document.querySelector("#continueBtn"),
+    randomLessonBtn: document.querySelector("#randomLessonBtn"),
+    topicsCount: document.querySelector("#topicsCount"),
+    lessonsCount: document.querySelector("#lessonsCount"),
+    completedCount: document.querySelector("#completedCount"),
+    topicsStatLabel: document.querySelector("#topicsStatLabel"),
+    lessonsStatLabel: document.querySelector("#lessonsStatLabel"),
+    completedStatLabel: document.querySelector("#completedStatLabel"),
+    topicsKicker: document.querySelector("#topicsKicker"),
+    topicsTitle: document.querySelector("#topicsTitle"),
+    topicsLead: document.querySelector("#topicsLead"),
+    progressKicker: document.querySelector("#progressKicker"),
+    progressTitle: document.querySelector("#progressTitle"),
+    progressLead: document.querySelector("#progressLead"),
+    overallProgressTitle: document.querySelector("#overallProgressTitle"),
+    overallProgressText: document.querySelector("#overallProgressText"),
+    overallProgressRing: document.querySelector("#overallProgressRing"),
+    overallProgressValue: document.querySelector("#overallProgressValue"),
+    savedPill: document.querySelector("#savedPill"),
+    topicCards: document.querySelector("#topicCards"),
+    topicProgressList: document.querySelector("#topicProgressList"),
+    lessonKicker: document.querySelector("#lessonKicker"),
+    activePath: document.querySelector("#activePath"),
+    lessonTitle: document.querySelector("#lessonTitle"),
+    lessonMeta: document.querySelector("#lessonMeta"),
+    miniLessonTitle: document.querySelector("#miniLessonTitle"),
+    lessonTypeBadge: document.querySelector("#lessonTypeBadge"),
+    lessonSummary: document.querySelector("#lessonSummary"),
+    lessonPoints: document.querySelector("#lessonPoints"),
+    lessonTags: document.querySelector("#lessonTags"),
+    practiceTitle: document.querySelector("#practiceTitle"),
+    practiceStatus: document.querySelector("#practiceStatus"),
+    lessonTask: document.querySelector("#lessonTask"),
+    starterNote: document.querySelector("#starterNote"),
+    editorLabel: document.querySelector("#editorLabel"),
+    answerEditor: document.querySelector("#answerEditor"),
+    runPreviewBtn: document.querySelector("#runPreviewBtn"),
+    checkAnswerBtn: document.querySelector("#checkAnswerBtn"),
+    resetLessonBtn: document.querySelector("#resetLessonBtn"),
+    prevLessonBtn: document.querySelector("#prevLessonBtn"),
+    nextLessonBtn: document.querySelector("#nextLessonBtn"),
+    previewTitle: document.querySelector("#previewTitle"),
+    previewStatus: document.querySelector("#previewStatus"),
+    previewEmpty: document.querySelector("#previewEmpty"),
+    previewWrap: document.querySelector("#previewWrap"),
+    previewFrame: document.querySelector("#previewFrame"),
+    aiTitle: document.querySelector("#aiTitle"),
+    lastCheckLabel: document.querySelector("#lastCheckLabel"),
+    feedbackEmpty: document.querySelector("#feedbackEmpty"),
+    feedbackContent: document.querySelector("#feedbackContent"),
+    scoreBadge: document.querySelector("#scoreBadge"),
+    scoreValue: document.querySelector("#scoreValue"),
+    feedbackState: document.querySelector("#feedbackState"),
+    feedbackHeadline: document.querySelector("#feedbackHeadline"),
+    feedbackSummary: document.querySelector("#feedbackSummary"),
+    checklistTitle: document.querySelector("#checklistTitle"),
+    tipsTitle: document.querySelector("#tipsTitle"),
+    feedbackChecklist: document.querySelector("#feedbackChecklist"),
+    feedbackTips: document.querySelector("#feedbackTips"),
+    footerNote: document.querySelector("#footerNote"),
+    resetProgressBtn: document.querySelector("#resetProgressBtn"),
+  };
+
+  let state = loadState(lessons);
+  let previewTimer = null;
+
+  bindEvents();
+  renderApp();
+
+  function bindEvents() {
+    document.querySelectorAll("[data-lang-option]").forEach((button) => {
+      button.addEventListener("click", () => {
+        if (button.dataset.langOption === state.lang) return;
+        state.lang = button.dataset.langOption;
+        saveState(state);
+        renderApp();
+      });
+    });
+
+    elements.continueBtn.addEventListener("click", () => {
+      const lessonId = findFirstIncompleteLessonId() || state.activeLessonId;
+      selectLesson(lessonId);
+    });
+
+    elements.randomLessonBtn.addEventListener("click", () => {
+      const pool = lessons.filter((lesson) => lesson.id !== state.activeLessonId);
+      const choice = pool[Math.floor(Math.random() * pool.length)] || lessons[0];
+      selectLesson(choice.id);
+    });
+
+    elements.resetProgressBtn.addEventListener("click", () => {
+      if (!window.confirm(t(ui.resetProgressConfirm))) return;
+      state = {
+        lang: state.lang,
+        activeLessonId: lessons[0].id,
+        progress: {},
+      };
+      saveState(state);
+      renderApp();
+    });
+
+    elements.prevLessonBtn.addEventListener("click", () => {
+      const index = lessons.findIndex((lesson) => lesson.id === state.activeLessonId);
+      if (index > 0) selectLesson(lessons[index - 1].id);
+    });
+
+    elements.nextLessonBtn.addEventListener("click", () => {
+      const index = lessons.findIndex((lesson) => lesson.id === state.activeLessonId);
+      if (index < lessons.length - 1) selectLesson(lessons[index + 1].id);
+    });
+
+    elements.answerEditor.addEventListener("input", () => {
+      const lesson = getActiveLesson();
+      const record = getProgressRecord(lesson.id);
+      record.answer = elements.answerEditor.value;
+      record.completed = false;
+      record.lastFeedback = null;
+      record.checkedAt = null;
+      ensureProgressContainer(lesson.id, record);
+      saveState(state);
+      renderPracticeStatus(lesson);
+      renderTopicCards();
+      renderProgressPanel();
+      renderFeedback(lesson);
+      schedulePreviewRefresh(lesson);
+    });
+
+    elements.runPreviewBtn.addEventListener("click", () => {
+      renderPreview(getActiveLesson(), true);
+    });
+
+    elements.checkAnswerBtn.addEventListener("click", () => {
+      const lesson = getActiveLesson();
+      const answer = elements.answerEditor.value;
+      const feedback = evaluateLesson(lesson, answer);
+      const record = getProgressRecord(lesson.id);
+
+      record.answer = answer;
+      record.bestScore = Math.max(record.bestScore || 0, feedback.score);
+      record.completed = feedback.score >= PASS_SCORE;
+      record.lastFeedback = feedback;
+      record.checkedAt = Date.now();
+
+      ensureProgressContainer(lesson.id, record);
+      saveState(state);
+
+      renderTopicCards();
+      renderProgressPanel();
+      renderPracticeStatus(lesson);
+      renderFeedback(lesson);
+    });
+
+    elements.resetLessonBtn.addEventListener("click", () => {
+      const lesson = getActiveLesson();
+      const record = getProgressRecord(lesson.id);
+      record.answer = lesson.task.starterCode;
+      record.completed = false;
+      record.lastFeedback = null;
+      record.checkedAt = null;
+      ensureProgressContainer(lesson.id, record);
+      saveState(state);
+      elements.answerEditor.value = lesson.task.starterCode;
+      renderPracticeStatus(lesson);
+      renderTopicCards();
+      renderProgressPanel();
+      renderFeedback(lesson);
+      renderPreview(lesson, true);
+    });
+
+    elements.topicCards.addEventListener("click", (event) => {
+      const lessonButton = event.target.closest("[data-lesson-select]");
+      if (lessonButton) {
+        selectLesson(lessonButton.dataset.lessonSelect);
+        return;
+      }
+
+      const topicButton = event.target.closest("[data-topic-select]");
+      if (topicButton) {
+        const topic = topicMap[topicButton.dataset.topicSelect];
+        const nextLesson = findFirstIncompleteLessonInTopic(topic) || topic.lessons[0];
+        selectLesson(nextLesson.id);
+      }
+    });
+  }
+
+  function renderApp() {
+    renderStaticCopy();
+    renderLangSwitch();
+    renderTopicCards();
+    renderProgressPanel();
+    renderLesson();
+    renderFeedback(getActiveLesson());
+  }
+
+  function renderStaticCopy() {
+    document.documentElement.lang = state.lang;
+    document.title = t(ui.brandTitle) + " | " + t(ui.heroTitle);
+
+    elements.brandTitle.textContent = t(ui.brandTitle);
+    elements.brandSubtitle.textContent = t(ui.brandSubtitle);
+    elements.heroKicker.textContent = t(ui.heroKicker);
+    elements.heroTitle.textContent = t(ui.heroTitle);
+    elements.heroLead.textContent = t(ui.heroLead);
+    elements.continueBtn.textContent = t(ui.continueBtn);
+    elements.randomLessonBtn.textContent = t(ui.randomLessonBtn);
+    elements.topicsStatLabel.textContent = t(ui.statTopics);
+    elements.lessonsStatLabel.textContent = t(ui.statLessons);
+    elements.completedStatLabel.textContent = t(ui.statCompleted);
+    elements.topicsKicker.textContent = t(ui.topicsKicker);
+    elements.topicsTitle.textContent = t(ui.topicsTitle);
+    elements.topicsLead.textContent = t(ui.topicsLead);
+    elements.progressKicker.textContent = t(ui.progressKicker);
+    elements.progressTitle.textContent = t(ui.progressTitle);
+    elements.progressLead.textContent = t(ui.progressLead);
+    elements.overallProgressTitle.textContent = t(ui.overallProgressTitle);
+    elements.savedPill.textContent = t(ui.savedPill);
+    elements.lessonKicker.textContent = t(ui.lessonKicker);
+    elements.miniLessonTitle.textContent = t(ui.miniLessonTitle);
+    elements.practiceTitle.textContent = t(ui.practiceTitle);
+    elements.editorLabel.textContent = t(ui.editorLabel);
+    elements.runPreviewBtn.textContent = t(ui.runPreviewBtn);
+    elements.checkAnswerBtn.textContent = t(ui.checkAnswerBtn);
+    elements.resetLessonBtn.textContent = t(ui.resetLessonBtn);
+    elements.prevLessonBtn.textContent = t(ui.prevLessonBtn);
+    elements.nextLessonBtn.textContent = t(ui.nextLessonBtn);
+    elements.previewTitle.textContent = t(ui.previewTitle);
+    elements.previewEmpty.textContent = t(ui.previewEmpty);
+    elements.aiTitle.textContent = t(ui.aiTitle);
+    elements.feedbackEmpty.textContent = t(ui.feedbackEmpty);
+    elements.checklistTitle.textContent = t(ui.checklistTitle);
+    elements.tipsTitle.textContent = t(ui.tipsTitle);
+    elements.footerNote.textContent = t(ui.footerNote);
+    elements.resetProgressBtn.textContent = t(ui.resetProgressBtn);
+  }
+
+  function renderLangSwitch() {
+    document.querySelectorAll("[data-lang-option]").forEach((button) => {
+      button.classList.toggle("is-active", button.dataset.langOption === state.lang);
+      button.setAttribute(
+        "aria-pressed",
+        button.dataset.langOption === state.lang ? "true" : "false"
+      );
+    });
+  }
+
+  function renderTopicCards() {
+    const activeLesson = getActiveLesson();
+
+    elements.topicCards.innerHTML = topics
+      .map((topic) => {
+        const completed = countCompletedLessons(topic.lessons);
+        const total = topic.lessons.length;
+        const isActive = topic.id === activeLesson.topicId;
+
+        return `
+          <article class="topic-card${isActive ? " is-active" : ""}" style="--topic-accent:${topic.accent}">
+            <button class="topic-card__head" type="button" data-topic-select="${topic.id}">
+              <span class="topic-icon">${topic.icon}</span>
+              <span class="topic-card__copy">
+                <strong>${escapeHtml(t(topic.title))}</strong>
+                <small>${escapeHtml(t(topic.blurb))}</small>
+              </span>
+              <span class="topic-card__count">${completed}/${total}</span>
+            </button>
+            <div class="topic-card__lessons">
+              ${topic.lessons
+                .map((lesson, index) => {
+                  const status = getLessonStatus(lesson.id);
+                  const isCurrent = lesson.id === activeLesson.id;
+
+                  return `
+                    <button
+                      class="lesson-pill lesson-pill--${status}${isCurrent ? " is-current" : ""}"
+                      type="button"
+                      data-lesson-select="${lesson.id}"
+                    >
+                      <span class="lesson-pill__number">${String(index + 1).padStart(2, "0")}</span>
+                      <span class="lesson-pill__text">${escapeHtml(t(lesson.title))}</span>
+                    </button>
+                  `;
+                })
+                .join("")}
+            </div>
+          </article>
+        `;
+      })
+      .join("");
+  }
+
+  function renderProgressPanel() {
+    const totalLessons = lessons.length;
+    const completedLessons = lessons.filter((lesson) => getProgressRecord(lesson.id).completed).length;
+    const progressValue = Math.round((completedLessons / totalLessons) * 100);
+
+    elements.topicsCount.textContent = String(topics.length);
+    elements.lessonsCount.textContent = String(totalLessons);
+    elements.completedCount.textContent = String(completedLessons);
+    elements.overallProgressValue.textContent = `${progressValue}%`;
+    elements.overallProgressText.textContent = `${completedLessons}/${totalLessons} ${t(
+      ui.completedFromTotal
+    )}`;
+    elements.overallProgressRing.style.setProperty("--progress", `${progressValue}%`);
+
+    elements.topicProgressList.innerHTML = topics
+      .map((topic) => {
+        const completed = countCompletedLessons(topic.lessons);
+        const total = topic.lessons.length;
+        const ratio = Math.round((completed / total) * 100);
+
+        return `
+          <div class="topic-progress-row">
+            <div class="topic-progress-row__top">
+              <span>${escapeHtml(t(topic.title))}</span>
+              <strong>${completed}/${total}</strong>
+            </div>
+            <div class="topic-progress-row__bar">
+              <span style="width:${ratio}%; background:${topic.accent};"></span>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
+  }
+
+  function renderLesson() {
+    const lesson = getActiveLesson();
+    const answer = getDraft(lesson);
+    const lessonIndex = lessons.findIndex((item) => item.id === lesson.id);
+
+    elements.activePath.textContent = `${t(lesson.topicTitle)} / ${t(lesson.title)}`;
+    elements.lessonTitle.textContent = t(lesson.title);
+    elements.lessonMeta.textContent = `${t(ui.levelLabel)}: ${t(lesson.difficulty)} вАҐ ${t(
+      ui.durationLabel
+    )}: ${lesson.duration} ${t(ui.minutes)} вАҐ ${t(ui.languageLabel)}: ${formatTrackLabel(
+      lesson.language
+    )}`;
+    elements.lessonTypeBadge.textContent = formatTrackLabel(lesson.language);
+    elements.lessonSummary.textContent = t(lesson.summary);
+    elements.lessonPoints.innerHTML = t(lesson.points)
+      .map((point) => `<li>${escapeHtml(point)}</li>`)
+      .join("");
+    elements.lessonTags.innerHTML = t(lesson.tags)
+      .map((tag) => `<span>${escapeHtml(tag)}</span>`)
+      .join("");
+    elements.lessonTask.textContent = t(lesson.task.instruction).replace(/`/g, "");
+    elements.answerEditor.value = answer;
+
+    renderStarterNote(lesson);
+    renderPracticeStatus(lesson);
+    renderPreview(lesson, false);
+
+    elements.prevLessonBtn.disabled = lessonIndex <= 0;
+    elements.nextLessonBtn.disabled = lessonIndex >= lessons.length - 1;
+  }
+
+  function renderStarterNote(lesson) {
+    const noteParts = [];
+    if (lesson.task.note) {
+      noteParts.push(`<p>${escapeHtml(t(lesson.task.note))}</p>`);
+    }
+
+    if (lesson.task.referenceCode) {
+      noteParts.push(`
+        <div class="starter-reference">
+          <strong>${escapeHtml(t(lesson.task.referenceTitle))}</strong>
+          <pre><code>${escapeHtml(lesson.task.referenceCode)}</code></pre>
+        </div>
+      `);
+    }
+
+    elements.starterNote.innerHTML = noteParts.join("");
+    elements.starterNote.hidden = noteParts.length === 0;
+  }
+
+  function renderPracticeStatus(lesson) {
+    const record = getProgressRecord(lesson.id);
+    const hasDraft = hasCustomDraft(lesson.id);
+    let text = t(ui.practicePending);
+
+    if (record.completed) {
+      text = t(ui.practiceDone);
+    } else if (hasDraft) {
+      text = t(ui.practiceDraft);
+    }
+
+    elements.practiceStatus.textContent = text;
+  }
+
+  function renderPreview(lesson, forceStatus) {
+    const previewMode = lesson.preview?.mode || "none";
+    const hasPreview = previewMode !== "none";
+    elements.runPreviewBtn.disabled = !hasPreview;
+
+    if (!hasPreview) {
+      elements.previewWrap.hidden = true;
+      elements.previewEmpty.hidden = false;
+      elements.previewStatus.textContent = t(ui.previewUnavailable);
+      elements.previewFrame.srcdoc = "";
+      return;
+    }
+
+    const answer = elements.answerEditor.value || lesson.task.starterCode;
+    elements.previewWrap.hidden = false;
+    elements.previewEmpty.hidden = true;
+    elements.previewFrame.srcdoc = buildPreviewDocument(lesson, answer);
+    if (forceStatus || !elements.previewStatus.textContent) {
+      elements.previewStatus.textContent = t(ui.previewReady);
+    } else {
+      elements.previewStatus.textContent = t(ui.previewReady);
+    }
+  }
+
+  function renderFeedback(lesson) {
+    const record = getProgressRecord(lesson.id);
+    const feedback = record.lastFeedback;
+
+    if (!feedback) {
+      elements.feedbackEmpty.hidden = false;
+      elements.feedbackContent.hidden = true;
+      elements.lastCheckLabel.textContent = "";
+      return;
+    }
+
+    elements.feedbackEmpty.hidden = true;
+    elements.feedbackContent.hidden = false;
+    elements.scoreValue.textContent = `${feedback.score}%`;
+    elements.scoreBadge.style.setProperty("--score", `${feedback.score}%`);
+    elements.feedbackState.textContent = getFeedbackStateLabel(feedback.status);
+    elements.feedbackHeadline.textContent = getFeedbackHeadline(lesson, feedback.status);
+    elements.feedbackSummary.textContent = t(feedback.summary);
+    elements.lastCheckLabel.textContent = `${t(ui.lastCheckPrefix)}: ${formatDate(record.checkedAt)}`;
+
+    elements.feedbackChecklist.innerHTML = feedback.checks
+      .map(
+        (check) => `
+          <article class="feedback-item feedback-item--${check.passed ? "pass" : "fail"}">
+            <span class="feedback-item__marker">${check.passed ? t(ui.markerPass) : t(ui.markerFix)}</span>
+            <div>
+              <strong>${escapeHtml(t(check.label))}</strong>
+              <p>${escapeHtml(t(check.hint))}</p>
+            </div>
+          </article>
+        `
+      )
+      .join("");
+
+    elements.feedbackTips.innerHTML = feedback.tips
+      .map(
+        (tip) => `
+          <article class="feedback-item feedback-item--tip">
+            <span class="feedback-item__marker">${t(ui.markerTip)}</span>
+            <div>
+              <p>${escapeHtml(t(tip))}</p>
+            </div>
+          </article>
+        `
+      )
+      .join("");
+  }
+
+  function selectLesson(lessonId) {
+    if (!lessonMap[lessonId]) return;
+    state.activeLessonId = lessonId;
+    saveState(state);
+    renderTopicCards();
+    renderLesson();
+    renderFeedback(getActiveLesson());
+  }
+
+  function getActiveLesson() {
+    return lessonMap[state.activeLessonId] || lessons[0];
+  }
+
+  function getProgressRecord(lessonId) {
+    return state.progress[lessonId] || {
+      answer: "",
+      bestScore: 0,
+      completed: false,
+      lastFeedback: null,
+      checkedAt: null,
+    };
+  }
+
+  function ensureProgressContainer(lessonId, record) {
+    state.progress[lessonId] = {
+      answer: record.answer || "",
+      bestScore: record.bestScore || 0,
+      completed: Boolean(record.completed),
+      lastFeedback: record.lastFeedback || null,
+      checkedAt: record.checkedAt || null,
+    };
+  }
+
+  function getDraft(lesson) {
+    const saved = getProgressRecord(lesson.id).answer;
+    return saved || lesson.task.starterCode;
+  }
+
+  function hasCustomDraft(lessonId) {
+    const lesson = lessonMap[lessonId];
+    const saved = getProgressRecord(lessonId).answer;
+    return Boolean(saved && saved.trim() && saved !== lesson.task.starterCode);
+  }
+
+  function findFirstIncompleteLessonId() {
+    const next = lessons.find((lesson) => !getProgressRecord(lesson.id).completed);
+    return next ? next.id : lessons[0].id;
+  }
+
+  function findFirstIncompleteLessonInTopic(topic) {
+    return topic.lessons.find((lesson) => !getProgressRecord(lesson.id).completed);
+  }
+
+  function getLessonStatus(lessonId) {
+    const record = getProgressRecord(lessonId);
+    if (record.completed) return "done";
+    if (hasCustomDraft(lessonId)) return "draft";
+    return "start";
+  }
+
+  function countCompletedLessons(topicLessons) {
+    return topicLessons.filter((lesson) => getProgressRecord(lesson.id).completed).length;
+  }
+
+  function schedulePreviewRefresh(lesson) {
+    if (!lesson.preview || lesson.preview.mode === "none") return;
+    window.clearTimeout(previewTimer);
+    previewTimer = window.setTimeout(() => {
+      renderPreview(lesson, false);
+    }, 240);
+  }
+
+  function t(value) {
+    if (Array.isArray(value)) return value;
+    if (value && typeof value === "object") return value[state.lang] || value.ru || value.en || "";
+    return value || "";
+  }
+
+  function formatTrackLabel(language) {
+    const labels = {
+      logic: { ru: "–Ы–Њ–≥–Є–Ї–∞", en: "Logic" },
+      html: { ru: "HTML", en: "HTML" },
+      css: { ru: "CSS", en: "CSS" },
+      javascript: { ru: "JavaScript", en: "JavaScript" },
+      python: { ru: "Python", en: "Python" },
+      java: { ru: "Java", en: "Java" },
+    };
+    return t(labels[language]);
+  }
+
+  function getFeedbackStateLabel(status) {
+    if (status === "strong") return t(ui.feedbackStrong);
+    if (status === "almost") return t(ui.feedbackAlmost);
+    return t(ui.feedbackRetry);
+  }
+
+  function getFeedbackHeadline(lesson, status) {
+    if (status === "strong") {
+      return state.lang === "ru"
+        ? `${t(lesson.title)}: —А–µ—И–µ–љ–Є–µ –њ—А–Є–љ—П—В–Њ`
+        : `${t(lesson.title)}: accepted`;
+    }
+
+    if (status === "almost") {
+      return state.lang === "ru"
+        ? `${t(lesson.title)}: –Њ—Б—В–∞–ї–Њ—Б—М –љ–µ–Љ–љ–Њ–≥–Њ`
+        : `${t(lesson.title)}: almost done`;
+    }
+
+    return state.lang === "ru"
+      ? `${t(lesson.title)}: –љ—Г–ґ–љ–Њ —Г—Б–Є–ї–Є—В—М –Њ—Б–љ–Њ–≤—Г`
+      : `${t(lesson.title)}: strengthen the basics`;
+  }
+}
+
+function flattenLessons(topics) {
+  return topics.flatMap((topic) =>
+    topic.lessons.map((lesson) => ({
+      ...lesson,
+      topicId: topic.id,
+      topicTitle: topic.title,
+      topicAccent: topic.accent,
+    }))
+  );
+}
+
+function loadState(lessons) {
+  try {
+    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+    return {
+      lang: raw.lang === "en" ? "en" : "ru",
+      activeLessonId: lessons.some((lesson) => lesson.id === raw.activeLessonId)
+        ? raw.activeLessonId
+        : lessons[0].id,
+      progress: raw.progress && typeof raw.progress === "object" ? raw.progress : {},
+    };
+  } catch (_error) {
+    return {
+      lang: "ru",
+      activeLessonId: lessons[0].id,
+      progress: {},
+    };
+  }
+}
+
+function saveState(state) {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+function buildPreviewDocument(lesson, answer) {
+  const preview = lesson.preview || { mode: "none" };
+  const baseCss = preview.baseCss || "";
+  const safeAnswer = answer || "";
+
+  if (preview.mode === "html") {
+    return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>${baseCss}</style>
+  </head>
+  <body>
+    ${safeAnswer}
+  </body>
+</html>`;
+  }
+
+  if (preview.mode === "css") {
+    return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>${baseCss}
+${safeAnswer}</style>
+  </head>
+  <body>
+    ${preview.baseHtml || ""}
+  </body>
+</html>`;
+  }
+
+  if (preview.mode === "javascript") {
+    const safeScript = sanitizeScript(safeAnswer);
+    return `<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>${baseCss}</style>
+  </head>
+  <body>
+    ${preview.baseHtml || ""}
+    <script>
+      const __consoleTarget = document.getElementById("__preview_console");
+      const __writeConsole = (message) => {
+        if (__consoleTarget) __consoleTarget.textContent = String(message);
+      };
+      const console = {
+        log: (...args) => __writeConsole(args.join(" "))
+      };
+      window.onerror = function(message) {
+        __writeConsole("Error: " + message);
+      };
+      try {
+        ${safeScript}
+        __writeConsole("Script executed");
+      } catch (error) {
+        __writeConsole("Error: " + error.message);
+      }
+    </script>
+  </body>
+</html>`;
+  }
+
+  return "";
+}
+
+function sanitizeScript(code) {
+  return String(code).replace(/<\/script/gi, "<\\/script");
+}
+
+function evaluateLesson(lesson, answer) {
+  const evaluators = {
+    "basics-variables": evaluateBasicsVariables,
+    "basics-condition": evaluateBasicsCondition,
+    "html-card": evaluateHtmlCard,
+    "html-form": evaluateHtmlForm,
+    "css-button": evaluateCssButton,
+    "css-layout": evaluateCssLayout,
+    "js-greeting": evaluateJsGreeting,
+    "js-function": evaluateJsFunction,
+    "python-loop": evaluatePythonLoop,
+    "python-function": evaluatePythonFunction,
+    "java-main": evaluateJavaMain,
+    "java-condition": evaluateJavaCondition,
+  };
+
+  const checks = (evaluators[lesson.id] || evaluateFallback)(answer);
+  const passedCount = checks.filter((check) => check.passed).length;
+  const score = Math.round((passedCount / checks.length) * 100);
+  const status = score >= PASS_SCORE ? "strong" : score >= 50 ? "almost" : "retry";
+
+  return {
+    score,
+    status,
+    checks,
+    tips: buildTips(checks, status),
+    summary:
+      status === "strong"
+        ? {
+            ru: "AI –≤–Є–і–Є—В –Ї–ї—О—З–µ–≤—Л–µ –Ї–Њ–љ—Б—В—А—Г–Ї—Ж–Є–Є. –Ь–Њ–ґ–љ–Њ –њ–µ—А–µ—Е–Њ–і–Є—В—М –і–∞–ї—М—И–µ –Є–ї–Є —Г–ї—Г—З—И–Є—В—М —Б—В–Є–ї—М –њ–Њ –ґ–µ–ї–∞–љ–Є—О.",
+            en: "The AI checker sees the key pieces. You can move on or polish the style if you want.",
+          }
+        : status === "almost"
+          ? {
+              ru: "–Ю—Б–љ–Њ–≤–∞ —Г–ґ–µ –µ—Б—В—М, –љ–Њ –љ–µ —Е–≤–∞—В–∞–µ—В –љ–µ—Б–Ї–Њ–ї—М–Ї–Є—Е –Њ–±—П–Ј–∞—В–µ–ї—М–љ—Л—Е —Н–ї–µ–Љ–µ–љ—В–Њ–≤.",
+              en: "The base is there, but a few required elements are still missing.",
+            }
+          : {
+              ru: "–°–µ–є—З–∞—Б –≤ —А–µ—И–µ–љ–Є–Є –љ–µ —Е–≤–∞—В–∞–µ—В –±–∞–Ј–Њ–≤—Л—Е —З–∞—Б—В–µ–є. –Ш—Б–њ—А–∞–≤—М –њ—Г–љ–Ї—В—Л –љ–Є–ґ–µ –Є –њ—А–Њ–≤–µ—А—М –µ—Й—С —А–∞–Ј.",
+              en: "The solution is still missing core parts. Fix the items below and run the check again.",
+            },
+  };
+}
+
+function buildTips(checks, status) {
+  const missing = checks.filter((check) => !check.passed).map((check) => check.hint);
+  if (missing.length > 0) return missing.slice(0, 3);
+
+  if (status === "strong") {
+    return [
+      {
+        ru: "–Ь–Њ–ґ–љ–Њ –њ–µ—А–µ—Е–Њ–і–Є—В—М –Ї —Б–ї–µ–і—Г—О—Й–µ–Љ—Г —Г—А–Њ–Ї—Г.",
+        en: "You can move to the next lesson.",
+      },
+      {
+        ru: "–Х—Б–ї–Є —Е–Њ—З–µ—И—М, —Г–ї—Г—З—И–Є —З–Є—В–∞–µ–Љ–Њ—Б—В—М –Є–Љ—С–љ –Є –Њ—В—Б—В—Г–њ–Њ–≤.",
+        en: "If you want, improve the readability of names and spacing.",
+      },
+    ];
+  }
+
+  return [
+    {
+      ru: "–Ф–Њ–±–∞–≤—М –±–Њ–ї—М—И–µ –Ї–Њ–љ–Ї—А–µ—В–Є–Ї–Є –Є –њ—А–Њ–≤–µ—А—М —А–µ—И–µ–љ–Є–µ –µ—Й—С —А–∞–Ј.",
+      en: "Add a bit more detail and run the check again.",
+    },
+  ];
+}
+
+function createCheck(passed, label, hint) {
+  return { passed, label, hint };
+}
+
+function evaluateFallback(answer) {
+  const hasContent = Boolean(answer.trim());
+  return [
+    createCheck(
+      hasContent,
+      {
+        ru: "–Ю—В–≤–µ—В –љ–µ –њ—Г—Б—В–Њ–є",
+        en: "The answer is not empty",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —А–µ—И–µ–љ–Є–µ –≤ —А–µ–і–∞–Ї—В–Њ—А.",
+        en: "Add a solution in the editor.",
+      }
+    ),
+  ];
+}
+
+function evaluateBasicsVariables(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /\bname\s*=\s*["'`][^"'`]+["'`]/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –њ–µ—А–µ–Љ–µ–љ–љ–∞—П `name` —Б –і–∞–љ–љ—Л–Љ–Є",
+        en: "A `name` variable with data is present",
+      },
+      {
+        ru: "–°–Њ–Ј–і–∞–є `name` –Є –Ј–∞–њ–Є—И–Є –≤ –љ–µ—С —Б—В—А–Њ–Ї—Г.",
+        en: "Create `name` and store a string inside it.",
+      }
+    ),
+    createCheck(
+      /\bgoal\s*=\s*["'`][^"'`]+["'`]/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –њ–µ—А–µ–Љ–µ–љ–љ–∞—П `goal` —Б –і–∞–љ–љ—Л–Љ–Є",
+        en: "A `goal` variable with data is present",
+      },
+      {
+        ru: "–°–Њ–Ј–і–∞–є `goal` –Є –Ј–∞–њ–Є—И–Є –≤ –љ–µ—С —Б—В—А–Њ–Ї—Г.",
+        en: "Create `goal` and store a string inside it.",
+      }
+    ),
+    createCheck(
+      /(print|console\.log|System\.out\.println)\s*\(\s*name\s*\)/i.test(normalized),
+      {
+        ru: "–Ш–Љ—П –≤—Л–≤–Њ–і–Є—В—Б—П –Њ—В–і–µ–ї—М–љ–Њ",
+        en: "The name is output separately",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –≤—Л–≤–Њ–і `name` —З–µ—А–µ–Ј `print`, `console.log` –Є–ї–Є `System.out.println`.",
+        en: "Output `name` with `print`, `console.log`, or `System.out.println`.",
+      }
+    ),
+    createCheck(
+      /(print|console\.log|System\.out\.println)\s*\(\s*goal\s*\)/i.test(normalized),
+      {
+        ru: "–¶–µ–ї—М –≤—Л–≤–Њ–і–Є—В—Б—П –Њ—В–і–µ–ї—М–љ–Њ",
+        en: "The goal is output separately",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –Њ—В–і–µ–ї—М–љ—Л–є –≤—Л–≤–Њ–і `goal`.",
+        en: "Add a separate output for `goal`.",
+      }
+    ),
+  ];
+}
+
+function evaluateBasicsCondition(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /\bscore\s*=\s*75\b/i.test(normalized),
+      {
+        ru: "–Я–µ—А–µ–Љ–µ–љ–љ–∞—П `score` —Б–Њ–Ј–і–∞–љ–∞",
+        en: "The `score` variable is created",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Б—В—А–Њ–Ї—Г `score = 75`.",
+        en: "Add the line `score = 75`.",
+      }
+    ),
+    createCheck(
+      /\bif\b/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤–µ—В–Ї–∞ `if`",
+        en: "There is an `if` branch",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Г—Б–ї–Њ–≤–Є–µ `if`.",
+        en: "Add an `if` condition.",
+      }
+    ),
+    createCheck(
+      /score\s*>=\s*60/i.test(normalized),
+      {
+        ru: "–Я–Њ—А–Њ–≥ `60` –Є—Б–њ–Њ–ї—М–Ј–Њ–≤–∞–љ",
+        en: "The `60` threshold is used",
+      },
+      {
+        ru: "–Я—А–Њ–≤–µ—А—М —Б—А–∞–≤–љ–µ–љ–Є–µ `score >= 60`.",
+        en: "Use the comparison `score >= 60`.",
+      }
+    ),
+    createCheck(
+      /\belse\b/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤–µ—В–Ї–∞ `else`",
+        en: "There is an `else` branch",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –≤–µ—В–Ї—Г `else` –і–ї—П –≤—В–Њ—А–Њ–≥–Њ —Б—Ж–µ–љ–∞—А–Є—П.",
+        en: "Add an `else` branch for the second scenario.",
+      }
+    ),
+    createCheck(
+      /(pass).*(try again)|(try again).*(pass)/i.test(normalized),
+      {
+        ru: "–Ю–±–∞ —В–µ–Ї—Б—В–∞ –≤—Л–≤–Њ–і–∞ –њ—А–Є—Б—Г—В—Б—В–≤—Г—О—В",
+        en: "Both output messages are present",
+      },
+      {
+        ru: "–Э—Г–ґ–љ—Л —Б—В—А–Њ–Ї–Є `pass` –Є `try again`.",
+        en: "Include both `pass` and `try again`.",
+      }
+    ),
+  ];
+}
+
+function evaluateHtmlCard(answer) {
+  const doc = new DOMParser().parseFromString(answer, "text/html");
+  return [
+    createCheck(
+      Boolean(doc.querySelector("section, article, div")),
+      {
+        ru: "–Х—Б—В—М –Ї–Њ–љ—В–µ–є–љ–µ—А –Ї–∞—А—В–Њ—З–Ї–Є",
+        en: "A card container is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –Ї–Њ–љ—В–µ–є–љ–µ—А: `section`, `article` –Є–ї–Є `div`.",
+        en: "Add a container: `section`, `article`, or `div`.",
+      }
+    ),
+    createCheck(
+      Boolean(doc.querySelector("h1")),
+      {
+        ru: "–Х—Б—В—М –Ј–∞–≥–Њ–ї–Њ–≤–Њ–Ї `h1`",
+        en: "An `h1` heading is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –Ј–∞–≥–Њ–ї–Њ–≤–Њ–Ї `h1`.",
+        en: "Add an `h1` heading.",
+      }
+    ),
+    createCheck(
+      Boolean(doc.querySelector("p")),
+      {
+        ru: "–Х—Б—В—М –∞–±–Ј–∞—Ж `p`",
+        en: "A `p` paragraph is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –∞–±–Ј–∞—Ж `p` —Б –Ї–Њ—А–Њ—В–Ї–Є–Љ —В–µ–Ї—Б—В–Њ–Љ.",
+        en: "Add a `p` paragraph with short text.",
+      }
+    ),
+    createCheck(
+      Boolean(doc.querySelector("button")),
+      {
+        ru: "–Х—Б—В—М –Ї–љ–Њ–њ–Ї–∞ `button`",
+        en: "A `button` is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –Ї–љ–Њ–њ–Ї—Г `button`.",
+        en: "Add a `button`.",
+      }
+    ),
+  ];
+}
+
+function evaluateHtmlForm(answer) {
+  const doc = new DOMParser().parseFromString(answer, "text/html");
+  return [
+    createCheck(
+      Boolean(doc.querySelector("form")),
+      {
+        ru: "–Х—Б—В—М —Д–Њ—А–Љ–∞ `form`",
+        en: "A `form` is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —В–µ–≥ `form`.",
+        en: "Add a `form` tag.",
+      }
+    ),
+    createCheck(
+      Boolean(doc.querySelector("label")),
+      {
+        ru: "–Х—Б—В—М `label` –і–ї—П –њ–Њ–і–њ–Є—Б–Є",
+        en: "A `label` is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `label` –і–ї—П –њ–Њ–ї—П –≤–≤–Њ–і–∞.",
+        en: "Add a `label` for the input.",
+      }
+    ),
+    createCheck(
+      Boolean(doc.querySelector('input[type="email"]')),
+      {
+        ru: "–Х—Б—В—М `input type=\"email\"`",
+        en: "An `input type=\"email\"` is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `input` —Б —В–Є–њ–Њ–Љ `email`.",
+        en: "Add an `input` with the `email` type.",
+      }
+    ),
+    createCheck(
+      Boolean(doc.querySelector("button")),
+      {
+        ru: "–Х—Б—В—М –Ї–љ–Њ–њ–Ї–∞ –Њ—В–њ—А–∞–≤–Ї–Є",
+        en: "A submit button is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –Ї–љ–Њ–њ–Ї—Г –і–ї—П –Њ—В–њ—А–∞–≤–Ї–Є —Д–Њ—А–Љ—Л.",
+        en: "Add a button to submit the form.",
+      }
+    ),
+  ];
+}
+
+function evaluateCssButton(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /\.cta-button\s*\{/i.test(normalized),
+      {
+        ru: "–°—В–Є–ї–Є –њ—А–Є–Љ–µ–љ—П—О—В—Б—П –Ї `.cta-button`",
+        en: "Styles target `.cta-button`",
+      },
+      {
+        ru: "–Э–∞—З–љ–Є –њ—А–∞–≤–Є–ї–Њ —Б `.cta-button { ... }`.",
+        en: "Start the rule with `.cta-button { ... }`.",
+      }
+    ),
+    createCheck(
+      /background(-color)?\s*:/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Ж–≤–µ—В –Є–ї–Є —Д–Њ–љ –Ї–љ–Њ–њ–Ї–Є",
+        en: "A button background is set",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `background` –Є–ї–Є `background-color`.",
+        en: "Add `background` or `background-color`.",
+      }
+    ),
+    createCheck(
+      /color\s*:/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Ж–≤–µ—В —В–µ–Ї—Б—В–∞",
+        en: "A text color is set",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Б–≤–Њ–є—Б—В–≤–Њ `color`.",
+        en: "Add the `color` property.",
+      }
+    ),
+    createCheck(
+      /padding\s*:/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤–љ—Г—В—А–µ–љ–љ–Є–є –Њ—В—Б—В—Г–њ",
+        en: "Padding is set",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `padding`, —З—В–Њ–±—Л –Ї–љ–Њ–њ–Ї–∞ –≤—Л–≥–ї—П–і–µ–ї–∞ –ї—Г—З—И–µ.",
+        en: "Add `padding` to improve the button shape.",
+      }
+    ),
+    createCheck(
+      /border-radius\s*:/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Б–Ї—А—Г–≥–ї–µ–љ–Є–µ",
+        en: "Border radius is set",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `border-radius` –і–ї—П –±–Њ–ї–µ–µ –Љ—П–≥–Ї–Њ–є —Д–Њ—А–Љ—Л.",
+        en: "Add `border-radius` for a softer shape.",
+      }
+    ),
+  ];
+}
+
+function evaluateCssLayout(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /\.cards\s*\{/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –њ—А–∞–≤–Є–ї–Њ –і–ї—П `.cards`",
+        en: "There is a rule for `.cards`",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М CSS-–њ—А–∞–≤–Є–ї–Њ –і–ї—П `.cards`.",
+        en: "Add a CSS rule for `.cards`.",
+      }
+    ),
+    createCheck(
+      /display\s*:\s*flex/i.test(normalized),
+      {
+        ru: "–Ш—Б–њ–Њ–ї—М–Ј—Г–µ—В—Б—П `display: flex`",
+        en: "`display: flex` is used",
+      },
+      {
+        ru: "–°–і–µ–ї–∞–є –Ї–Њ–љ—В–µ–є–љ–µ—А flex —З–µ—А–µ–Ј `display: flex`.",
+        en: "Turn the container into flex with `display: flex`.",
+      }
+    ),
+    createCheck(
+      /gap\s*:/i.test(normalized),
+      {
+        ru: "–Ч–∞–і–∞–љ `gap` –Љ–µ–ґ–і—Г –Ї–∞—А—В–Њ—З–Ї–∞–Љ–Є",
+        en: "`gap` is set between cards",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `gap` –Љ–µ–ґ–і—Г –Ї–∞—А—В–Њ—З–Ї–∞–Љ–Є.",
+        en: "Add `gap` between the cards.",
+      }
+    ),
+    createCheck(
+      /\.cards\s+article\s*\{/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –њ—А–∞–≤–Є–ї–Њ –і–ї—П `.cards article`",
+        en: "There is a rule for `.cards article`",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –њ—А–∞–≤–Є–ї–Њ –і–ї—П `.cards article`.",
+        en: "Add a rule for `.cards article`.",
+      }
+    ),
+    createCheck(
+      /padding\s*:|background(-color)?\s*:/i.test(normalized),
+      {
+        ru: "–Ъ–∞—А—В–Њ—З–Ї–Є –њ–Њ–ї—Г—З–Є–ї–Є –±–∞–Ј–Њ–≤–Њ–µ –Њ—Д–Њ—А–Љ–ї–µ–љ–Є–µ",
+        en: "The cards have basic styling",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Е–Њ—В—П –±—Л `padding` –Є —Д–Њ–љ –Ї–∞—А—В–Њ—З–Ї–∞–Љ.",
+        en: "Add at least `padding` and a background to the cards.",
+      }
+    ),
+  ];
+}
+
+function evaluateJsGreeting(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /\b(const|let|var)\s+userName\s*=\s*["'`][^"'`]+["'`]/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –њ–µ—А–µ–Љ–µ–љ–љ–∞—П `userName` —Б–Њ —Б—В—А–Њ–Ї–Њ–є",
+        en: "A `userName` string variable is present",
+      },
+      {
+        ru: "–°–Њ–Ј–і–∞–є `userName` –Є –Ј–∞–њ–Є—И–Є –≤ –љ–µ—С –Є–Љ—П.",
+        en: "Create `userName` and store a name inside it.",
+      }
+    ),
+    createCheck(
+      /document\.querySelector\s*\(\s*["']#output["']\s*\)/i.test(normalized) ||
+        /document\.getElementById\s*\(\s*["']output["']\s*\)/i.test(normalized),
+      {
+        ru: "–≠–ї–µ–Љ–µ–љ—В `#output` –љ–∞–є–і–µ–љ",
+        en: "The `#output` element is selected",
+      },
+      {
+        ru: "–Э–∞–є–і–Є —Н–ї–µ–Љ–µ–љ—В `#output` —З–µ—А–µ–Ј DOM.",
+        en: "Select the `#output` element through the DOM.",
+      }
+    ),
+    createCheck(
+      /(textContent|innerText|innerHTML)\s*=\s*.*userName/i.test(normalized),
+      {
+        ru: "–Ш–Љ—П –≤—Л–≤–Њ–і–Є—В—Б—П –≤ –Є–љ—В–µ—А—Д–µ–є—Б",
+        en: "The name is rendered in the UI",
+      },
+      {
+        ru: "–Ч–∞–њ–Є—И–Є –њ—А–Є–≤–µ—В—Б—В–≤–Є–µ –≤ `textContent`, `innerText` –Є–ї–Є `innerHTML`.",
+        en: "Write the greeting into `textContent`, `innerText`, or `innerHTML`.",
+      }
+    ),
+    createCheck(
+      /(hello|hi|–њ—А–Є–≤–µ—В)/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Б–∞–Љ–Њ –њ—А–Є–≤–µ—В—Б—В–≤–Є–µ",
+        en: "A greeting is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Б–ї–Њ–≤–Њ `Hello`, `Hi` –Є–ї–Є `–Я—А–Є–≤–µ—В` –≤ —В–µ–Ї—Б—В.",
+        en: "Add `Hello`, `Hi`, or `–Я—А–Є–≤–µ—В` to the text.",
+      }
+    ),
+  ];
+}
+
+function evaluateJsFunction(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /function\s+checkAge\s*\(\s*age\s*\)/i.test(normalized) ||
+        /(const|let|var)\s+checkAge\s*=\s*\(\s*age\s*\)\s*=>/i.test(normalized),
+      {
+        ru: "–§—Г–љ–Ї—Ж–Є—П `checkAge(age)` —Б–Њ–Ј–і–∞–љ–∞",
+        en: "The `checkAge(age)` function is created",
+      },
+      {
+        ru: "–°–Њ–Ј–і–∞–є —Д—Г–љ–Ї—Ж–Є—О —Б –Є–Љ–µ–љ–µ–Љ `checkAge` –Є –њ–∞—А–∞–Љ–µ—В—А–Њ–Љ `age`.",
+        en: "Create a function named `checkAge` with the `age` parameter.",
+      }
+    ),
+    createCheck(
+      /\bif\s*\(\s*age\s*>=\s*18\s*\)/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Г—Б–ї–Њ–≤–Є–µ `age >= 18`",
+        en: "The `age >= 18` condition is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –њ—А–Њ–≤–µ—А–Ї—Г `if (age >= 18)`.",
+        en: "Add the `if (age >= 18)` check.",
+      }
+    ),
+    createCheck(
+      /return\s+["'`]adult["'`]/i.test(normalized),
+      {
+        ru: "–§—Г–љ–Ї—Ж–Є—П –≤–Њ–Ј–≤—А–∞—Й–∞–µ—В `adult`",
+        en: "The function returns `adult`",
+      },
+      {
+        ru: "–Т –Њ–і–љ–Њ–є –≤–µ—В–Ї–µ –≤–µ—А–љ–Є —Б—В—А–Њ–Ї—Г `adult`.",
+        en: "Return the string `adult` in one branch.",
+      }
+    ),
+    createCheck(
+      /return\s+["'`]junior["'`]/i.test(normalized),
+      {
+        ru: "–§—Г–љ–Ї—Ж–Є—П –≤–Њ–Ј–≤—А–∞—Й–∞–µ—В `junior`",
+        en: "The function returns `junior`",
+      },
+      {
+        ru: "–Т–Њ –≤—В–Њ—А–Њ–є –≤–µ—В–Ї–µ –≤–µ—А–љ–Є —Б—В—А–Њ–Ї—Г `junior`.",
+        en: "Return the string `junior` in the other branch.",
+      }
+    ),
+  ];
+}
+
+function evaluatePythonLoop(answer) {
+  const normalized = answer;
+  const stringItems = normalized.match(/["'][^"']+["']/g) || [];
+  return [
+    createCheck(
+      /\btopics\s*=\s*\[.*\]/is.test(normalized),
+      {
+        ru: "–°–њ–Є—Б–Њ–Ї `topics` —Б–Њ–Ј–і–∞–љ",
+        en: "The `topics` list is created",
+      },
+      {
+        ru: "–°–Њ–Ј–і–∞–є —Б–њ–Є—Б–Њ–Ї `topics = [...]`.",
+        en: "Create a `topics = [...]` list.",
+      }
+    ),
+    createCheck(
+      stringItems.length >= 3,
+      {
+        ru: "–Т —Б–њ–Є—Б–Ї–µ –Ї–∞–Ї –Љ–Є–љ–Є–Љ—Г–Љ —В—А–Є —В–µ–Љ—Л",
+        en: "The list contains at least three topics",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –≤ —Б–њ–Є—Б–Њ–Ї —В—А–Є —Б—В—А–Њ–Ї–Њ–≤—Л—Е —Н–ї–µ–Љ–µ–љ—В–∞.",
+        en: "Add three string items to the list.",
+      }
+    ),
+    createCheck(
+      /\bfor\s+\w+\s+in\s+topics\s*:/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Ж–Є–Ї–ї `for` –њ–Њ —Б–њ–Є—Б–Ї—Г",
+        en: "A `for` loop iterates through the list",
+      },
+      {
+        ru: "–Ш—Б–њ–Њ–ї—М–Ј—Г–є —Ж–Є–Ї–ї `for item in topics:`.",
+        en: "Use the `for item in topics:` pattern.",
+      }
+    ),
+    createCheck(
+      /print\s*\(\s*\w+\s*\)/i.test(normalized),
+      {
+        ru: "–≠–ї–µ–Љ–µ–љ—В—Л –≤—Л–≤–Њ–і—П—В—Б—П —З–µ—А–µ–Ј `print()`",
+        en: "Items are printed with `print()`",
+      },
+      {
+        ru: "–Т–љ—Г—В—А–Є —Ж–Є–Ї–ї–∞ –і–Њ–±–∞–≤—М `print(item)`.",
+        en: "Add `print(item)` inside the loop.",
+      }
+    ),
+  ];
+}
+
+function evaluatePythonFunction(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /\bdef\s+calculate_total\s*\(/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М —Д—Г–љ–Ї—Ж–Є—П `calculate_total`",
+        en: "The `calculate_total` function is present",
+      },
+      {
+        ru: "–Э–∞—З–љ–Є —А–µ—И–µ–љ–Є–µ —Б `def calculate_total(...):`.",
+        en: "Start with `def calculate_total(...):`.",
+      }
+    ),
+    createCheck(
+      /\bdef\s+calculate_total\s*\(\s*price\s*,\s*quantity\s*\)\s*:/i.test(normalized),
+      {
+        ru: "–Я–∞—А–∞–Љ–µ—В—А—Л `price` –Є `quantity` —Г–Ї–∞–Ј–∞–љ—Л",
+        en: "`price` and `quantity` parameters are present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –њ–∞—А–∞–Љ–µ—В—А—Л `price, quantity`.",
+        en: "Add the `price, quantity` parameters.",
+      }
+    ),
+    createCheck(
+      /\breturn\b/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М `return`",
+        en: "A `return` statement is present",
+      },
+      {
+        ru: "–Т–µ—А–љ–Є —А–µ–Ј—Г–ї—М—В–∞—В —З–µ—А–µ–Ј `return`.",
+        en: "Return the result with `return`.",
+      }
+    ),
+    createCheck(
+      /return\s+price\s*\*\s*quantity/i.test(normalized),
+      {
+        ru: "–§—Г–љ–Ї—Ж–Є—П –≤–Њ–Ј–≤—А–∞—Й–∞–µ—В `price * quantity`",
+        en: "The function returns `price * quantity`",
+      },
+      {
+        ru: "–Ш—Б–њ–Њ–ї—М–Ј—Г–є `return price * quantity`.",
+        en: "Use `return price * quantity`.",
+      }
+    ),
+  ];
+}
+
+function evaluateJavaMain(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /public\s+class\s+Main/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –Ї–ї–∞—Б—Б `Main`",
+        en: "A `Main` class is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `public class Main`.",
+        en: "Add `public class Main`.",
+      }
+    ),
+    createCheck(
+      /public\s+static\s+void\s+main\s*\(\s*String\[\]\s+args\s*\)/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –Љ–µ—В–Њ–і `main`",
+        en: "The `main` method is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М `public static void main(String[] args)`.",
+        en: "Add `public static void main(String[] args)`.",
+      }
+    ),
+    createCheck(
+      /System\.out\.println\s*\(/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤—Л–≤–Њ–і —З–µ—А–µ–Ј `System.out.println`",
+        en: "`System.out.println` is used",
+      },
+      {
+        ru: "–Т—Л–≤–µ–і–Є —Б—В—А–Њ–Ї—Г —З–µ—А–µ–Ј `System.out.println(...)`.",
+        en: "Print the text with `System.out.println(...)`.",
+      }
+    ),
+    createCheck(
+      /Hello,\s*coder!/i.test(normalized),
+      {
+        ru: "–Т—Л–≤–Њ–і–Є—В `Hello, coder!`",
+        en: "It prints `Hello, coder!`",
+      },
+      {
+        ru: "–Э—Г–ґ–љ–∞ —Б—В—А–Њ–Ї–∞ `Hello, coder!`.",
+        en: "Use the string `Hello, coder!`.",
+      }
+    ),
+  ];
+}
+
+function evaluateJavaCondition(answer) {
+  const normalized = answer;
+  return [
+    createCheck(
+      /int\s+age\s*=\s*18\s*;/i.test(normalized),
+      {
+        ru: "–Я–µ—А–µ–Љ–µ–љ–љ–∞—П `age` —Б–Њ–Ј–і–∞–љ–∞",
+        en: "The `age` variable is created",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Б—В—А–Њ–Ї—Г `int age = 18;`.",
+        en: "Add the line `int age = 18;`.",
+      }
+    ),
+    createCheck(
+      /if\s*\(\s*age\s*>=\s*18\s*\)/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –њ—А–Њ–≤–µ—А–Ї–∞ `age >= 18`",
+        en: "The `age >= 18` check is present",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М —Г—Б–ї–Њ–≤–Є–µ `if (age >= 18)`.",
+        en: "Add the `if (age >= 18)` condition.",
+      }
+    ),
+    createCheck(
+      /\belse\b/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤–µ—В–Ї–∞ `else`",
+        en: "There is an `else` branch",
+      },
+      {
+        ru: "–Ф–Њ–±–∞–≤—М –≤–µ—В–Ї—Г `else`.",
+        en: "Add an `else` branch.",
+      }
+    ),
+    createCheck(
+      /System\.out\.println\s*\(\s*["'`]Access granted["'`]\s*\)\s*;/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤—Л–≤–Њ–і `Access granted`",
+        en: "`Access granted` is printed",
+      },
+      {
+        ru: "–Т –њ–µ—А–≤–Њ–є –≤–µ—В–Ї–µ –≤—Л–≤–µ–і–Є `Access granted`.",
+        en: "Print `Access granted` in the first branch.",
+      }
+    ),
+    createCheck(
+      /System\.out\.println\s*\(\s*["'`]Too early["'`]\s*\)\s*;/i.test(normalized),
+      {
+        ru: "–Х—Б—В—М –≤—Л–≤–Њ–і `Too early`",
+        en: "`Too early` is printed",
+      },
+      {
+        ru: "–Т–Њ –≤—В–Њ—А–Њ–є –≤–µ—В–Ї–µ –≤—Л–≤–µ–і–Є `Too early`.",
+        en: "Print `Too early` in the second branch.",
+      }
+    ),
+  ];
+}
+
+function formatDate(timestamp) {
+  if (!timestamp) return "";
+  const locale = document.documentElement.lang === "ru" ? "ru-RU" : "en-US";
+  return new Intl.DateTimeFormat(locale, {
+    day: "2-digit",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(timestamp));
+}
+
+</script>
+  </head>
+  <body>
+    <div class="page-backdrop" aria-hidden="true">
+      <div class="backdrop-orb backdrop-orb--teal"></div>
+      <div class="backdrop-orb backdrop-orb--orange"></div>
+      <div class="backdrop-grid"></div>
+    </div>
+
+    <header class="site-header container">
+      <a class="brand" href="index.html" aria-label="IT Start Lab">
+        <span class="brand__mark">&lt;/&gt;</span>
+        <span class="brand__copy">
+          <strong id="brandTitle"></strong>
+          <small id="brandSubtitle"></small>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <div class="lang-switch" aria-label="Language switch">
+          <button type="button" data-lang-option="ru">RU</button>
+          <button type="button" data-lang-option="en">EN</button>
+        </div>
+        <button class="ghost-button" id="resetProgressBtn" type="button"></button>
+      </div>
+    </header>
+
+    <main class="container page-layout">
+      <section class="hero panel">
+        <div class="hero__content">
+          <p class="eyebrow" id="heroKicker"></p>
+          <h1 id="heroTitle"></h1>
+          <p class="hero__lead" id="heroLead"></p>
+
+          <div class="hero__actions">
+            <button class="primary-button" id="continueBtn" type="button"></button>
+            <button class="secondary-button" id="randomLessonBtn" type="button"></button>
+          </div>
+        </div>
+
+        <div class="hero__stats">
+          <article class="stat-card">
+            <strong id="topicsCount">0</strong>
+            <span id="topicsStatLabel"></span>
+          </article>
+          <article class="stat-card">
+            <strong id="lessonsCount">0</strong>
+            <span id="lessonsStatLabel"></span>
+          </article>
+          <article class="stat-card">
+            <strong id="completedCount">0</strong>
+            <span id="completedStatLabel"></span>
+          </article>
+        </div>
+      </section>
+
+      <section class="dashboard">
+        <aside class="sidebar">
+          <section class="panel sidebar-card">
+            <div class="section-head">
+              <p class="eyebrow" id="topicsKicker"></p>
+              <h2 id="topicsTitle"></h2>
+              <p class="section-copy" id="topicsLead"></p>
+            </div>
+            <div id="topicCards" class="topic-stack"></div>
+          </section>
+
+          <section class="panel sidebar-card progress-card">
+            <div class="section-head">
+              <p class="eyebrow" id="progressKicker"></p>
+              <h2 id="progressTitle"></h2>
+              <p class="section-copy" id="progressLead"></p>
+            </div>
+
+            <div class="overall-progress">
+              <div class="overall-progress__ring" id="overallProgressRing">
+                <span id="overallProgressValue">0%</span>
+              </div>
+              <div class="overall-progress__copy">
+                <strong id="overallProgressTitle"></strong>
+                <p id="overallProgressText"></p>
+                <span class="saved-pill" id="savedPill"></span>
+              </div>
+            </div>
+
+            <div id="topicProgressList" class="topic-progress-list"></div>
+          </section>
+        </aside>
+
+        <section class="workspace">
+          <section class="panel lesson-card">
+            <div class="lesson-card__top">
+              <div>
+                <p class="eyebrow" id="lessonKicker"></p>
+                <div class="active-path" id="activePath"></div>
+                <h2 id="lessonTitle"></h2>
+                <p class="lesson-meta" id="lessonMeta"></p>
+              </div>
+
+              <div class="lesson-nav">
+                <button class="small-button" id="prevLessonBtn" type="button"></button>
+                <button class="small-button" id="nextLessonBtn" type="button"></button>
+              </div>
+            </div>
+
+            <div class="lesson-grid">
+              <article class="mini-lesson">
+                <div class="mini-lesson__head">
+                  <h3 id="miniLessonTitle"></h3>
+                  <span class="type-badge" id="lessonTypeBadge"></span>
+                </div>
+                <p id="lessonSummary"></p>
+                <ul id="lessonPoints" class="lesson-points"></ul>
+                <div class="tag-list" id="lessonTags"></div>
+              </article>
+
+              <article class="practice-card">
+                <div class="practice-card__head">
+                  <h3 id="practiceTitle"></h3>
+                  <span class="practice-status" id="practiceStatus"></span>
+                </div>
+
+                <p id="lessonTask" class="task-copy"></p>
+                <div id="starterNote" class="starter-note"></div>
+
+                <label class="editor-label" for="answerEditor">
+                  <span id="editorLabel"></span>
+                </label>
+                <textarea id="answerEditor" spellcheck="false"></textarea>
+
+                <div class="editor-actions">
+                  <button class="secondary-button" id="runPreviewBtn" type="button"></button>
+                  <button class="primary-button" id="checkAnswerBtn" type="button"></button>
+                  <button class="ghost-button" id="resetLessonBtn" type="button"></button>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <div class="workspace-grid">
+            <section class="panel preview-card">
+              <div class="panel-head">
+                <h3 id="previewTitle"></h3>
+                <span class="panel-status" id="previewStatus"></span>
+              </div>
+
+              <p id="previewEmpty" class="empty-note"></p>
+              <div id="previewWrap" class="preview-wrap">
+                <iframe
+                  id="previewFrame"
+                  title="Lesson preview"
+                  sandbox="allow-scripts"
+                ></iframe>
+              </div>
+            </section>
+
+            <section class="panel feedback-card">
+              <div class="panel-head">
+                <h3 id="aiTitle"></h3>
+                <span class="panel-status" id="lastCheckLabel"></span>
+              </div>
+
+              <p id="feedbackEmpty" class="empty-note"></p>
+
+              <div id="feedbackContent" class="feedback-content" hidden>
+                <div class="feedback-summary">
+                  <div class="score-badge" id="scoreBadge">
+                    <span id="scoreValue">0%</span>
+                  </div>
+                  <div class="feedback-summary__copy">
+                    <span class="feedback-state" id="feedbackState"></span>
+                    <h3 id="feedbackHeadline"></h3>
+                    <p id="feedbackSummary"></p>
+                  </div>
+                </div>
+
+                <div class="feedback-block">
+                  <h4 id="checklistTitle"></h4>
+                  <div id="feedbackChecklist" class="feedback-list"></div>
+                </div>
+
+                <div class="feedback-block">
+                  <h4 id="tipsTitle"></h4>
+                  <div id="feedbackTips" class="feedback-list"></div>
+                </div>
+              </div>
+            </section>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer container">
+      <p id="footerNote"></p>
+    </footer>
+  </body>
 </html>
