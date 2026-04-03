@@ -81,6 +81,9 @@ function initTrainer() {
     feedbackTips: document.querySelector("#feedbackTips"),
     footerNote: document.querySelector("#footerNote"),
     resetProgressBtn: document.querySelector("#resetProgressBtn"),
+    qrLabel: document.querySelector("#qrLabel"),
+    qrHint: document.querySelector("#qrHint"),
+    qrImage: document.querySelector("#qrImage"),
   };
 
   let state = loadState(lessons);
@@ -251,6 +254,9 @@ function initTrainer() {
     elements.feedbackEmpty.textContent = t(ui.feedbackEmpty);
     elements.checklistTitle.textContent = t(ui.checklistTitle);
     elements.tipsTitle.textContent = t(ui.tipsTitle);
+    elements.qrLabel.textContent = t(ui.qrLabel);
+    elements.qrHint.textContent = t(ui.qrHint);
+    elements.qrImage.alt = t(ui.qrAlt);
     elements.footerNote.textContent = t(ui.footerNote);
     elements.resetProgressBtn.textContent = t(ui.resetProgressBtn);
   }
