@@ -210,7 +210,23 @@
     </main>
 
     <footer class="site-footer container">
-      <p id="footerNote"></p>
+      <div class="footer-shell">
+        <p id="footerNote"></p>
+
+        <aside class="qr-card">
+          <div class="qr-card__copy">
+            <strong id="qrLabel"></strong>
+            <small id="qrHint"></small>
+          </div>
+          <img
+            id="qrImage"
+            class="qr-card__image"
+            src="assets/qr-code.png"
+            alt="QR code"
+            loading="lazy"
+          />
+        </aside>
+      </div>
     </footer>
   </body>
 </html>
