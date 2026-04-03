@@ -152,6 +152,18 @@ window.TRAINER_APP = {
       ru: "Совет",
       en: "Tip",
     },
+    qrLabel: {
+      ru: "QR",
+      en: "QR",
+    },
+    qrHint: {
+      ru: "Открыть на телефоне",
+      en: "Open on phone",
+    },
+    qrAlt: {
+      ru: "QR-код для быстрого открытия сайта",
+      en: "QR code for opening the site quickly",
+    },
     footerNote: {
       ru: "Полностью статический сайт для GitHub Pages: интерфейс двуязычный, ответы сохраняются в браузере, проверка работает на клиенте.",
       en: "A fully static GitHub Pages site: bilingual UI, browser-based saved progress, and client-side answer checking.",
